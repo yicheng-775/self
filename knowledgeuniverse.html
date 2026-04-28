@@ -3,1377 +3,867 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌌 知识宇宙 · 七大星系全景</title>
+    <title>🌌 知识宇宙 · 七大星系完整版</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #0a0e1a;
-            color: #e0e6f0;
-            min-height: 100vh;
-            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0e1a; color: #e0e6f0; min-height: 100vh; overflow-x: hidden;
         }
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #141a2e;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2d3a5e;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #4a5a82;
-        }
+        .stars { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:hidden; }
+        .star { position:absolute; border-radius:50%; background:#fff; animation:twinkle var(--duration) ease-in-out infinite alternate; }
+        @keyframes twinkle { 0%{opacity:0.2;transform:scale(0.8)} 100%{opacity:1;transform:scale(1.2)} }
+        .container { position:relative; z-index:1; max-width:1300px; margin:0 auto; padding:20px; }
 
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-        .star {
-            position: absolute;
-            border-radius: 50%;
-            background: #fff;
-            animation: twinkle var(--duration) ease-in-out infinite alternate;
-        }
-        @keyframes twinkle {
-            0% {
-                opacity: 0.2;
-                transform: scale(0.8);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1.2);
-            }
-        }
-
-        .shooting-star {
-            position: fixed;
-            width: 2px;
-            height: 2px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.3);
-            animation: shoot 4s linear infinite;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0;
-        }
-        .shooting-star::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 80px;
-            height: 1px;
-            background: linear-gradient(to left, rgba(255, 255, 255, 0.6), transparent);
-            transform: translateX(-100%);
-        }
-        @keyframes shoot {
-            0% {
-                transform: translate(0, 0) rotate(-35deg);
-                opacity: 0;
-            }
-            5% {
-                opacity: 1;
-            }
-            20% {
-                opacity: 1;
-            }
-            25% {
-                transform: translate(calc(-100vw - 100px), calc(100vh + 100px)) rotate(-35deg);
-                opacity: 0;
-            }
-            100% {
-                opacity: 0;
-            }
-        }
-
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 20px 20px 60px;
-        }
-
-        .header {
-            text-align: center;
-            padding: 50px 20px 40px;
-            position: relative;
-        }
+        .header { text-align:center; padding:40px 20px; }
         .header h1 {
-            font-size: 3.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #f0e6ff, #a78bfa, #60a5fa, #34d399);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradientShift 6s ease-in-out infinite;
-            letter-spacing: 4px;
+            font-size:3rem; font-weight:800;
+            background:linear-gradient(135deg,#f0e6ff,#a78bfa,#60a5fa,#34d399);
+            background-size:300% 300%;
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+            animation:gradientShift 6s ease-in-out infinite; letter-spacing:4px;
         }
-        @keyframes gradientShift {
-            0%,
-            100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-        }
-        .header .subtitle {
-            font-size: 1.15rem;
-            color: #8899bb;
-            margin-top: 12px;
-            letter-spacing: 2px;
-            font-weight: 300;
-        }
-        .header .divider {
-            width: 120px;
-            height: 2px;
-            margin: 20px auto 0;
-            background: linear-gradient(90deg, transparent, #60a5fa, #a78bfa, transparent);
-            border-radius: 2px;
-        }
+        @keyframes gradientShift { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+        .header p { color:#8899bb; margin-top:10px; font-size:1.05rem; }
 
-        .galaxy-tabs {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin: 35px 0 30px;
-            position: relative;
-            z-index: 2;
+        .tabs { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin:25px 0 20px; }
+        .tab {
+            padding:10px 18px; border-radius:50px; border:2px solid transparent;
+            background:rgba(20,26,46,0.75); cursor:pointer; font-size:0.85rem; font-weight:600;
+            color:#8899bb; transition:all .3s; user-select:none;
         }
-        .galaxy-tab {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 22px;
-            border-radius: 50px;
-            border: 2px solid transparent;
-            background: rgba(20, 26, 46, 0.75);
-            backdrop-filter: blur(8px);
-            cursor: pointer;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #8899bb;
-            user-select: none;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-        }
-        .galaxy-tab .icon {
-            font-size: 1.3rem;
-            line-height: 1;
-        }
-        .galaxy-tab:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
-        }
-        .galaxy-tab.active {
-            color: #fff;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.5);
-        }
-        .galaxy-tab .badge {
-            font-size: 0.7rem;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2px 10px;
-            border-radius: 20px;
-            color: #aabbdd;
-            font-weight: 400;
-        }
-        .galaxy-tab.active .badge {
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-        }
+        .tab:hover { transform:translateY(-2px); }
+        .tab.active { color:#fff; transform:translateY(-2px); }
+        .tab .badge { font-size:0.6rem; background:rgba(255,255,255,0.1); padding:2px 8px; border-radius:12px; margin-left:4px; }
 
-        .tab-0.active {
-            border-color: #ff6b6b;
-            background: rgba(255, 107, 107, 0.18);
-            box-shadow: 0 6px 30px rgba(255, 107, 107, 0.2);
-        }
-        .tab-1.active {
-            border-color: #4ecdc4;
-            background: rgba(78, 205, 196, 0.18);
-            box-shadow: 0 6px 30px rgba(78, 205, 196, 0.2);
-        }
-        .tab-2.active {
-            border-color: #45b7d1;
-            background: rgba(69, 183, 209, 0.18);
-            box-shadow: 0 6px 30px rgba(69, 183, 209, 0.2);
-        }
-        .tab-3.active {
-            border-color: #96ceb4;
-            background: rgba(150, 206, 180, 0.18);
-            box-shadow: 0 6px 30px rgba(150, 206, 180, 0.2);
-        }
-        .tab-4.active {
-            border-color: #ffeaa7;
-            background: rgba(255, 234, 167, 0.18);
-            box-shadow: 0 6px 30px rgba(255, 234, 167, 0.2);
-        }
-        .tab-5.active {
-            border-color: #dda0dd;
-            background: rgba(221, 160, 221, 0.18);
-            box-shadow: 0 6px 30px rgba(221, 160, 221, 0.2);
-        }
-        .tab-6.active {
-            border-color: #f0b27a;
-            background: rgba(240, 178, 122, 0.18);
-            box-shadow: 0 6px 30px rgba(240, 178, 122, 0.2);
-        }
+        .content { min-height:300px; }
+        .page { display:none; }
+        .page.active { display:block; animation:fadeIn .35s ease; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
 
-        .content-area {
-            position: relative;
-            min-height: 400px;
-            margin-top: 10px;
+        .card {
+            background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);
+            border-radius:12px; padding:14px 18px; margin-bottom:8px;
         }
+        .card-title {
+            font-size:1.05rem; font-weight:700; cursor:pointer; user-select:none;
+            display:flex; align-items:center; gap:8px;
+        }
+        .card-title .arrow { font-size:0.8rem; color:#667799; transition:transform .3s; width:16px; display:inline-block; text-align:center; }
+        .card-title .arrow.open { transform:rotate(90deg); }
+        .card-title .tag { font-size:0.6rem; padding:2px 10px; border-radius:12px; background:rgba(255,255,255,0.06); color:#8899bb; margin-left:auto; }
+        .card-desc { color:#8899bb; font-size:0.88rem; margin-top:4px; padding-left:24px; line-height:1.5; }
+        .card-children { padding-left:16px; margin-top:8px; border-left:2px solid rgba(255,255,255,0.05); }
+        .card-children.hidden { display:none; }
 
-        .galaxy-content {
-            display: none;
-            animation: fadeSlideIn 0.5s ease;
+        .sub-card {
+            background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03);
+            border-radius:10px; padding:10px 14px; margin-bottom:5px;
         }
-        .galaxy-content.active {
-            display: block;
-        }
+        .sub-card .sc-title { font-size:0.92rem; font-weight:600; cursor:pointer; user-select:none; display:flex; align-items:center; gap:6px; }
+        .sub-card .sc-desc { color:#7788aa; font-size:0.82rem; margin-top:2px; padding-left:20px; }
 
-        @keyframes fadeSlideIn {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        .leaf { padding:5px 10px 5px 18px; border-radius:6px; display:flex; align-items:flex-start; gap:5px; }
+        .leaf .dot { color:#667799; font-size:0.75rem; margin-top:1px; flex-shrink:0; }
+        .leaf .text { flex:1; }
+        .leaf .label { font-weight:500; font-size:0.85rem; }
+        .leaf .exp { color:#7788aa; font-size:0.78rem; line-height:1.4; }
 
-        .galaxy-header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 25px 30px;
-            border-radius: 16px;
-            margin-bottom: 30px;
-            background: rgba(20, 26, 46, 0.6);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+        .bottom-map {
+            margin-top:40px; padding:24px; border-radius:16px;
+            background:rgba(20,26,46,0.5); border:1px solid rgba(255,255,255,0.05);
         }
-        .galaxy-header .big-icon {
-            font-size: 2.8rem;
-            line-height: 1;
-            flex-shrink: 0;
+        .bottom-map h3 { text-align:center; color:#aabbdd; margin-bottom:16px; font-size:1.2rem; }
+        .map-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:8px; }
+        .map-item {
+            display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:10px;
+            background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03);
+            cursor:pointer; transition:.2s;
         }
-        .galaxy-header .info h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-        .galaxy-header .info .desc {
-            color: #99aacd;
-            margin-top: 6px;
-            font-size: 1rem;
-            line-height: 1.5;
-        }
-        .galaxy-header .info .stats {
-            display: flex;
-            gap: 16px;
-            margin-top: 10px;
-            font-size: 0.85rem;
-            color: #7788aa;
-        }
-        .galaxy-header .info .stats span {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
+        .map-item:hover { background:rgba(255,255,255,0.05); transform:translateX(4px); }
+        .map-item .mi-icon { font-size:1.3rem; }
+        .map-item .mi-text { flex:1; }
+        .map-item .mi-name { font-weight:600; font-size:0.85rem; }
+        .map-item .mi-desc { color:#7788aa; font-size:0.72rem; }
 
-        .knowledge-tree {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding-left: 0;
-        }
-
-        .node-level-0 {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 14px;
-            padding: 18px 24px;
-            margin-bottom: 6px;
-            transition: all 0.25s;
-        }
-        .node-level-0:hover {
-            background: rgba(255, 255, 255, 0.07);
-            border-color: rgba(255, 255, 255, 0.12);
-        }
-        .node-level-0 .node-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            user-select: none;
-        }
-        .node-level-0 .node-title .toggle {
-            font-size: 0.85rem;
-            color: #7788aa;
-            transition: transform 0.3s;
-            display: inline-block;
-            width: 18px;
-            text-align: center;
-        }
-        .node-level-0 .node-title .toggle.open {
-            transform: rotate(90deg);
-        }
-        .node-level-0 .node-title .tag {
-            font-size: 0.7rem;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-weight: 500;
-            background: rgba(255, 255, 255, 0.08);
-            color: #99aacd;
-            margin-left: auto;
-        }
-        .node-level-0 .node-desc {
-            color: #99aacd;
-            font-size: 0.92rem;
-            margin-top: 6px;
-            line-height: 1.6;
-            padding-left: 28px;
-        }
-        .node-level-0 .node-children {
-            padding-left: 20px;
-            margin-top: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            border-left: 2px solid rgba(255, 255, 255, 0.06);
-        }
-        .node-level-0 .node-children.collapsed {
-            display: none;
-        }
-
-        .node-level-1 {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            padding: 12px 18px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.2s;
-        }
-        .node-level-1:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-        .node-level-1 .node-title {
-            font-size: 1rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            user-select: none;
-        }
-        .node-level-1 .node-title .toggle {
-            font-size: 0.8rem;
-            color: #667799;
-            transition: transform 0.3s;
-            display: inline-block;
-            width: 16px;
-            text-align: center;
-        }
-        .node-level-1 .node-title .toggle.open {
-            transform: rotate(90deg);
-        }
-        .node-level-1 .node-title .tag {
-            font-size: 0.65rem;
-            padding: 1px 10px;
-            border-radius: 20px;
-            font-weight: 500;
-            background: rgba(255, 255, 255, 0.06);
-            color: #8899bb;
-            margin-left: auto;
-        }
-        .node-level-1 .node-desc {
-            color: #8899bb;
-            font-size: 0.88rem;
-            margin-top: 4px;
-            line-height: 1.5;
-            padding-left: 24px;
-        }
-        .node-level-1 .node-children {
-            padding-left: 16px;
-            margin-top: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            border-left: 2px solid rgba(255, 255, 255, 0.04);
-        }
-        .node-level-1 .node-children.collapsed {
-            display: none;
-        }
-
-        .node-level-2 {
-            padding: 8px 14px 8px 20px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            transition: all 0.2s;
-        }
-        .node-level-2:hover {
-            background: rgba(255, 255, 255, 0.04);
-        }
-        .node-level-2 .bullet {
-            color: #667799;
-            font-size: 0.8rem;
-            margin-top: 2px;
-            flex-shrink: 0;
-        }
-        .node-level-2 .text {
-            flex: 1;
-        }
-        .node-level-2 .text .label {
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-        .node-level-2 .text .explain {
-            color: #7788aa;
-            font-size: 0.82rem;
-            margin-top: 1px;
-        }
-        .node-level-2 .tag-sm {
-            font-size: 0.6rem;
-            padding: 1px 8px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.06);
-            color: #8899bb;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .footer-map {
-            margin-top: 60px;
-            padding: 30px;
-            border-radius: 16px;
-            background: rgba(20, 26, 46, 0.5);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .footer-map h3 {
-            text-align: center;
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #aabbdd;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-        }
-        .footer-map .map-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 12px;
-        }
-        .footer-map .map-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.25s;
-            cursor: pointer;
-        }
-        .footer-map .map-item:hover {
-            background: rgba(255, 255, 255, 0.06);
-            transform: translateX(4px);
-        }
-        .footer-map .map-item .mi-icon {
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-        .footer-map .map-item .mi-text {
-            flex: 1;
-        }
-        .footer-map .map-item .mi-text .mi-name {
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-        .footer-map .map-item .mi-text .mi-desc {
-            color: #7788aa;
-            font-size: 0.8rem;
-        }
-        .footer-map .map-item .mi-arrow {
-            color: #445577;
-            font-size: 1.1rem;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-            .header .subtitle {
-                font-size: 0.9rem;
-            }
-            .galaxy-tab {
-                padding: 8px 14px;
-                font-size: 0.8rem;
-                gap: 4px;
-            }
-            .galaxy-tab .icon {
-                font-size: 1rem;
-            }
-            .galaxy-tab .badge {
-                display: none;
-            }
-            .galaxy-header {
-                flex-direction: column;
-                text-align: center;
-                padding: 18px 16px;
-            }
-            .galaxy-header .big-icon {
-                font-size: 2rem;
-            }
-            .galaxy-header .info h2 {
-                font-size: 1.3rem;
-            }
-            .node-level-0 {
-                padding: 14px 16px;
-            }
-            .node-level-0 .node-title {
-                font-size: 1rem;
-                flex-wrap: wrap;
-            }
-            .node-level-0 .node-title .tag {
-                margin-left: 0;
-                font-size: 0.65rem;
-            }
-            .node-level-1 {
-                padding: 10px 12px;
-            }
-            .node-level-1 .node-title {
-                font-size: 0.9rem;
-                flex-wrap: wrap;
-            }
-            .node-level-2 {
-                padding: 6px 10px 6px 14px;
-                flex-wrap: wrap;
-            }
-            .node-level-2 .text .label {
-                font-size: 0.85rem;
-            }
-            .footer-map .map-grid {
-                grid-template-columns: 1fr;
-            }
-            .container {
-                padding: 12px 10px 30px;
-            }
-            .galaxy-tabs {
-                gap: 6px;
-            }
-        }
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.5rem;
-            }
-            .galaxy-tab {
-                padding: 6px 10px;
-                font-size: 0.7rem;
-            }
-            .galaxy-tab .icon {
-                font-size: 0.85rem;
-            }
+        @media(max-width:768px){
+            .header h1{font-size:2rem}
+            .tab{padding:7px 12px;font-size:0.75rem}
+            .tab .badge{display:none}
+            .card{padding:12px 14px}
+            .card-title{font-size:0.95rem}
+            .sub-card{padding:8px 10px}
         }
     </style>
 </head>
 <body>
-
-    <div class="stars" id="stars"></div>
-
-    <div class="shooting-star" style="top:10%;left:80%;animation-delay:0s;"></div>
-    <div class="shooting-star" style="top:30%;left:60%;animation-delay:2.5s;"></div>
-    <div class="shooting-star" style="top:60%;left:90%;animation-delay:5.2s;"></div>
-
-    <div class="container" id="app">
-
-        <div class="header">
-            <h1>🌌 知识宇宙</h1>
-            <p class="subtitle">从 Clash 到 AI · 七大星系全景知识图谱</p>
-            <div class="divider"></div>
-        </div>
-
-        <div class="galaxy-tabs" id="galaxyTabs"></div>
-
-        <div class="content-area" id="contentArea">
-            <div style="text-align:center;padding:60px 20px;color:#667799;">
-                <div style="font-size:3rem;margin-bottom:16px;">⏳</div>
-                <div>正在加载知识宇宙…</div>
-            </div>
-        </div>
-
-        <div class="footer-map" id="footerMap">
-            <h3>🗺️ 知识宇宙全景图</h3>
-            <div class="map-grid" id="mapGrid"></div>
-        </div>
-
+<div class="stars" id="stars"></div>
+<div class="container">
+    <div class="header">
+        <h1>🌌 知识宇宙</h1>
+        <p>从 Clash 到 AI · 七大星系完整知识图谱 · 基于整场对话内容重构</p>
     </div>
+    <div class="tabs" id="tabs"></div>
+    <div class="content" id="content"></div>
+    <div class="bottom-map">
+        <h3>🗺️ 知识宇宙全景图（点击跳转）</h3>
+        <div class="map-grid" id="mapGrid"></div>
+    </div>
+</div>
+<script>
+const COLORS = ['#ff6b6b','#4ecdc4','#45b7d1','#96ceb4','#ffeaa7','#dda0dd','#f0b27a'];
 
-    <script>
-        // ============================================================
-        //  🛡️ 先用一个try-catch包住整个逻辑，防止白屏
-        // ============================================================
-        try {
+const GALAXIES = [
+    // ========== 星系一：网络代理 ==========
+    {id:0, name:'网络代理', icon:'🔌', color:COLORS[0], desc:'Clash Verge · 代理协议 · 机场 · 规则模式', count:18,
+     headerDesc:'从 Clash Verge 客户端出发，辐射到代理协议、机场服务、规则配置等完整生态。理解这些你就能完全掌控自己的网络代理。',
+     items:[
+         {title:'🔌 Clash Verge（客户端）', tag:'工具', desc:'Clash 的图形界面客户端，支持 Windows/macOS/Linux。你在界面上切换节点、选择模式，底层调用 Clash 核心引擎。',
+          subs:[
+              {title:'Clash 核心引擎', tag:'引擎', desc:'开源代理工具核心，Verge 只是图形外壳。核心负责：解析YAML配置 → 建立连接 → 转发流量 → 执行规则。',
+               leafs:[
+                   {l:'配置文件格式', e:'YAML 格式，包含 proxies（代理节点）、proxy-groups（策略组）、rules（规则）三大部分'},
+                   {l:'核心版本', e:'Clash Meta（原 Clash Premium）是目前最活跃的分支，支持更多协议和 TUN 模式'},
+                   {l:'API 控制', e:'Clash 提供 RESTful API（端口 9090），可以被其他程序如 Dashboard 控制'},
+                   {l:'运行模式', e:'支持 Table（普通）、TUN（虚拟网卡）、Mixed（混合）三种模式'}
+               ]},
+              {title:'订阅链接（Subscription）', tag:'概念', desc:'机场给你的一个 URL。Clash 定期访问这个 URL 获取最新的节点列表。',
+               leafs:[
+                   {l:'自动更新', e:'Clash 可设置每 24 小时自动拉取最新订阅，保持节点列表最新'},
+                   {l:'订阅转换', e:'用 subconverter 等工具可以把不同格式的订阅统一转换成 Clash 格式'},
+                   {l:'多条订阅合并', e:'可以把多个机场的订阅合并到一个配置文件中'}
+               ]}
+          ]},
+         {title:'代理协议', tag:'协议', desc:'代理客户端和服务器之间的通信语言。不同协议有不同的伪装方式和加密强度，这是科学上网的核心技术。',
+          subs:[
+              {title:'V2Ray / VMess', tag:'最主流', desc:'目前最广泛使用的协议，支持多种传输方式，灵活且难以被识别。',
+               leafs:[
+                   {l:'WebSocket (WS)', e:'伪造成普通网页流量，配合 CDN 使用效果极佳'},
+                   {l:'gRPC', e:'Google 出品，基于 HTTP/2，速度快但特征较明显'},
+                   {l:'TCP', e:'最基础的传输方式，配置简单'},
+                   {l:'TLS 加密', e:'V2Ray 可以套上 TLS 证书，流量看起来像 HTTPS'}
+               ]},
+              {title:'Shadowsocks (SS)', tag:'经典', desc:'早期的代理协议，原理简单：用密码加密流量。虽然逐渐被取代但仍有大量用户。',
+               leafs:[
+                   {l:'加密方式', e:'支持 aes-256-gcm、chacha20-ietf-poly1305 等'},
+                   {l:'缺点', e:'流量特征明显，容易被墙通过主动探测识别'},
+                   {l:'AEAD 加密', e:'现代 SS 使用 AEAD 加密，增加了抗探测能力'}
+               ]},
+              {title:'Trojan', tag:'流行', desc:'伪装成标准的 HTTPS 流量。如果你访问一个 Trojan 节点，看起来就像访问一个普通网站。',
+               leafs:[
+                   {l:'工作原理', e:'通过 TLS 握手伪装成 HTTPS，非代理流量直接返回网页内容'},
+                   {l:'优势', e:'比 V2Ray+WS 更难以被识别，因为完全模拟正常 HTTPS 流量'},
+                   {l:'回落（Fallback）', e:'访问者不带密码时，返回一个正常的网页，迷惑审查系统'}
+               ]},
+              {title:'Hysteria2', tag:'极速', desc:'基于 QUIC（HTTP/3）协议，利用 UDP 的高速特性。速度极快但特征明显。',
+               leafs:[
+                   {l:'速度优势', e:'在高丢包率网络环境下比其他协议快 3-5 倍'},
+                   {l:'缺点', e:'基于 UDP，某些网络环境会限速或屏蔽 UDP'}
+               ]},
+              {title:'WireGuard', tag:'VPN', desc:'现代 VPN 协议，代码极少（仅 4000 行），速度极快但容易被封 IP。',
+               leafs:[
+                   {l:'与代理的区别', e:'WG 是 VPN 协议（系统级），不是代理协议（应用级）'},
+                   {l:'优缺点', e:'速度快但 IP 特征明显，容易被直接封锁服务器 IP'}
+               ]}
+          ]},
+         {title:'机场（代理服务商）', tag:'服务', desc:'提供代理节点的服务商。你付钱买流量/时长，他们给你订阅链接。选机场有这些关键指标：',
+          subs:[
+              {title:'节点质量指标', tag:'核心', desc:'衡量机场好坏的核心参数。',
+               leafs:[
+                   {l:'延迟（Ping）', e:'数据包往返时间。< 100ms 优秀，100-300ms 可用，> 500ms 很卡'},
+                   {l:'丢包率', e:'数据包丢失比例。< 1% 优秀，> 5% 会出现明显卡顿'},
+                   {l:'带宽', e:'最大传输速度。看 4K 视频需要 > 20Mbps'},
+                   {l:'解锁能力', e:'能否看 Netflix/Disney+/YouTube Premium/Spotify 等'}
+               ]},
+              {title:'计费方式', tag:'对比', desc:'不同机场计费方式不同，选择适合自己的。',
+               leafs:[
+                   {l:'按量计费', e:'买固定流量（如 100GB/月），用完即止，适合轻度用户'},
+                   {l:'包月不限量', e:'每月固定费用，不限流量，但可能有速度限制'},
+                   {l:'按周期计费', e:'按月/季/年付费，年付通常有折扣'},
+                   {l:'中转 vs 直连', e:'中转节点通过国内服务器转发，延迟低但贵；直连节点便宜但可能被墙'}
+               ]},
+              {title:'审计规则', tag:'注意', desc:'机场会禁止某些类型的流量。选择前需了解。',
+               leafs:[
+                   {l:'BT 下载', e:'多数机场禁止 BT/PT 下载，因为会占用大量带宽'},
+                   {l:'成人内容', e:'部分机场禁止访问成人网站'},
+                   {l:'协议限制', e:'某些机场只开放特定端口（如 80/443）'}
+               ]}
+          ]},
+         {title:'规则模式（Rule）', tag:'配置', desc:'决定哪些流量走代理、哪些直连。这是 Clash 最强大的功能，也是你日常最需要调整的部分。',
+          subs:[
+              {title:'全局模式（Global）', tag:'简单', desc:'所有流量全部走代理路由。适合需要完全翻墙的场景，但访问国内网站会变慢。'},
+              {title:'规则模式（Rule）⭐', tag:'最推荐', desc:'最均衡的模式。国内网站直连、国外网站走代理、特定网站指定节点。日常使用首选。',
+               leafs:[
+                   {l:'规则匹配顺序', e:'从上到下匹配，匹配到就执行，不再继续往下'},
+                   {l:'GEOIP 规则', e:'根据 IP 地理位置判断国内/国外，自动分流'},
+                   {l:'GEOSITE 规则', e:'根据网站域名分类（如 Google、YouTube、Netflix）分流'},
+                   {l:'自定义规则', e:'可以手动添加特定网站走特定节点或直连'}
+               ]},
+              {title:'直连模式（Direct）', tag:'简单', desc:'全部不走代理。用于调试网络问题，或者你不需要翻墙时。'},
+              {title:'脚本模式', tag:'高级', desc:'用 JavaScript 自定义分流逻辑，可以实现非常复杂的规则（如按时间段切换节点）。'}
+          ]},
+         {title:'代理 vs VPN', tag:'对比', desc:'很多人混淆这两个概念，它们有本质区别。',
+          subs:[
+              {title:'核心区别', tag:'原理', desc:'VPN 是系统级（所有流量都走虚拟网卡），代理是应用级（只转发特定应用流量）。'},
+              {title:'Clash 的定位', tag:'结论', desc:'Clash 是代理工具，不是 VPN。但它的 TUN 模式可以在功能上模拟 VPN 的效果。'},
+              {title:'TUN 模式', tag:'进阶', desc:'Clash 创建虚拟网卡，捕获所有系统流量。让不支持代理的应用（如游戏、命令行工具）也能走代理。'},
+              {title:'DNS 泄露', tag:'问题', desc:'配置不当时，你的真实 DNS 请求可能暴露给 ISP，导致域名被污染。Clash 有 DNS 防泄漏配置。'}
+          ]}
+     ]},
 
-            // ============================================================
-            //  数据：七大星系
-            //  💡 所有字符串用反引号 ` 避免单引号嵌套问题
-            // ============================================================
-            const GALAXIES = [{
-                id: 0,
-                name: `网络代理`,
-                icon: `🔌`,
-                color: `#ff6b6b`,
-                desc: `Clash Verge、代理协议、机场、规则模式`,
-                count: 12,
-                headerDesc: `从 Clash Verge 客户端出发，辐射到代理协议、机场服务、规则配置等完整生态。`,
-                trees: [{
-                    title: `🔌 Clash Verge（客户端）`,
-                    tag: `工具`,
-                    desc: `Clash 的图形界面客户端，支持多平台。你下载后点开关、选节点，底层调用 Clash 核心引擎。`,
-                    children: [{
-                        title: `Clash 核心引擎`,
-                        tag: `引擎`,
-                        desc: `开源代理工具，Verge 只是外壳。核心负责：解析配置→建立连接→转发流量→执行规则。`,
-                        children: [
-                            { label: `配置文件格式`, explain: `YAML 格式，包含代理节点、规则组、策略组` },
-                            { label: `核心版本`, explain: `Clash Meta（原 Clash Premium）是目前最活跃的分支` },
-                            { label: `API 控制`, explain: `Clash 提供 RESTful API，可被其他程序控制` }
-                        ]
-                    }, {
-                        title: `代理协议`,
-                        tag: `协议`,
-                        desc: `代理客户端和服务器之间的通信语言，不同协议有不同伪装和加密方式。`,
-                        children: [
-                            { label: `V2Ray / VMess`, explain: `最主流，支持 WebSocket/gRPC/TCP 多种传输方式` },
-                            { label: `Shadowsocks (SS)`, explain: `早期主流，简单轻量，但现在容易被识别` },
-                            { label: `Trojan`, explain: `伪装成 HTTPS 流量，更难被墙识别` },
-                            { label: `Hysteria2`, explain: `基于 QUIC 协议，速度快但特征明显` },
-                            { label: `WireGuard`, explain: `VPN 协议，速度极快但容易被封 IP` }
-                        ]
-                    }, {
-                        title: `机场（代理服务商）`,
-                        tag: `服务`,
-                        desc: `提供代理节点的服务商。你付费买流量，他们给订阅链接。`,
-                        children: [
-                            { label: `节点质量`, explain: `看延迟（低）、丢包率（低）、带宽（高）` },
-                            { label: `流量计费`, explain: `按 GB/TB 计费，有按量和包月两种` },
-                            { label: `解锁能力`, explain: `能否看 Netflix/Disney+/YouTube Premium` },
-                            { label: `审计规则`, explain: `是否禁止 BT 下载或成人内容` }
-                        ]
-                    }, {
-                        title: `规则模式（Rule）`,
-                        tag: `配置`,
-                        desc: `决定哪些流量走代理、哪些直连。Clash 最强大的功能。`,
-                        children: [
-                            { label: `全局（Global）`, explain: `所有流量全部走代理` },
-                            { label: `规则（Rule）`, explain: `国内直连 + 国外走代理（最推荐）` },
-                            { label: `直连（Direct）`, explain: `全部不走代理` },
-                            { label: `脚本模式`, explain: `用 JavaScript 自定义分流逻辑` }
-                        ]
-                    }, {
-                        title: `订阅链接`,
-                        tag: `概念`,
-                        desc: `机场给你的 URL。Clash 定期访问它获取最新节点列表。到期后链接失效。`,
-                        children: [
-                            { label: `自动更新`, explain: `Clash 可设置每 24 小时自动拉取最新订阅` },
-                            { label: `转换/托管`, explain: `用 subconverter 转换格式或合并多个订阅` }
-                        ]
-                    }, {
-                        title: `代理 vs VPN`,
-                        tag: `对比`,
-                        desc: `两者本质不同，不是一回事。`,
-                        children: [
-                            { label: `VPN`, explain: `系统级加密隧道，所有流量走虚拟网卡，全局生效` },
-                            { label: `代理`, explain: `应用级转发，只代理特定应用或端口的流量` },
-                            { label: `Clash 本质`, explain: `Clash 是代理工具，不是 VPN（但支持 TUN 模式模拟 VPN）` }
-                        ]
-                    }]
-                }, {
-                    title: `🔄 进阶概念`,
-                    tag: `延伸`,
-                    desc: `理解这些，你就能诊断绝大多数代理问题了。`,
-                    children: [{
-                        title: `TUN 模式`,
-                        tag: `进阶`,
-                        desc: `Clash 创建虚拟网卡，捕获所有系统流量。让不支持代理的应用也能走代理。`,
-                    }, {
-                        title: `DNS 泄露`,
-                        tag: `问题`,
-                        desc: `配置不当导致真实 DNS 请求暴露给 ISP，即使流量走了代理。`,
-                    }, {
-                        title: `分流`,
-                        tag: `策略`,
-                        desc: `根据目标（IP/域名/地理位置）选择出口：国内直连、国外走代理、特定网站指定节点。`,
-                    }, {
-                        title: `延迟 / RTT`,
-                        tag: `指标`,
-                        desc: `数据包往返时间。RTT < 100ms 优秀，100-300ms 可用，> 500ms 很卡。`,
-                    }, {
-                        title: `CDN 中转`,
-                        tag: `技术`,
-                        desc: `利用 Cloudflare 等 CDN 做流量中转，隐藏真实服务器 IP。`,
-                    }]
-                }]
-            }, {
-                id: 1,
-                name: `开源协作`,
-                icon: `🐙`,
-                color: `#4ecdc4`,
-                desc: `GitHub、Git、开源许可证、CI/CD`,
-                count: 10,
-                headerDesc: `从 GitHub 出发，深入版本控制工具 Git，了解开源社区的协作方式和许可证体系。`,
-                trees: [{
-                    title: `🐙 GitHub 核心功能`,
-                    tag: `平台`,
-                    desc: `全球最大代码托管平台，不只是存代码，更是整个开源世界的协作中心。`,
-                    children: [{
-                        title: `仓库（Repository）`,
-                        tag: `基础`,
-                        desc: `存放代码的地方，包含所有文件、提交历史和协作记录。`,
-                    }, {
-                        title: `Fork（复制）`,
-                        tag: `协作`,
-                        desc: `把别人仓库复制到自己账号下，自由修改，不影响原仓库。`,
-                    }, {
-                        title: `Pull Request（PR）`,
-                        tag: `协作`,
-                        desc: `向原作者提交修改建议。原作者审核后可合并。开源协作的核心机制。`,
-                    }, {
-                        title: `Issue（问题）`,
-                        tag: `协作`,
-                        desc: `提 Bug 报告、功能建议或讨论，类似论坛帖子。`,
-                    }, {
-                        title: `Star（收藏）`,
-                        tag: `社交`,
-                        desc: `给项目点赞，Star 数是项目流行度的重要指标。`,
-                    }, {
-                        title: `Actions（自动化）`,
-                        tag: `CI/CD`,
-                        desc: `内置 CI/CD 工具。代码推送后自动运行测试、构建、部署。`,
-                    }, {
-                        title: `Pages（静态网站）`,
-                        tag: `托管`,
-                        desc: `免费托管个人网站或项目文档（username.github.io）`,
-                    }]
-                }, {
-                    title: `📦 代码托管平台对比`,
-                    tag: `生态`,
-                    desc: `不止 GitHub，还有多个选择。`,
-                    children: [
-                        { label: `GitHub`, explain: `微软旗下，最主流，社区最大` },
-                        { label: `GitLab`, explain: `支持自建部署，企业级功能强` },
-                        { label: `Gitee（码云）`, explain: `国内平台，访问快，但开源项目不如 GitHub` },
-                        { label: `Bitbucket`, explain: `Atlassian 出品，与 Jira 集成好` }
-                    ]
-                }, {
-                    title: `🔧 Git 进阶概念`,
-                    tag: `工具`,
-                    desc: `不止 add/commit/push，Git 还有很多强大功能。`,
-                    children: [
-                        { label: `Branch（分支）`, explain: `开一条新线独立开发，不影响主分支` },
-                        { label: `Merge（合并）`, explain: `把分支修改合并回主分支` },
-                        { label: `Rebase（变基）`, explain: `重写提交历史，保持线性历史` },
-                        { label: `Stash（暂存）`, explain: `暂时藏起未完成修改，切换分支后再取回` },
-                        { label: `Cherry-pick`, explain: `只选取某几个提交记录合并过来` },
-                        { label: `Tag（标签）`, explain: `给版本打标签，如 v1.0.0` }
-                    ]
-                }, {
-                    title: `📜 开源许可证`,
-                    tag: `法律`,
-                    desc: `决定别人能否用你的代码、怎么用、要不要付费。`,
-                    children: [
-                        { label: `MIT`, explain: `最宽松，随便用，只需保留版权声明` },
-                        { label: `Apache 2.0`, explain: `宽松但要求注明出处，包含专利授权` },
-                        { label: `GPL`, explain: `严格 — 用了它的代码，你的项目也必须开源` },
-                        { label: `BSD`, explain: `类似 MIT，非常宽松` },
-                        { label: `AGPL`, explain: `最严格 — 网络使用也算分发，必须开源` }
-                    ]
-                }, {
-                    title: `⚙️ CI/CD`,
-                    tag: `自动化`,
-                    desc: `代码从提交到上线全自动。`,
-                    children: [
-                        { label: `CI（持续集成）`, explain: `每次提交代码自动运行测试` },
-                        { label: `CD（持续部署）`, explain: `测试通过后自动部署到服务器` },
-                        { label: `GitHub Actions`, explain: `GitHub 内置 CI/CD` },
-                        { label: `其他工具`, explain: `Jenkins、GitLab CI、CircleCI` }
-                    ]
-                }]
-            }, {
-                id: 2,
-                name: `企业协作`,
-                icon: `📋`,
-                color: `#45b7d1`,
-                desc: `飞书、钉钉、Slack、多维表格、SaaS`,
-                count: 8,
-                headerDesc: `从飞书这个协作全家桶出发，了解企业协作工具生态和 SaaS 软件模式。`,
-                trees: [{
-                    title: `📋 企业协作工具市场`,
-                    tag: `概览`,
-                    desc: `不同产品定位不同，各有侧重。`,
-                    children: [
-                        { label: `飞书（字节跳动）`, explain: `文档+聊天+会议+AI 一体化，体验最好` },
-                        { label: `钉钉（阿里）`, explain: `打卡/审批最强，但被吐槽功能臃肿` },
-                        { label: `企业微信（腾讯）`, explain: `和个人微信互通，适合触达客户` },
-                        { label: `Slack`, explain: `美国最主流，聊天为主，集成能力强` },
-                        { label: `Teams（微软）`, explain: `与 Office 365 深度绑定，大企业首选` },
-                        { label: `Notion`, explain: `文档+知识库+数据库，适合小团队和个人` }
-                    ]
-                }, {
-                    title: `✨ 飞书特色功能`,
-                    tag: `深度`,
-                    desc: `飞书不只是聊天工具，特色功能让它成为效率神器。`,
-                    children: [{
-                        title: `多维表格（Bitable）`,
-                        tag: `最强`,
-                        desc: `比 Excel 更像数据库。可关联记录、设置字段类型、多人协作。`,
-                    }, {
-                        title: `云文档`,
-                        tag: `协作`,
-                        desc: `多人实时协作编辑，支持 markdown、@提醒、评论。`,
-                    }, {
-                        title: `飞书妙记`,
-                        tag: `AI`,
-                        desc: `会议自动录音 + 转文字 + AI 总结，会后自动生成纪要。`,
-                    }, {
-                        title: `飞书知识库`,
-                        tag: `管理`,
-                        desc: `团队 Wiki，结构化组织知识文档。`,
-                    }, {
-                        title: `飞书审批`,
-                        tag: `OA`,
-                        desc: `请假、报销、用印、出差等审批流程。`,
-                    }]
-                }, {
-                    title: `🤖 飞书 + AI`,
-                    tag: `融合`,
-                    desc: `飞书在 AI 方面的布局。`,
-                    children: [
-                        { label: `飞书智能伙伴`, explain: `内置 AI 助手，可写文档、总结会议` },
-                        { label: `接入 Coze Bot`, explain: `在 Coze 搭的 Bot 可发布到飞书群` },
-                        { label: `飞书机器人`, explain: `自动发消息、提醒，配合 Webhook 使用` }
-                    ]
-                }, {
-                    title: `☁️ SaaS 概念`,
-                    tag: `模式`,
-                    desc: `软件即服务 — 不用安装，打开浏览器就能用，按月/年付费。`,
-                    children: [
-                        { label: `特点`, explain: `无需安装、自动更新、数据云端、按需付费` },
-                        { label: `代表`, explain: `飞书、Notion、Slack、Google Workspace` },
-                        { label: `与传统区别`, explain: `传统买断制 vs SaaS 订阅制` }
-                    ]
-                }]
-            }, {
-                id: 3,
-                name: `AI 工具调用`,
-                icon: `🔧`,
-                color: `#96ceb4`,
-                desc: `API、MCP、Skills、Agent、RAG`,
-                count: 14,
-                headerDesc: `从 API 到 MCP、Skills、Agent、RAG，完整理解 AI 如何连接外部世界。`,
-                trees: [{
-                    title: `🔌 API（接口）— 一切的基础`,
-                    tag: `核心`,
-                    desc: `API 是程序之间通信的菜单。你告诉 AI 要什么，AI 返回结果。`,
-                    children: [{
-                        title: `API 的类型`,
-                        tag: `分类`,
-                        desc: ``,
-                        children: [
-                            { label: `RESTful API`, explain: `最主流，用 GET/POST/PUT/DELETE 操作资源` },
-                            { label: `GraphQL`, explain: `Facebook 出品，精确请求想要的数据` },
-                            { label: `WebSocket`, explain: `双向实时通信，用于聊天、游戏` },
-                            { label: `gRPC`, explain: `Google 出品，性能极高，适合微服务` }
-                        ]
-                    }, {
-                        title: `API 认证方式`,
-                        tag: `安全`,
-                        desc: ``,
-                        children: [
-                            { label: `API Key`, explain: `一个字符串，最简单` },
-                            { label: `JWT`, explain: `包含用户信息的令牌，可设置过期` },
-                            { label: `OAuth 2.0`, explain: `三方登录底层协议` },
-                            { label: `Basic Auth`, explain: `用户名+密码，最基础` }
-                        ]
-                    }, {
-                        title: `SDK（工具包）`,
-                        tag: `配套`,
-                        desc: `API 是菜单，SDK 是半成品料理包。封装了 API 调用细节。`,
-                    }]
-                }, {
-                    title: `📡 MCP（模型上下文协议）`,
-                    tag: `标准`,
-                    desc: `Anthropic 推出的标准，定义 AI 如何连接外部工具。相当于 AI 世界的 USB-C 接口。`,
-                    children: [{
-                        title: `MCP 的核心思想`,
-                        tag: `理念`,
-                        desc: `标准化 AI 与外部工具的连接方式。不管什么工具，都通过同一套协议对接。`,
-                    }, {
-                        title: `MCP vs Function Calling`,
-                        tag: `对比`,
-                        desc: `Function Calling 是 OpenAI 方案，MCP 是 Anthropic 方案。MCP 更标准化、更开放。`,
-                    }, {
-                        title: `MCP 的应用场景`,
-                        tag: `用途`,
-                        desc: `AI 查数据库、读文件、调用 API、操作浏览器…只要 AI 需要伸手做的事。`,
-                    }]
-                }, {
-                    title: `🛠️ Skills（技能）— 给 AI 装外挂`,
-                    tag: `能力`,
-                    desc: `AI 本身只有语言能力，Skills 弥补它不能做的事。`,
-                    children: [
-                        { label: `搜索技能`, explain: `让 AI 联网查最新信息` },
-                        { label: `代码执行技能`, explain: `让 AI 运行 Python/JS 代码` },
-                        { label: `文件处理技能`, explain: `读取 PDF/Word/Excel 文件` },
-                        { label: `图像识别技能`, explain: `让 AI 看懂图片内容` },
-                        { label: `文生图技能`, explain: `调用 DALL·E 或 SD 生成图片` },
-                        { label: `自定义技能`, explain: `把自己写的 API 封装成 Skill` }
-                    ]
-                }, {
-                    title: `🤖 Agent（智能体）`,
-                    tag: `未来`,
-                    desc: `Skills 是给工具，Agent 是给目标 — 自己规划、拆解、执行。`,
-                    children: [
-                        { label: `工作方式`, explain: `接收目标 → 规划步骤 → 调工具 → 检查结果` },
-                        { label: `例子`, explain: `帮我订机票 → 查航班→ 查日历→ 下单→ 发确认邮件` },
-                        { label: `当前水平`, explain: `最热门方向但还在早期，容易出错` }
-                    ]
-                }, {
-                    title: `📚 RAG（检索增强生成）`,
-                    tag: `准确`,
-                    desc: `解决 AI 瞎编。回答前先去外部知识库查资料，基于真实信息回答。`,
-                    children: [
-                        { label: `为什么需要`, explain: `AI 训练数据有时效性，不知道你的私有数据` },
-                        { label: `工作流程`, explain: `提问 → 去向量数据库检索 → AI 基于文档回答` },
-                        { label: `效果`, explain: `回答有据可查，减少幻觉` }
-                    ]
-                }]
-            }, {
-                id: 4,
-                name: `AI 黑话大全`,
-                icon: `🧠`,
-                color: `#ffeaa7`,
-                desc: `LLM、Token、幻觉、微调、多模态`,
-                count: 22,
-                headerDesc: `AI 领域专业术语大全。从模型到训练推理，从产品到开发工具。`,
-                trees: [{
-                    title: `🧠 模型相关`,
-                    tag: `基础`,
-                    desc: `关于 AI 模型本身的核心概念。`,
-                    children: [
-                        { label: `LLM（大语言模型）`, explain: `如 GPT-4、Claude、文心一言` },
-                        { label: `SLM（小语言模型）`, explain: `可在手机上运行，如 Phi-3、Gemma` },
-                        { label: `Foundation Model`, explain: `通用大模型，可在此基础上微调` },
-                        { label: `多模态`, explain: `同时处理文字+图片+音频+视频` },
-                        { label: `参数（Parameters）`, explain: `模型大小指标，70B = 700亿参数` },
-                        { label: `上下文窗口`, explain: `一次能处理的最大文本量，如 128K` },
-                        { label: `知识截止日期`, explain: `模型训练数据的最晚时间点` },
-                        { label: `幻觉（Hallucination）`, explain: `AI 编造事实，自信地胡说八道` }
-                    ]
-                }, {
-                    title: `🏋️ 训练相关`,
-                    tag: `训练`,
-                    desc: `AI 模型是怎么学出来的。`,
-                    children: [
-                        { label: `预训练`, explain: `用海量数据从零训练，烧钱（几千万美元）` },
-                        { label: `微调（Fine-tuning）`, explain: `用特定数据做额外训练，让它更懂某领域` },
-                        { label: `LoRA`, explain: `轻量微调，只训练一小部分参数` },
-                        { label: `RLHF`, explain: `人类反馈强化学习，让模型更符合偏好` },
-                        { label: `SFT`, explain: `用人工标注数据训练模型` }
-                    ]
-                }, {
-                    title: `💡 推理相关`,
-                    tag: `使用`,
-                    desc: `AI 实际使用时涉及的概念。`,
-                    children: [
-                        { label: `推理（Inference）`, explain: `模型使用时算答案的过程` },
-                        { label: `Temperature`, explain: `控制创造性：0=严谨，1=有创意，2=发疯` },
-                        { label: `Top-P`, explain: `采样参数，控制回答多样性` },
-                        { label: `Token`, explain: `AI 处理文本的最小单位，约 0.75 个汉字` },
-                        { label: `流式输出`, explain: `一个字一个字显示，不用等全部生成完` },
-                        { label: `思维链（CoT）`, explain: `让 AI 一步步推理，大幅提升正确率` }
-                    ]
-                }, {
-                    title: `🌐 产品与平台`,
-                    tag: `生态`,
-                    desc: `市场主要的 AI 产品和平台。`,
-                    children: [
-                        { label: `ChatGPT（OpenAI）`, explain: `最知名的 AI 聊天机器人` },
-                        { label: `Claude（Anthropic）`, explain: `以安全著称，编码能力强` },
-                        { label: `Gemini（Google）`, explain: `多模态能力强` },
-                        { label: `文心一言（百度）`, explain: `国内主流` },
-                        { label: `通义千问（阿里）`, explain: `开源了 Qwen 系列` },
-                        { label: `Kimi（月之暗面）`, explain: `超长上下文（200万字）` },
-                        { label: `DeepSeek`, explain: `推理能力强，性价比高` },
-                        { label: `Coze（字节）`, explain: `搭 AI Bot 的平台` },
-                        { label: `Dify`, explain: `开源 AI 应用开发平台` },
-                        { label: `Hugging Face`, explain: `AI 模型的 GitHub` }
-                    ]
-                }]
-            }, {
-                id: 5,
-                name: `编程语言`,
-                icon: `💻`,
-                color: `#dda0dd`,
-                desc: `语言分类、生态框架、核心概念`,
-                count: 16,
-                headerDesc: `从底层到高层，全面理解主流编程语言的定位、生态和核心概念。`,
-                trees: [{
-                    title: `📊 语言分类（按离硬件距离）`,
-                    tag: `全景`,
-                    desc: `越底层性能越高但越难学，越顶层开发效率越高。`,
-                    children: [{
-                        title: `底层（系统级）`,
-                        tag: `性能`,
-                        desc: `C → C++ → Rust。直接操作内存，性能极高。`,
-                    }, {
-                        title: `中层（应用级）`,
-                        tag: `平衡`,
-                        desc: `Go → Java → C#。性能好，工程化强。`,
-                    }, {
-                        title: `高层（脚本级）`,
-                        tag: `效率`,
-                        desc: `Python → JavaScript → TypeScript。开发效率高。`,
-                    }]
-                }, {
-                    title: `🐍 Python 生态`,
-                    tag: `Python`,
-                    desc: `最简单的语言，生态最丰富。`,
-                    children: [
-                        { label: `Web 框架`, explain: `Django、Flask、FastAPI` },
-                        { label: `AI/ML`, explain: `PyTorch、TensorFlow、Scikit-learn` },
-                        { label: `数据分析`, explain: `Pandas、NumPy、Matplotlib` },
-                        { label: `自动化`, explain: `Selenium、Requests、Scrapy` },
-                        { label: `包管理`, explain: `pip、conda、venv` }
-                    ]
-                }, {
-                    title: `🌐 JavaScript 生态`,
-                    tag: `JS`,
-                    desc: `浏览器唯一原生语言，全栈通用。`,
-                    children: [
-                        { label: `前端框架`, explain: `React、Vue、Angular、Svelte` },
-                        { label: `后端`, explain: `Node.js、Express、Next.js` },
-                        { label: `TypeScript`, explain: `JS 超集，加类型检查，大型项目必备` },
-                        { label: `包管理`, explain: `npm、yarn、pnpm` },
-                        { label: `构建工具`, explain: `Vite、Webpack、ESBuild` }
-                    ]
-                }, {
-                    title: `☕ Java 生态`,
-                    tag: `Java`,
-                    desc: `大厂最爱，稳定可靠。`,
-                    children: [
-                        { label: `框架`, explain: `Spring Boot、Spring Cloud` },
-                        { label: `构建工具`, explain: `Maven、Gradle` },
-                        { label: `JVM 语言`, explain: `Kotlin、Scala、Groovy` },
-                        { label: `应用领域`, explain: `银行、电商、大厂后端` }
-                    ]
-                }, {
-                    title: `🧩 通用核心概念`,
-                    tag: `基础`,
-                    desc: `学任何语言都会遇到。`,
-                    children: [
-                        { label: `框架`, explain: `帮你写好大半代码的半成品` },
-                        { label: `库（Library）`, explain: `一组可复用的函数工具包` },
-                        { label: `包管理器`, explain: `安装/更新/删除库的工具` },
-                        { label: `运行时`, explain: `代码运行的环境（Node.js、JVM）` },
-                        { label: `编译器 vs 解释器`, explain: `编译一次性翻译，解释边翻译边跑` },
-                        { label: `静态 vs 动态类型`, explain: `静态需声明类型，动态运行时确定` },
-                        { label: `GC（垃圾回收）`, explain: `自动回收内存，C/Rust 没有` },
-                        { label: `并发 vs 并行`, explain: `并发看似同时，并行真的同时` }
-                    ]
-                }]
-            }, {
-                id: 6,
-                name: `数据库生态`,
-                icon: `🗄️`,
-                color: `#f0b27a`,
-                desc: `关系型、NoSQL、向量数据库、SQL`,
-                count: 11,
-                headerDesc: `从关系型到 NoSQL 到向量数据库，全面理解数据存储生态。`,
-                trees: [{
-                    title: `🗄️ 关系型数据库（SQL）`,
-                    tag: `经典`,
-                    desc: `用表存数据，支持 ACID 事务。`,
-                    children: [
-                        { label: `MySQL`, explain: `最流行开源关系型数据库` },
-                        { label: `PostgreSQL`, explain: `功能最强开源数据库` },
-                        { label: `SQLite`, explain: `轻量嵌入式，手机/桌面应用本地存` },
-                        { label: `Oracle`, explain: `商业数据库，最贵但最稳定` }
-                    ]
-                }, {
-                    title: `📦 NoSQL 数据库`,
-                    tag: `灵活`,
-                    desc: `不局限于表结构，适应不同数据模型。`,
-                    children: [
-                        { label: `MongoDB（文档型）`, explain: `存 JSON，灵活无 schema` },
-                        { label: `Redis（内存型）`, explain: `数据在内存，极快，适合缓存` },
-                        { label: `Cassandra（列存储）`, explain: `面向列，适合大数据写入` },
-                        { label: `Neo4j（图数据库）`, explain: `存节点和关系，适合社交网络` }
-                    ]
-                }, {
-                    title: `🔢 向量数据库（AI 时代）`,
-                    tag: `前沿`,
-                    desc: `专门存向量（Embedding）的数据库。AI 时代核心基础设施。`,
-                    children: [
-                        { label: `Milvus`, explain: `最主流开源向量数据库` },
-                        { label: `Pinecone`, explain: `商业托管，上手简单` },
-                        { label: `Qdrant`, explain: `Rust 写的，性能好` },
-                        { label: `Chroma`, explain: `轻量级，适合学习` }
-                    ]
-                }, {
-                    title: `📝 SQL 基础`,
-                    tag: `技能`,
-                    desc: `不管用什么数据库，SQL 都是核心技能。`,
-                    children: [
-                        { label: `SELECT`, explain: `查询数据` },
-                        { label: `INSERT`, explain: `插入数据` },
-                        { label: `UPDATE`, explain: `更新数据` },
-                        { label: `DELETE`, explain: `删除数据` },
-                        { label: `JOIN`, explain: `关联多张表` },
-                        { label: `CREATE TABLE`, explain: `建表` }
-                    ]
-                }, {
-                    title: `🔗 ORM（对象关系映射）`,
-                    tag: `工具`,
-                    desc: `不用写 SQL，用代码操作数据库。`,
-                    children: [
-                        { label: `Python: SQLAlchemy`, explain: `Python 最强大的 ORM` },
-                        { label: `JS: Prisma`, explain: `下一代 ORM，类型安全` },
-                        { label: `JS: TypeORM`, explain: `TypeScript 最流行` },
-                        { label: `Java: MyBatis`, explain: `半 ORM，SQL 和代码分离` }
-                    ]
-                }]
-            }];
+    // ========== 星系二：开源协作 ==========
+    {id:1, name:'开源协作', icon:'🐙', color:COLORS[1], desc:'GitHub · Git · 开源许可证 · CI/CD', count:18,
+     headerDesc:'从 GitHub 出发，深入版本控制工具 Git，了解开源社区的协作方式和许可证体系。这些都是现代软件开发的基础设施。',
+     items:[
+         {title:'🐙 GitHub 核心功能', tag:'平台', desc:'全球最大的代码托管平台，不只是存代码，更是整个开源世界的协作中心。2024 年拥有超过 1 亿开发者。',
+          subs:[
+              {title:'仓库（Repository）', tag:'基础', desc:'存放代码的地方，包含所有文件、提交历史、Issue、PR 和 Wiki。每个项目对应一个仓库。',
+               leafs:[
+                   {l:'README.md', e:'项目的介绍文件，用 Markdown 编写，让别人一眼看懂你的项目'},
+                   {l:'LICENSE', e:'开源许可证文件，决定了别人能不能用你的代码'},
+                   {l:'.gitignore', e:'告诉 Git 哪些文件不需要跟踪（如 node_modules、.env）'}
+               ]},
+              {title:'Fork（复制）', tag:'协作', desc:'把别人的仓库复制到你自己的账号下，然后可以自由修改，不影响原仓库。开源贡献的第一步。'},
+              {title:'Pull Request（PR）', tag:'协作', desc:'向原作者提交修改建议。原作者审核后可合并你的代码。这是开源协作的核心机制。',
+               leafs:[
+                   {l:'PR 流程', e:'Fork → 修改 → 提交 PR → 讨论/修改 → Merge'},
+                   {l:'Code Review', e:'PR 提交后，项目维护者和其他贡献者会审查代码'},
+                   {l:'CI 检查', e:'提交 PR 时自动运行测试，确保代码质量'}
+               ]},
+              {title:'Issue（问题）', tag:'协作', desc:'提 Bug 报告、功能建议或讨论。类似论坛帖子。好的 Issue 模版能帮助贡献者更好地描述问题。'},
+              {title:'Star（收藏）', tag:'社交', desc:'给项目点赞。Star 数是项目流行度的重要指标。Star 多的项目通常维护更好、社区更活跃。'},
+              {title:'Actions（CI/CD）', tag:'自动化', desc:'内置的 CI/CD 工具。代码推送到仓库后自动触发运行测试、构建、部署。',
+               leafs:[
+                   {l:'Workflow', e:'定义在 .github/workflows 目录下的 YAML 文件，描述自动化流程'},
+                   {l:'Runner', e:'执行 Workflow 的虚拟机。GitHub 提供免费的 Ubuntu/Windows/macOS runner'},
+                   {l:'Marketplace', e:'社区贡献的 Action 模板，可以直接复用'}
+               ]},
+              {title:'Pages（静态网站）', tag:'托管', desc:'免费托管个人网站或项目文档。支持自定义域名和 HTTPS。格式：username.github.io/repo-name。'}
+          ]},
+         {title:'📦 代码托管平台对比', tag:'生态', desc:'除了 GitHub，还有多个优秀的选择。不同平台有不同定位和优势。',
+          subs:[
+              {title:'GitHub', tag:'微软', desc:'全球最主流的代码托管平台。社区最大、开源项目最多、生态最完善。2024 年有 1 亿+ 仓库。',
+               leafs:[
+                   {l:'优势', e:'社区最大、集成最全（Actions/Pages/Packages）、收购了 npm'},
+                   {l:'劣势', e:'国内访问速度慢、私有仓库免费版有协作人数限制'}
+               ]},
+              {title:'GitLab', tag:'独立', desc:'功能最强大的企业级平台。支持自建部署（Self-hosted），适合对数据安全要求高的企业。',
+               leafs:[
+                   {l:'优势', e:'内置完整的 DevOps 工具链、CI/CD 最强、支持自建'},
+                   {l:'劣势', e:'社区规模不如 GitHub、界面相对复杂'}
+               ]},
+              {title:'Gitee（码云）', tag:'国产', desc:'国内最大的代码托管平台。访问速度快，适合国内开发者或需要国内合规的项目。',
+               leafs:[
+                   {l:'优势', e:'访问速度快、国内合规、有企业版'},
+                   {l:'劣势', e:'开源项目数量和质量不如 GitHub、功能相对较少'}
+               ]},
+              {title:'Bitbucket', tag:'Atlassian', desc:'Atlassian 出品，与 Jira、Trello 等项目管理工具深度集成。适合使用 Atlassian 生态的团队。'}
+          ]},
+         {title:'🔧 Git 进阶概念', tag:'工具', desc:'Git 是版本控制的基石。除了 add/commit/push 这些基础操作，理解这些进阶概念能让你真正用好 Git。',
+          subs:[
+              {title:'Branch（分支）', tag:'基础', desc:'开一条独立的开发线，不受主分支影响。每个人可以在自己的分支上开发，互不干扰。',
+               leafs:[
+                   {l:'主分支（main/master）', e:'项目的稳定版本，通常部署到生产环境'},
+                   {l:'功能分支（feature）', e:'开发新功能时创建，完成后合并回主分支'},
+                   {l:'修复分支（hotfix）', e:'紧急修复线上 Bug 时使用'}
+               ]},
+              {title:'Merge（合并）', tag:'基础', desc:'把分支的修改合并回主分支。会产生一个"合并提交"（merge commit），保留分支历史。'},
+              {title:'Rebase（变基）', tag:'进阶', desc:'重写提交历史，让提交线保持线性。更干净但更危险，不要对已推送的公共分支做 rebase。',
+               leafs:[
+                   {l:'Merge vs Rebase', e:'Merge 保留完整历史但会分叉，Rebase 让历史线性但会重写提交'},
+                   {l:'交互式 Rebase', e:'git rebase -i，可以合并/修改/删除提交记录'}
+               ]},
+              {title:'Stash（暂存）', tag:'实用', desc:'暂时藏起未完成的修改。当你需要切换分支但又不想提交半成品代码时使用。',
+               leafs:[
+                   {l:'git stash', e:'暂存当前修改，工作区变干净'},
+                   {l:'git stash pop', e:'取回最新一次暂存的修改'},
+                   {l:'git stash list', e:'查看所有暂存记录'}
+               ]},
+              {title:'Cherry-pick', tag:'进阶', desc:'只选取某几个提交记录合并到当前分支。适合只想要某个功能的一部分代码的场景。'},
+              {title:'Tag（标签）', tag:'实用', desc:'给某个历史版本打上标记，通常用于发布版本（如 v1.0.0、v2.3.1）。和分支不同，标签是只读的。'},
+              {title:'.gitignore', tag:'配置', desc:'配置文件，告诉 Git 哪些文件不需要跟踪。常见的有：node_modules/、.env、dist/、*.log 等。'}
+          ]},
+         {title:'📜 开源许可证', tag:'法律', desc:'决定了别人能不能用你的代码、怎么用、要不要付费。选择许可证是开源项目最重要的决策之一。',
+          subs:[
+              {title:'MIT', tag:'最宽松', desc:'最常用的许可证。允许任何人使用、复制、修改、合并、出版、分发、再许可和/或出售软件副本。只需保留版权声明。',
+               leafs:[
+                   {l:'代表项目', e:'React、Vue、jQuery、Node.js'},
+                   {l:'适合场景', e:'希望被广泛采用的开源项目'}
+               ]},
+              {title:'Apache 2.0', tag:'宽松', desc:'类似 MIT 但更严格。要求注明出处，并包含专利授权条款。适合企业项目。',
+               leafs:[
+                   {l:'代表项目', e:'Android、Kubernetes、Swift'},
+                   {l:'专利保护', e:'明确授予专利使用权，防止专利诉讼'}
+               ]},
+              {title:'GPL', tag:'严格', desc:'"传染性"许可证。用了 GPL 的代码，你的项目也必须以 GPL 开源。分为 GPLv2 和 GPLv3。',
+               leafs:[
+                   {l:'代表项目', e:'Linux 内核（GPLv2）、Git（GPLv2）'},
+                   {l:'商业影响', e:'企业使用 GPL 代码需谨慎，可能被迫开源自己的代码'}
+               ]},
+              {title:'BSD', tag:'宽松', desc:'类似 MIT。有 2-Clause（简版）和 3-Clause（禁止用作者名字做推广）两个版本。'},
+              {title:'AGPL', tag:'最严格', desc:'GPL 的超集。不仅分发代码时需要开源，通过网络提供服务（SaaS）也算分发，也必须开源。',
+               leafs:[
+                   {l:'代表项目', e:'MongoDB（之前用 AGPL）、Elasticsearch'},
+                   {l:'适合场景', e:'不希望云厂商白嫖自己开源项目的场景'}
+               ]}
+          ]},
+         {title:'⚙️ CI/CD（持续集成/持续部署）', tag:'自动化', desc:'DevOps 的核心实践。代码从提交到上线的全自动化流程，是现代软件工程的标配。',
+          subs:[
+              {title:'CI（持续集成）', tag:'概念', desc:'每次提交代码都自动运行测试、构建、代码检查。确保新代码不会破坏现有功能。',
+               leafs:[
+                   {l:'自动化测试', e:'单元测试、集成测试、端到端测试'},
+                   {l:'代码质量检查', e:'Lint（语法检查）、SonarQube（代码质量分析）'},
+                   {l:'构建验证', e:'确保代码能成功编译/打包'}
+               ]},
+              {title:'CD（持续部署）', tag:'概念', desc:'CI 通过后，自动将代码部署到服务器。分为持续交付（需手动确认）和持续部署（全自动）。',
+               leafs:[
+                   {l:'部署策略', e:'蓝绿部署（两套环境切换）、滚动更新（逐步替换）、金丝雀发布（灰度测试）'},
+                   {l:'基础设施即代码', e:'用 Terraform/Pulumi 管理服务器配置'}
+               ]},
+              {title:'GitHub Actions', tag:'工具', desc:'GitHub 内置的 CI/CD 工具。Workflow 定义在仓库的 .github/workflows/ 目录下，YAML 格式。',
+               leafs:[
+                   {l:'核心组件', e:'Workflow → Job → Step → Action，层层嵌套'},
+                   {l:'事件触发', e:'push、pull_request、schedule（定时）、workflow_dispatch（手动）'},
+                   {l:'Marketplace', e:'社区贡献的 Action，可以直接复用他人的工作'},
+                   {l:'免费额度', e:'免费用户每月 2000 分钟运行时间'}
+               ]},
+              {title:'其他 CI/CD 工具', tag:'对比', desc:'除了 GitHub Actions，还有多种选择。',
+               leafs:[
+                   {l:'Jenkins', e:'最老牌的 CI 工具，插件生态丰富但配置复杂'},
+                   {l:'GitLab CI', e:'和 GitLab 深度集成，使用 .gitlab-ci.yml 配置'},
+                   {l:'CircleCI', e:'配置简单，运行速度快，适合中小团队'},
+                   {l:'Travis CI', e:'最早和 GitHub 集成的 CI 工具之一'}
+               ]}
+          ]}
+     ]},
 
-            // ============================================================
-            //  渲染逻辑
-            // ============================================================
+    // ========== 星系三：企业协作 ==========
+    {id:2, name:'企业协作', icon:'📋', color:COLORS[2], desc:'飞书 · 钉钉 · Slack · SaaS', count:14,
+     headerDesc:'从飞书这个"协作全家桶"出发，了解企业协作工具的生态布局，以及 SaaS（软件即服务）的商业模式。',
+     items:[
+         {title:'📋 企业协作工具市场', tag:'概览', desc:'不同产品定位不同，各有侧重。中国和美国市场差异明显。',
+          subs:[
+              {title:'飞书（字节跳动）', tag:'国产', desc:'文档+聊天+会议+AI 一体化。以"文档驱动协作"为理念，体验流畅，深受创业公司和互联网企业喜爱。',
+               leafs:[
+                   {l:'核心优势', e:'文档协作体验最好、多维表格强大、AI 集成度高'},
+                   {l:'适合企业', e:'互联网公司、创业团队、追求效率的团队'}
+               ]},
+              {title:'钉钉（阿里）', tag:'国产', desc:'国内用户量最大的企业协作软件。打卡/审批/OA 流程最强，但被吐槽功能臃肿、体验不够流畅。',
+               leafs:[
+                   {l:'核心优势', e:'打卡/审批/考勤最强、中小企业覆盖广'},
+                   {l:'适合企业', e:'传统企业、制造业、需要强 OA 管理的团队'}
+               ]},
+              {title:'企业微信（腾讯）', tag:'国产', desc:'和个人微信互通，能直接加客户微信。适合销售/客服/私域运营场景。',
+               leafs:[
+                   {l:'核心优势', e:'和个人微信打通、客户沟通方便'},
+                   {l:'适合企业', e:'零售、销售、客服、私域运营'}
+               ]},
+              {title:'Slack', tag:'美国', desc:'美国最主流的企业协作软件。以聊天为核心，集成了上千个第三方服务（GitHub、Jira、Google Drive 等）。'},
+              {title:'Teams（微软）', tag:'美国', desc:'与 Office 365 深度绑定。大企业首选，因为微软生态的粘性。视频会议功能强大。'},
+              {title:'Notion', tag:'独立', desc:'文档+知识库+数据库一体化。适合小团队和个人。以"All-in-One"为理念，但企业级功能不如飞书/钉钉。'}
+          ]},
+         {title:'✨ 飞书特色功能深度解析', tag:'深度', desc:'飞书不只是聊天软件，它的特色功能让它成为效率神器。很多功能是首创。',
+          subs:[
+              {title:'多维表格（Bitable）', tag:'⭐最强', desc:'比 Excel 更像数据库。可以关联记录、设置字段类型（文本/数字/日期/勾选/人员等）、多人实时协作。本质是一个轻量数据库。',
+               leafs:[
+                   {l:'关联功能', e:'不同表格之间的记录可以相互关联，类似数据库的外键'},
+                   {l:'视图切换', e:'支持网格视图、看板视图、日历视图、画册视图'},
+                   {l:'自动化', e:'设置触发条件自动执行操作（如到期提醒）'}
+               ]},
+              {title:'云文档', tag:'协作', desc:'多人实时协作编辑，类似 Google Docs。支持 Markdown 语法、@提醒同事、添加评论。文档即聊天的概念。'},
+              {title:'飞书妙记', tag:'AI', desc:'会议自动录音 + 转文字 + AI 总结。开会后自动生成会议纪要，可以搜索历史会议内容。极大提升开会效率。'},
+              {title:'飞书知识库', tag:'管理', desc:'团队的 Wiki 系统。结构化组织知识文档，支持多级目录、全文搜索、权限管理。相当于公司内部的维基百科。'},
+              {title:'飞书审批', tag:'OA', desc:'请假、报销、用印、出差等审批流程。支持自定义审批模板和流程。'},
+              {title:'飞书日历', tag:'效率', desc:'团队日程管理。可以查看同事的忙闲状态、一键预定会议室、创建群组日历。'}
+          ]},
+         {title:'🤖 飞书 + AI 布局', tag:'融合', desc:'飞书在 AI 方面的布局非常积极，是国产协作软件中 AI 集成度最高的。',
+          leafs:[
+              {l:'飞书智能伙伴', e:'内置 AI 助手，可以帮写文档、总结会议内容、回答问题（基于知识库）'},
+              {l:'接入 Coze Bot', e:'在 Coze 平台上搭建的 AI Bot，可以一键发布到飞书群聊'},
+              {l:'飞书机器人', e:'通过 Webhook 自动发送消息通知，支持定时提醒、事件触发'},
+              {l:'AI 翻译', e:'飞书文档和消息支持实时翻译，目前支持 20+ 种语言'}
+          ]},
+         {title:'☁️ SaaS 概念深度理解', tag:'模式', desc:'SaaS = Software as a Service（软件即服务）。不用安装、打开浏览器就能用，按月/年付费。',
+          subs:[
+              {title:'SaaS 的特点', tag:'定义', desc:'相对于传统买断制软件，SaaS 有完全不同的商业模式。',
+               leafs:[
+                   {l:'无需安装', e:'打开浏览器就能用，不需要下载安装包'},
+                   {l:'自动更新', e:'服务商负责维护和升级，用户永远用最新版本'},
+                   {l:'数据云端', e:'数据存在云端，任何设备都能访问'},
+                   {l:'按需付费', e:'按用户数/功能/使用量付费，按年或按月'},
+                   {l:'多租户架构', e:'一套代码服务所有客户，通过数据隔离保证安全'}
+               ]},
+              {title:'SaaS 代表产品', tag:'案例', desc:'我们身边到处都是 SaaS 产品。',
+               leafs:[
+                   {l:'飞书/钉钉', e:'企业协作 SaaS'},
+                   {l:'Notion', e:'文档+知识库 SaaS'},
+                   {l:'Slack', e:'团队沟通 SaaS'},
+                   {l:'Google Workspace', e:'办公套件 SaaS'},
+                   {l:'Figma', e:'设计协作 SaaS'},
+                   {l:'GitHub', e:'代码托管 SaaS'}
+               ]},
+              {title:'与传统软件的区别', tag:'对比', desc:'买断制 vs 订阅制，各有优劣。',
+               leafs:[
+                   {l:'买断制（传统）', e:'一次付费永久使用，但升级需额外付费，数据存在本地'},
+                   {l:'订阅制（SaaS）', e:'按年/月付费，永远用最新版，数据在云端，随时随地访问'}
+               ]}
+          ]}
+     ]},
 
-            let currentGalaxy = 0;
+    // ========== 星系四：AI 工具调用 ==========
+    {id:3, name:'AI 工具调用', icon:'🔧', color:COLORS[3], desc:'API · MCP · Skills · Agent · RAG', count:20,
+     headerDesc:'从 API 这个基础概念出发，到 MCP 协议、Skills 技能、Agent 智能体、RAG 检索增强——完整理解 AI 如何连接外部世界。这是 AI 时代最核心的能力扩展体系。',
+     items:[
+         {title:'🔌 API（接口）— 一切的基础', tag:'核心', desc:'API = Application Programming Interface（应用程序接口）。它是程序之间通信的"菜单"——你点菜（发请求），厨房做菜（服务器处理），端上来（返回结果）。',
+          subs:[
+              {title:'API 的类型', tag:'分类', desc:'不同的 API 设计风格适用于不同场景。',
+               leafs:[
+                   {l:'RESTful API', e:'最主流的设计风格。用 GET（获取）、POST（创建）、PUT（更新）、DELETE（删除）操作资源。基于 HTTP 协议'},
+                   {l:'GraphQL', e:'Facebook 出品。客户端精确指定需要哪些字段，不多不少。减少多次请求的问题'},
+                   {l:'WebSocket', e:'双向实时通信。建立连接后双方可以随时发消息。用于聊天、实时游戏、股票行情'},
+                   {l:'gRPC', e:'Google 出品。基于 HTTP/2，性能极高。适合微服务之间的通信'}
+               ]},
+              {title:'API 认证方式', tag:'安全', desc:'如何证明你有权限调用这个 API？不同的认证方式适用于不同安全级别。',
+               leafs:[
+                   {l:'API Key', e:'一个字符串，最简单常见。在请求头中携带。适合服务端到服务端的通信'},
+                   {l:'JWT (JSON Web Token)', e:'包含用户信息的令牌，可以设置过期时间。包含三部分：Header.Payload.Signature'},
+                   {l:'OAuth 2.0', e:'三方授权协议。"使用微信/Google登录"的底层实现。授权码模式是最常见的流程'},
+                   {l:'Basic Auth', e:'用户名+密码的 Base64 编码。最基础但最不安全，仅适合内部调试'}
+               ]},
+              {title:'SDK（工具包）', tag:'配套', desc:'API 是"菜单"，SDK（Software Development Kit）是"半成品料理包"。SDK 封装了 API 的调用细节，让你几行代码就能使用 API 功能。'}
+          ]},
+         {title:'📡 MCP（模型上下文协议）', tag:'标准', desc:'Model Context Protocol，由 Anthropic 推出的开放标准。定义 AI 如何连接外部工具和数据源。相当于 AI 世界的 USB-C 接口——统一标准，一个接口连接所有设备。',
+          subs:[
+              {title:'MCP 的核心思想', tag:'理念', desc:'标准化 AI 与外部工具的连接。不管是什么工具（数据库、文件系统、API、浏览器），都通过同一套协议对接。',
+               leafs:[
+                   {l:'Server 端', e:'提供工具/数据的服务端，比如数据库 MCP Server'},
+                   {l:'Client 端', e:'AI 模型作为客户端，通过 MCP 协议调用 Server'},
+                   {l:'工具注册', e:'Server 向 AI 声明自己有哪些工具可用，AI 按需调用'}
+               ]},
+              {title:'MCP vs Function Calling', tag:'对比', desc:'两者目标相同（让 AI 调用工具），但实现方式不同。',
+               leafs:[
+                   {l:'OpenAI Function Calling', e:'OpenAI 的私有方案，只适用于 GPT 系列模型'},
+                   {l:'MCP', e:'Anthropic 推出的开放标准，理论上任何模型都可以使用'},
+                   {l:'哪个更好', e:'MCP 更开放、更标准化，但目前生态不如 Function Calling 成熟'}
+               ]},
+              {title:'MCP 的应用场景', tag:'用途', desc:'只要是 AI 需要"伸手去做"的事情，都可以通过 MCP 实现。',
+               leafs:[
+                   {l:'查数据库', e:'AI 通过 MCP 直接查询你的业务数据库'},
+                   {l:'读文件', e:'AI 读取本地文件、PDF、Word 文档'},
+                   {l:'调用业务 API', e:'AI 调用你公司的内部 API'},
+                   {l:'浏览器操作', e:'AI 控制浏览器进行网页操作'},
+                   {l:'文件系统操作', e:'AI 创建、读取、修改、删除文件'}
+               ]}
+          ]},
+         {title:'🛠️ Skills（技能）— 给 AI 装外挂', tag:'能力', desc:'大模型本身只有"语言能力"，它不能联网、不能精确计算、不能操作文件。Skills 就是弥补这些不足的"外挂能力"。',
+          subs:[
+              {title:'常见技能类型', tag:'分类', desc:'不同的 Skills 让 AI 拥有不同的超能力。',
+               leafs:[
+                   {l:'🔍 搜索技能', e:'让 AI 联网搜索最新信息，突破训练数据的时效性限制'},
+                   {l:'💻 代码执行技能', e:'让 AI 运行 Python/JavaScript 代码，精确计算数学题'},
+                   {l:'📄 文件处理技能', e:'让 AI 读取 PDF、Word、Excel、PPT 等文件内容'},
+                   {l:'🖼️ 图像识别技能', e:'让 AI 看懂图片中的物体、文字、场景'},
+                   {l:'🎨 文生图技能', e:'让 AI 调用 DALL·E 或 Stable Diffusion 生成图片'},
+                   {l:'🗣️ 语音技能', e:'让 AI 进行语音合成（TTS）和语音识别（ASR）'}
+               ]},
+              {title:'在 Coze 平台中的 Skills', tag:'实践', desc:'Coze 的 Skills 可以直接拖拽使用，也可以自己编写。配合工作流（Workflow）可以搭建复杂的 AI 应用。'},
+              {title:'在不同平台的叫法', tag:'对比', desc:'同一个概念在不同平台有不同名字。',
+               leafs:[
+                   {l:'Coze', e:'Skills（技能）'},
+                   {l:'ChatGPT', e:'GPT Actions / Plugins'},
+                   {l:'Claude', e:'Tools / MCP Tools'},
+                   {l:'字节豆包', e:'插件'}
+               ]}
+          ]},
+         {title:'🤖 Agent（智能体）', tag:'未来', desc:'Agent 比 Skills 更高级。Skills 是给 AI 一个工具（给一把螺丝刀），Agent 是给 AI 一个目标（去把桌子修好）。Agent 自己规划步骤、调用工具、检查结果。',
+          subs:[
+              {title:'Agent 的工作方式', tag:'原理', desc:'Agent = 大模型 + 规划能力 + 工具调用 + 记忆。典型的工作循环：',
+               leafs:[
+                   {l:'① 接收目标', e:'人给 Agent 一个模糊的任务（如"帮我安排一次北京出差"）'},
+                   {l:'② 规划步骤', e:'Agent 拆解任务：查日程 → 订机票 → 订酒店 → 发确认邮件'},
+                   {l:'③ 调用工具', e:'调用日历 API、航班查询 API、邮件 API'},
+                   {l:'④ 检查结果', e:'确认每一步是否成功，失败则重试或调整方案'},
+                   {l:'⑤ 完成任务', e:'所有步骤完成，向用户报告结果'}
+               ]},
+              {title:'Agent 的实际案例', tag:'案例', desc:'一个订机票 Agent 的完整流程。',
+               leafs:[
+                   {l:'用户说', e:'帮我订一张下周三去北京的机票'},
+                   {l:'Agent 做', e:'① 查日历确认下周三的日期 → ② 搜索当天航班 → ③ 比价 → ④ 下单 → ⑤ 发确认邮件给用户'}
+               ]},
+              {title:'当前水平', tag:'现状', desc:'Agent 是 2024-2025 年 AI 领域最热门的方向。但目前还在早期阶段，复杂任务容易出错，需要人类的监督和干预。'},
+              {title:'Agent vs Skills', tag:'对比', desc:'Skills 是"被动调用"（AI 等你去叫它用），Agent 是"主动执行"（AI 自己决定什么时候用什么工具）。'}
+          ]},
+         {title:'📚 RAG（检索增强生成）', tag:'准确', desc:'Retrieval-Augmented Generation。解决 AI 瞎编的问题。AI 回答前先去外部知识库查资料，基于真实信息回答。这是企业部署 AI 的标配方案。',
+          subs:[
+              {title:'为什么需要 RAG', tag:'问题', desc:'大模型的本质问题：',
+               leafs:[
+                   {l:'知识有时效性', e:'模型训练数据截止日期之后的事它不知道'},
+                   {l:'不知道你的私有数据', e:'模型没学过你公司的内部文档'},
+                   {l:'会瞎编（幻觉）', e:'没有依据时它会自信地编造答案'}
+               ]},
+              {title:'RAG 的工作流程', tag:'原理', desc:'标准的三步流程。',
+               leafs:[
+                   {l:'① 用户提问', e:'"今年第一季度的销售额是多少？"'},
+                   {l:'② 检索相关文档', e:'去向量数据库中查找和问题最相关的文档片段'},
+                   {l:'③ 基于文档回答', e:'AI 只基于检索到的真实数据生成回答，不再凭空编造'}
+               ]},
+              {title:'RAG 的关键组件', tag:'架构', desc:'一个完整的 RAG 系统需要这些组件。',
+               leafs:[
+                   {l:'向量数据库', e:'存储文档的向量表示（Milvus/Pinecone/Qdrant/Chroma）'},
+                   {l:'Embedding 模型', e:'把文本转成向量的模型（如 text-embedding-3-small）'},
+                   {l:'大语言模型', e:'基于检索结果生成最终答案的模型'},
+                   {l:'文档解析器', e:'把 PDF/Word/网页等格式转成纯文本'}
+               ]},
+              {title:'RAG 的效果', tag:'结论', desc:'回答有据可查、大幅减少幻觉、可以利用最新的/私有的数据。是企业把 AI 落地到实际业务中的首选方案。'}
+          ]}
+     ]},
 
-            function createStars() {
-                const container = document.getElementById(`stars`);
-                if (!container) return;
-                const count = 180;
-                for (let i = 0; i < count; i++) {
-                    const star = document.createElement(`div`);
-                    star.className = `star`;
-                    const size = Math.random() * 2.5 + 1;
-                    star.style.width = size + `px`;
-                    star.style.height = size + `px`;
-                    star.style.left = Math.random() * 100 + `%`;
-                    star.style.top = Math.random() * 100 + `%`;
-                    star.style.setProperty(`--duration`, (Math.random() * 3 + 2) + `s`);
-                    star.style.animationDelay = Math.random() * 5 + `s`;
-                    star.style.opacity = Math.random() * 0.5 + 0.2;
-                    container.appendChild(star);
-                }
-            }
+    // ========== 星系五：AI 黑话大全 ==========
+    {id:4, name:'AI 黑话大全', icon:'🧠', color:COLORS[4], desc:'LLM · Token · 幻觉 · 微调 · 多模态 · 30+术语', count:38,
+     headerDesc:'AI 领域的专业术语完全手册。从模型相关到训练推理，从产品平台到开发工具。理解这些，你就能看懂 90% 的 AI 文章和讨论。',
+     items:[
+         {title:'🧠 模型相关（13 个）', tag:'基础', desc:'关于 AI 模型本身的核心概念。这些是最基础、最重要的术语。',
+          leafs:[
+              {l:'LLM (Large Language Model)', e:'大型语言模型。GPT-4、Claude、文心一言等的统称。用海量文本训练出来的文本生成模型'},
+              {l:'SLM (Small Language Model)', e:'小型语言模型。参数较少，可以在手机上运行。如 Phi-3（微软）、Gemma（Google）'},
+              {l:'Foundation Model（基础模型）', e:'通用大模型，可以在此基础上微调出专用模型。GPT-4、Claude 3 都是基础模型'},
+              {l:'多模态（Multimodal）', e:'能同时处理多种类型的数据：文字+图片+音频+视频。如 GPT-4V、Gemini'},
+              {l:'参数（Parameters）', e:'模型的大小指标。70B = 700 亿参数。参数越多模型越强，但训练和推理成本也越高'},
+              {l:'上下文窗口（Context Window）', e:'模型一次能处理的最大文本量。Claude 3 有 200K（约15万汉字），GPT-4 有 128K'},
+              {l:'知识截止日期', e:'模型训练数据的最晚时间点。之后的新闻和事件模型不知道'},
+              {l:'幻觉（Hallucination）', e:'AI 编造事实。自信地给出看似合理但实际错误的答案。这是 LLM 的固有问题'},
+              {l:'推理（Inference）', e:'模型实际使用时"算答案"的过程。训练是一次性的，推理是每次使用都在进行'},
+              {l:'Temperature', e:'控制模型输出的"创造性"。0=最严谨保守，1=有创意，2=容易跑偏/发疯'},
+              {l:'Top-P (Nucleus Sampling)', e:'采样参数。控制回答的多样性。值为 0.9 表示只考虑概率最高的 90% 的词汇'},
+              {l:'Token', e:'AI 处理文本的最小单位。约等于 0.75 个汉字或 0.4 个英文单词。计费和上下文限制都是按 Token 算的'},
+              {l:'Streaming（流式输出）', e:'AI 一个字一个字地显示在屏幕上，像打字效果。不用等全部生成完才能看到'}
+          ]},
+         {title:'🏋️ 训练相关（8 个）', tag:'训练', desc:'AI 模型是怎么"学出来"的。了解这些能理解为什么训练一个模型这么贵。',
+          leafs:[
+              {l:'预训练（Pre-training）', e:'从零开始训练基础模型。需要海量数据（TB 级）和算力（千万美元级）。GPT-4 的预训练成本估计超过 1 亿美元'},
+              {l:'微调（Fine-tuning）', e:'在预训练模型的基础上，用特定领域的数据集做额外训练。让模型更懂某个垂直领域'},
+              {l:'LoRA (Low-Rank Adaptation)', e:'轻量级微调方法。只训练一小部分参数（0.1%-1%），成本低、速度快、效果好'},
+              {l:'RLHF（人类反馈强化学习）', e:'用人类对模型输出的评分来训练模型。让模型的回答更符合人类偏好和价值观'},
+              {l:'SFT（监督微调）', e:'Supervised Fine-Tuning。用人工标注的"问题-答案"对来训练模型'},
+              {l:'DPO（直接偏好优化）', e:'RLHF 的简化版本。不需要训练奖励模型，直接在偏好数据上优化。2024 年兴起的新方法'},
+              {l:'量化（Quantization）', e:'降低模型参数的精度（从 16bit 降到 4bit/8bit），减少模型大小和推理成本。让大模型能在普通电脑上运行'},
+              {l:'蒸馏（Distillation）', e:'用大模型（教师）教小模型（学生）。让学生模型学会模仿教师模型的输出'}
+          ]},
+         {title:'💡 开发与应用（9 个）', tag:'开发', desc:'开发 AI 应用时遇到的核心概念。',
+          leafs:[
+              {l:'Prompt Engineering（提示词工程）', e:'通过设计输入给 AI 的指令来获得更好的输出。包括角色设定、格式要求、示例等'},
+              {l:'Few-shot（少样本学习）', e:'在提示词中给 AI 2-3 个例子，让它按照示例的模式输出'},
+              {l:'Zero-shot（零样本学习）', e:'不给例子，直接让 AI 完成任务。靠模型本身的理解能力'},
+              {l:'Chain of Thought（思维链）', e:'让 AI 一步一步推理。"让我们一步步思考"这句话能大幅提升复杂问题的正确率'},
+              {l:'RAG（检索增强生成）', e:'让 AI 在回答前先去外部的知识库中检索相关资料，基于真实数据回答'},
+              {l:'Agent（智能体）', e:'能自主规划、调用工具、执行任务的 AI 系统。不只是回答问题，而是去完成任务'},
+              {l:'Embedding（嵌入）', e:'把文字转成一组数字（向量），用来计算语义相似度。"猫"和"狗"的向量距离近，"猫"和"汽车"距离远'},
+              {l:'向量数据库', e:'专门存储 Embedding 向量的数据库。Milvus、Pinecone、Qdrant、Chroma 是主流'},
+              {l:'Function Calling', e:'AI 根据对话内容自动决定调用哪个函数、传什么参数。让 AI 有"手"去执行操作'}
+          ]},
+         {title:'🌐 AI 产品与平台（10 个）', tag:'生态', desc:'目前市场上主流的 AI 产品和平台。了解它们的特点能帮你选择合适的工具。',
+          leafs:[
+              {l:'ChatGPT（OpenAI）', e:'最知名的 AI 聊天机器人。GPT-4 是目前最强大的模型之一。有 Plus（$20/月）和免费版'},
+              {l:'Claude（Anthropic）', e:'以安全著称的 AI 模型。编码能力强，支持超长上下文（200K）。推出了 MCP 协议'},
+              {l:'Gemini（Google）', e:'Google 的多模态 AI。和 Google 生态（搜索、Gmail、Docs）深度整合'},
+              {l:'文心一言（百度）', e:'百度出品的 AI 模型。国内用户最多，和百度搜索/文库深度整合'},
+              {l:'通义千问（阿里）', e:'阿里出品的 AI 模型。开源了 Qwen 系列，在开发者社区口碑很好'},
+              {l:'Kimi（月之暗面）', e:'主打超长上下文（200 万字）。适合处理长篇文档、论文、小说'},
+              {l:'DeepSeek（深度求索）', e:'推理能力极强，性价比高。开源了多个版本，在编程和数学方面表现出色'},
+              {l:'Coze（字节跳动）', e:'AI Bot 搭建平台。无需写代码就能搭建自己的 AI 助手，可发布到飞书/微信'},
+              {l:'Dify', e:'开源的 AI 应用开发平台。支持 RAG、Agent、Workflow，可自部署'},
+              {l:'Hugging Face', e:'AI 模型的"GitHub"。60 万+ 模型、20 万+ 数据集。下载和使用模型的首选平台'}
+          ]},
+         {title:'🎯 向量相关（6 个）', tag:'核心', desc:'向量是 AI 理解世界的基础。这些概念贯穿了几乎所有 AI 应用。',
+          leafs:[
+              {l:'向量（Vector）', e:'一组有顺序的数字，表示一个事物在"语义空间"中的位置。[0.12, -0.45, 0.78] 就是一个三维向量'},
+              {l:'Embedding 模型', e:'把文字/图片转成向量的模型。如 OpenAI 的 text-embedding-3-small、text-embedding-3-large'},
+              {l:'余弦相似度', e:'衡量两个向量方向是否一致。值越接近1表示越相似。只看方向不看长度'},
+              {l:'向量维度', e:'向量的长度。维度越高表达的信息越丰富，但计算成本也越高。常见的维度：384、768、1024、1536'},
+              {l:'语义搜索', e:'不是关键词匹配，而是理解意思后搜索。"苹果"和"香蕉"语义相近，"苹果"和"华为"在特定语境下也相近'},
+              {l:'向量数据库检索', e:'在向量数据库中找到和查询向量最近的 K 个向量（KNN/ANN 搜索）'}
+          ]}
+     ]},
 
-            function renderTabs() {
-                const container = document.getElementById(`galaxyTabs`);
-                if (!container) return;
-                container.innerHTML = ``;
-                GALAXIES.forEach((g, idx) => {
-                    const tab = document.createElement(`div`);
-                    tab.className = `galaxy-tab tab-${idx}${idx === currentGalaxy ? ` active` : ``}`;
-                    tab.innerHTML = `
-                        <span class="icon">${g.icon}</span>
-                        <span>${g.name}</span>
-                        <span class="badge">${g.count}</span>
-                    `;
-                    tab.dataset.idx = idx;
-                    tab.addEventListener(`click`, () => switchGalaxy(idx));
-                    container.appendChild(tab);
-                });
-            }
+    // ========== 星系六：编程语言 ==========
+    {id:5, name:'编程语言', icon:'💻', color:COLORS[5], desc:'语言分类 · 生态框架 · 核心概念 · 20+门语言', count:28,
+     headerDesc:'从底层到高层，全面理解主流编程语言的定位、生态和核心概念。帮你选对语言、用对工具。这是我们整场对话中反复讨论的主题。',
+     items:[
+         {title:'📊 语言分类（按离硬件距离）', tag:'全景', desc:'越底层的语言越接近硬件，性能越高但学习难度也越高。越高层的语言越接近人类语言，开发效率越高但性能较低。',
+          subs:[
+              {title:'底层（系统级）', tag:'性能', desc:'C → C++ → Rust。直接操作内存，性能极高。用于操作系统、游戏引擎、嵌入式设备。',
+               leafs:[
+                   {l:'C', e:'最接近硬件的语言。操作系统（Linux/Windows）、嵌入式系统、硬件驱动的首选'},
+                   {l:'C++', e:'C 的超集，加入面向对象。游戏引擎（Unreal Engine）、高性能计算的王者'},
+                   {l:'Rust', e:'最新的系统级语言。内存安全（不需要垃圾回收），性能堪比 C++。被称为"最受开发者喜爱的语言"'}
+               ]},
+              {title:'中层（应用级）', tag:'平衡', desc:'Go → Java → C#。性能好、工程化强、生态成熟。大厂后端的主力语言。',
+               leafs:[
+                   {l:'Go', e:'Google 出品。语法简单，并发能力强。Docker、Kubernetes、etcd 都是用 Go 写的'},
+                   {l:'Java', e:'大厂标配。稳定、跨平台、生态最成熟。银行、电商的后端首选'},
+                   {l:'C#', e:'微软出品。和 Java 很像，但语法更现代化。Windows 桌面开发和 Unity 游戏开发的首选'}
+               ]},
+              {title:'高层（脚本级）', tag:'效率', desc:'Python → JavaScript → TypeScript。开发效率最高，适合快速迭代、AI 开发、Web 开发。',
+               leafs:[
+                   {l:'Python', e:'最简单、最友好的语言。AI/机器学习领域绝对霸主。数据分析、自动化脚本的首选'},
+                   {l:'JavaScript', e:'浏览器唯一原生语言。全栈通用，前端必备'},
+                   {l:'TypeScript', e:'JavaScript 的超集。加了类型检查，大型项目必备。前端工程师的进阶语言'}
+               ]}
+          ]},
+         {title:'🐍 Python 生态全景', tag:'Python', desc:'Python 是当前最流行的编程语言之一，尤其在 AI 和数据科学领域占据绝对主导地位。',
+          subs:[
+              {title:'Web 开发', tag:'框架', desc:'Python 也可以做网站后端。',
+               leafs:[
+                   {l:'Django', e:'全栈框架。"电池内置"，自带管理后台、ORM、认证系统'},
+                   {l:'Flask', e:'轻量级框架。灵活自由，适合小型项目和 API'},
+                   {l:'FastAPI', e:'高性能 API 框架。自动生成文档，支持异步。目前最热门的 Python Web 框架'}
+               ]},
+              {title:'AI / 机器学习', tag:'AI', desc:'Python 在 AI 领域不可替代。几乎所有的 AI 框架都用 Python。',
+               leafs:[
+                   {l:'PyTorch', e:'Meta 出品。学术界和工业界最主流的深度学习框架'},
+                   {l:'TensorFlow', e:'Google 出品。老牌框架，部署生态完善'},
+                   {l:'Transformers', e:'Hugging Face 出品。加载和使用预训练模型的标准工具'},
+                   {l:'Scikit-learn', e:'传统机器学习库。适合分类、回归、聚类等经典 ML 任务'}
+               ]},
+              {title:'数据分析 / 自动化', tag:'工具', desc:'Python 在办公室自动化和数据分析方面也非常强大。',
+               leafs:[
+                   {l:'Pandas', e:'数据分析的核心库。类似 Excel 但更强大'},
+                   {l:'NumPy', e:'科学计算基础库。矩阵运算、线性代数'},
+                   {l:'Matplotlib', e:'数据可视化库。画折线图、柱状图、散点图'},
+                   {l:'Selenium', e:'浏览器自动化。可以自动操作网页'},
+                   {l:'Requests', e:'HTTP 请求库。爬虫和 API 调用的基础'}
+               ]}
+          ]},
+         {title:'🌐 JavaScript 生态全景', tag:'JS', desc:'JavaScript 是浏览器唯一原生语言，也是全栈开发的核心语言。TypeScript 的兴起让它变得更加强大。',
+          subs:[
+              {title:'前端框架', tag:'界面', desc:'三大框架主导前端开发。',
+               leafs:[
+                   {l:'React', e:'Meta 出品。最流行。组件化开发，虚拟 DOM 性能好'},
+                   {l:'Vue', e:'中国最火。上手简单，文档好。渐进式框架'},
+                   {l:'Angular', e:'Google 出品。大而全，适合大型企业项目'},
+                   {l:'Svelte', e:'新兴框架。编译时框架，打包体积小、性能好'}
+               ]},
+              {title:'后端 / 全栈', tag:'服务端', desc:'JavaScript 不仅能在浏览器运行，也能在服务器运行。',
+               leafs:[
+                   {l:'Node.js', e:'JavaScript 的运行时。让 JS 能在服务器上运行'},
+                   {l:'Express', e:'最流行的 Node.js Web 框架'},
+                   {l:'Next.js', e:'React 的全栈框架。前端+后端一体化'},
+                   {l:'NestJS', e:'企业级 Node.js 框架。类似 Spring Boot 的架构'}
+               ]},
+              {title:'TypeScript', tag:'⭐进化', desc:'JavaScript 的超集。加了静态类型检查。大型项目必备，能减少 40% 的运行时 Bug。'},
+              {title:'包管理 & 构建工具', tag:'工具', desc:'前端开发的基础设施。',
+               leafs:[
+                   {l:'npm / yarn / pnpm', e:'包管理器，安装和更新第三方库'},
+                   {l:'Vite', e:'新一代构建工具。极快的热更新速度'},
+                   {l:'Webpack', e:'老牌构建工具，功能强大但配置复杂'}
+               ]}
+          ]},
+         {title:'☕ Java 生态全景', tag:'Java', desc:'大厂后端的首选语言。稳定、可靠、生态成熟。虽然学习曲线陡峭，但学会了就业面很广。',
+          leafs:[
+              {l:'Spring Boot', e:'Java 最主流的框架。自动配置、内嵌服务器、生产就绪'},
+              {l:'Spring Cloud', e:'微服务架构的集大成者。服务发现、配置中心、负载均衡'},
+              {l:'MyBatis', e:'数据库操作框架。SQL 和 Java 代码分离，灵活可控'},
+              {l:'Maven / Gradle', e:'构建工具。管理依赖和自动化构建'},
+              {l:'Kotlin', e:'JVM 上的现代语言。Android 开发首选。比 Java 更简洁、更安全'},
+              {l:'Scala', e:'融合面向对象和函数式编程。大数据领域（Spark 就是用 Scala 写的）'}
+          ]},
+         {title:'🧩 通用核心概念', tag:'基础', desc:'学任何编程语言都会遇到的底层概念。理解这些，你就能理解所有语言的共通之处。',
+          leafs:[
+              {l:'框架（Framework）', e:'帮你写好大半代码的"半成品"。你在框架上填写你的业务逻辑'},
+              {l:'库（Library）', e:'一组可复用的函数/工具包。按需调用，不像框架那样约束你的代码结构'},
+              {l:'包管理器', e:'帮你安装、更新、删除第三方库的工具。npm（JS）、pip（Python）、maven（Java）'},
+              {l:'运行时（Runtime）', e:'让代码能跑的环境。Node.js=JS 运行时，JVM=Java 运行时，Python 解释器'},
+              {l:'编译器 vs 解释器', e:'编译器一次性把源代码翻译成机器码（快），解释器边翻译边执行（灵活）'},
+              {l:'静态类型 vs 动态类型', e:'静态（Java/TS/Rust）：写代码时声明类型，编译器检查；动态（Python/JS）：运行时确定类型'},
+              {l:'GC（垃圾回收）', e:'自动回收不再使用的内存。Python/Java/Go/JS 都有 GC，C/Rust 没有（需要手动管理）'},
+              {l:'并发 vs 并行', e:'并发=看起来同时做多件事（单核切换），并行=真正同时做多件事（多核）'},
+              {l:'面向对象（OOP）', e:'以"对象"为核心的编程范式。封装、继承、多态三大特性'},
+              {l:'函数式编程', e:'以"函数"为核心的范式。避免状态变化，多用纯函数。适合并发编程'}
+          ]}
+     ]},
 
-            function switchGalaxy(idx) {
-                if (idx === currentGalaxy) return;
-                currentGalaxy = idx;
-                document.querySelectorAll(`.galaxy-tab`).forEach((tab, i) => {
-                    tab.classList.toggle(`active`, i === idx);
-                });
-                renderContent(idx);
-            }
+    // ========== 星系七：数据库生态 ==========
+    {id:6, name:'数据库生态', icon:'🗄️', color:COLORS[6], desc:'关系型 · NoSQL · 向量数据库 · SQL · ORM', count:18,
+     headerDesc:'从关系型到 NoSQL 到向量数据库，从 SQL 到 ORM——全面理解数据存储生态。数据是任何应用的核心。',
+     items:[
+         {title:'🗄️ 关系型数据库（SQL）', tag:'经典', desc:'用表存储数据，表之间通过外键关联。支持 ACID 事务（原子性、一致性、隔离性、持久性）。已有 40+ 年历史，依然是最主流的数据存储方案。',
+          subs:[
+              {title:'MySQL', tag:'最流行', desc:'最流行的开源关系型数据库。互联网公司最爱。性能好、社区活跃、学习资源丰富。',
+               leafs:[
+                   {l:'典型场景', e:'Web 应用后端、CMS、电商系统'},
+                   {l:'存储引擎', e:'InnoDB（默认，支持事务）、MyISAM（只读场景）'},
+                   {l:'分支版本', e:'MariaDB（MySQL 原作者维护）、Percona（优化版）'}
+               ]},
+              {title:'PostgreSQL', tag:'功能最强', desc:'功能最强大的开源关系型数据库。支持 JSON、GIS、全文搜索等高级特性。被称为"开发者最爱"的数据库。',
+               leafs:[
+                   {l:'高级特性', e:'支持 JSONB（二进制JSON）、GIS（地理信息）、全文检索'},
+                   {l:'扩展生态', e:'PostGIS（地理空间）、TimescaleDB（时序数据）'},
+                   {l:'适合场景', e:'复杂查询、数据分析、地理信息系统'}
+               ]},
+              {title:'SQLite', tag:'轻量', desc:'嵌入式关系型数据库。不需要单独的服务器进程，整个数据库就是一个文件。手机/桌面应用本地存储的首选。',
+               leafs:[
+                   {l:'典型场景', e:'移动端本地存储、桌面软件配置存储、嵌入式设备'},
+                   {l:'特点', e:'零配置、无服务器、一个文件就是一个数据库'}
+               ]},
+              {title:'Oracle', tag:'商业', desc:'最贵的商业数据库。功能最全、安全性最高、稳定性最好。大型银行、电信、政府机构的标配。'},
+              {title:'SQL Server', tag:'微软', desc:'微软的商用数据库。与 .NET 生态和 Azure 云深度集成。Windows 企业的首选。'}
+          ]},
+         {title:'📦 NoSQL 数据库', tag:'灵活', desc:'Not Only SQL。不局限于表结构，适应不同的数据模型。随着互联网大规模应用的兴起而流行。',
+          subs:[
+              {title:'MongoDB（文档型）', tag:'最流行', desc:'存 JSON 文档。灵活无 schema，适合快速迭代和不确定的数据结构。Node.js 开发者的最爱。',
+               leafs:[
+                   {l:'数据模型', e:'集合（Collection）→ 文档（Document），类似数据库→行'},
+                   {l:'适合场景', e:'内容管理、日志存储、物联网数据'},
+                   {l:'特点', e:'Schema-less（无需预定义结构）、水平扩展容易'}
+               ]},
+              {title:'Redis（内存型）', tag:'最快', desc:'数据在内存中，读写极快（微秒级）。用作缓存、消息队列、实时排行榜、分布式锁。',
+               leafs:[
+                   {l:'数据结构', e:'字符串、列表、集合、有序集合、哈希、HyperLogLog'},
+                   {l:'典型场景', e:'缓存加速、Session 存储、实时计数器、消息队列'},
+                   {l:'持久化', e:'支持 RDB（快照）和 AOF（日志）两种持久化方式'}
+               ]},
+              {title:'Cassandra（列存储）', tag:'大数据', desc:'面向列的分布式数据库。写入性能极高，适合海量数据的写入场景。Meta 用 Cassandra 存储消息。'},
+              {title:'Neo4j（图数据库）', tag:'关系', desc:'以节点和关系为核心的数据模型。适合社交网络、推荐系统、知识图谱等强关联数据的场景。'}
+          ]},
+         {title:'🔢 向量数据库（AI 时代）', tag:'前沿', desc:'专门存储和检索向量（Embedding）的数据库。AI 时代的核心基础设施。让计算机能理解和搜索语义相似的内容。',
+          subs:[
+              {title:'Milvus', tag:'最主流', desc:'最主流的开源向量数据库。功能完善、社区活跃（GitHub 30K+ Star）。支持多种索引类型和 GPU 加速。'},
+              {title:'Pinecone', tag:'商业', desc:'商业托管向量数据库。上手极其简单，几分钟就能集成。适合不想自己运维的团队。'},
+              {title:'Qdrant', tag:'高性能', desc:'Rust 写的向量数据库。性能好、支持自部署。API 设计简洁优雅。'},
+              {title:'Chroma', tag:'轻量', desc:'轻量级向量数据库。适合学习和小型项目。几行代码就能跑起来。'},
+              {title:'向量数据库的应用场景', tag:'用途', desc:'RAG（检索增强生成）是其核心应用。还有：图片搜索、相似推荐、异常检测、去重等。'}
+          ]},
+         {title:'📝 SQL 基础（必学）', tag:'技能', desc:'不管用什么数据库，SQL 都是核心技能。关系型数据库用 SQL，很多 NoSQL 也支持类似 SQL 的查询语法。',
+          leafs:[
+              {l:'SELECT', e:'查询数据。SELECT * FROM users WHERE age > 18 ORDER BY age DESC'},
+              {l:'INSERT', e:'插入数据。INSERT INTO users (name, age) VALUES ("张三", 25)'},
+              {l:'UPDATE', e:'更新数据。UPDATE users SET age = 26 WHERE name = "张三"'},
+              {l:'DELETE', e:'删除数据。DELETE FROM users WHERE id = 1'},
+              {l:'JOIN', e:'关联多张表。SELECT * FROM users JOIN orders ON users.id = orders.user_id'},
+              {l:'GROUP BY', e:'分组聚合。SELECT city, COUNT(*) FROM users GROUP BY city'},
+              {l:'HAVING', e:'对聚合结果过滤。HAVING COUNT(*) > 10（和 WHERE 的区别）'},
+              {l:'CREATE TABLE', e:'建表。定义表结构和字段类型。CREATE TABLE users (id INT, name VARCHAR(100))'},
+              {l:'INDEX', e:'索引。加速查询速度。CREATE INDEX idx_name ON users(name)'},
+              {l:'事务', e:'一组操作要么全部成功要么全部失败。BEGIN → COMMIT / ROLLBACK'}
+          ]},
+         {title:'🔗 ORM（对象关系映射）', tag:'工具', desc:'ORM = Object-Relational Mapping。让你用代码操作数据库，不用手写 SQL。ORM 把数据库表映射成编程语言中的"对象"。',
+          leafs:[
+              {l:'Python: SQLAlchemy', e:'Python 最强大的 ORM。支持多种数据库，灵活且功能丰富'},
+              {l:'Python: Django ORM', e:'Django 自带的 ORM。和 Django 框架深度集成，开箱即用'},
+              {l:'JS: Prisma', e:'下一代 ORM。类型安全、自动补全、迁移工具完善。TypeScript 项目首选'},
+              {l:'JS: TypeORM', e:'TypeScript 最流行的 ORM。支持 Active Record 和 Data Mapper 两种模式'},
+              {l:'Java: MyBatis', e:'半 ORM。SQL 和代码分离，让你完全控制 SQL 语句'},
+              {l:'Java: Hibernate', e:'全自动 ORM。Java 生态最老牌的 ORM，JPA 规范的参考实现'}
+          ]}
+     ]}
+];
 
-            function renderContent(idx) {
-                const area = document.getElementById(`contentArea`);
-                if (!area) return;
-                const g = GALAXIES[idx];
+let cur = 0;
 
-                let treeHTML = ``;
-                g.trees.forEach((node, ti) => {
-                    treeHTML += buildNodeHTML(node, 0, ti);
-                });
-
-                area.innerHTML = `
-                    <div class="galaxy-content active">
-                        <div class="galaxy-header" style="border-left: 4px solid ${g.color};">
-                            <div class="big-icon">${g.icon}</div>
-                            <div class="info">
-                                <h2 style="color:${g.color};">${g.name}</h2>
-                                <div class="desc">${g.headerDesc}</div>
-                                <div class="stats">
-                                    <span>📚 ${g.count} 个核心概念</span>
-                                    <span>📊 ${g.trees.length} 个知识分支</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="knowledge-tree">
-                            ${treeHTML}
-                        </div>
-                    </div>
-                `;
-
-                // 绑定展开折叠
-                area.querySelectorAll(`.node-title[data-toggle]`).forEach(el => {
-                    el.addEventListener(`click`, function(e) {
-                        e.stopPropagation();
-                        const parent = this.closest(`[data-has-children]`);
-                        if (!parent) return;
-                        const children = parent.querySelector(`:scope > .node-children`);
-                        const toggle = this.querySelector(`.toggle`);
-                        if (children) {
-                            children.classList.toggle(`collapsed`);
-                            if (toggle) toggle.classList.toggle(`open`);
-                        }
-                    });
-                });
-            }
-
-            function buildNodeHTML(node, level, index) {
-                const hasChildren = node.children && node.children.length > 0;
-                let html = ``;
-
-                if (level === 0) {
-                    html = `
-                        <div class="node-level-0" data-has-children="${hasChildren}">
-                            <div class="node-title" data-toggle="true">
-                                ${hasChildren ? `<span class="toggle open">▶</span>` : `<span style="width:18px;display:inline-block;"></span>`}
-                                <span>${node.title || ``}</span>
-                                ${node.tag ? `<span class="tag" style="border:1px solid ${GALAXIES[currentGalaxy].color}40;color:${GALAXIES[currentGalaxy].color};">${node.tag}</span>` : ``}
-                            </div>
-                            ${node.desc ? `<div class="node-desc">${node.desc}</div>` : ``}
-                            ${hasChildren ? buildChildrenHTML(node.children, 1) : ``}
-                        </div>
-                    `;
-                } else if (level === 1) {
-                    html = `
-                        <div class="node-level-1" data-has-children="${hasChildren}">
-                            <div class="node-title" data-toggle="true">
-                                ${hasChildren ? `<span class="toggle open">▶</span>` : `<span style="width:16px;display:inline-block;"></span>`}
-                                <span>${node.title || ``}</span>
-                                ${node.tag ? `<span class="tag" style="color:${GALAXIES[currentGalaxy].color};">${node.tag}</span>` : ``}
-                            </div>
-                            ${node.desc ? `<div class="node-desc">${node.desc}</div>` : ``}
-                            ${hasChildren ? buildChildrenHTML(node.children, 2) : ``}
-                        </div>
-                    `;
-                }
-
-                return html;
-            }
-
-            function buildChildrenHTML(children, level) {
-                let html = `<div class="node-children">`;
-                children.forEach(child => {
-                    if (level === 1) {
-                        html += buildNodeHTML(child, 1, Math.random());
-                    } else {
-                        const label = child.label || child.title || ``;
-                        const explain = child.explain || child.desc || ``;
-                        html += `
-                            <div class="node-level-2">
-                                <span class="bullet">▸</span>
-                                <div class="text">
-                                    <div class="label">${label}</div>
-                                    ${explain ? `<div class="explain">${explain}</div>` : ``}
-                                </div>
-                                ${child.tag ? `<span class="tag-sm">${child.tag}</span>` : ``}
-                            </div>
-                        `;
-                    }
-                });
-                html += `</div>`;
-                return html;
-            }
-
-            function renderMap() {
-                const grid = document.getElementById(`mapGrid`);
-                if (!grid) return;
-                grid.innerHTML = ``;
-                GALAXIES.forEach((g, idx) => {
-                    const item = document.createElement(`div`);
-                    item.className = `map-item`;
-                    item.innerHTML = `
-                        <span class="mi-icon">${g.icon}</span>
-                        <div class="mi-text">
-                            <div class="mi-name" style="color:${g.color};">${g.name}</div>
-                            <div class="mi-desc">${g.desc}</div>
-                        </div>
-                        <span class="mi-arrow">→</span>
-                    `;
-                    item.addEventListener(`click`, () => {
-                        switchGalaxy(idx);
-                        document.querySelector(`.galaxy-tabs`).scrollIntoView({ behavior: `smooth`,
-                            block: `start` });
-                    });
-                    grid.appendChild(item);
-                });
-            }
-
-            // ============================================================
-            //  启动
-            // ============================================================
-
-            createStars();
-            renderTabs();
-            renderContent(0);
-            renderMap();
-
-            console.log(`🌌 知识宇宙已加载！七大星系等待探索。`);
-            console.log(`💡 点击标签切换星系，点击知识节点展开/折叠。`);
-
-        } catch (e) {
-            // 如果出错了，在页面上显示错误信息，而不是白屏
-            console.error(`❌ 知识宇宙加载失败:`, e);
-            document.getElementById(`contentArea`).innerHTML = `
-                <div style="text-align:center;padding:60px 20px;color:#ff6b6b;">
-                    <div style="font-size:3rem;margin-bottom:16px;">⚠️</div>
-                    <h2 style="margin-bottom:12px;color:#ff6b6b;">加载失败</h2>
-                    <p style="color:#99aacd;margin-bottom:8px;">JavaScript 执行出错，请检查控制台（F12）查看详细错误。</p>
-                    <p style="color:#7788aa;font-size:0.85rem;">错误信息：${e.message}</p>
-                </div>
-            `;
+function stars(){
+    const c=document.getElementById('stars');
+    for(let i=0;i<150;i++){
+        const s=document.createElement('div');
+        s.className='star';
+        const sz=Math.random()*2.5+1;
+        s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--duration:${Math.random()*3+2}s;animation-delay:${Math.random()*5}s`;
+        c.appendChild(s);
+    }
+}
+function renderTabs(){
+    const c=document.getElementById('tabs');
+    c.innerHTML='';
+    GALAXIES.forEach((g,i)=>{
+        const t=document.createElement('div');
+        t.className=`tab${i===0?' active':''}`;
+        t.style.cssText=i===0?`border-color:${g.color};background:${g.color}22;color:#fff`:``;
+        t.innerHTML=`${g.icon} ${g.name}<span class="badge">${g.count}</span>`;
+        t.onclick=()=>switchGal(i);
+        c.appendChild(t);
+    });
+}
+function switchGal(idx){
+    cur=idx;
+    document.querySelectorAll('.tab').forEach((t,i)=>{
+        const g=GALAXIES[i];
+        t.classList.toggle('active',i===idx);
+        t.style.cssText=i===idx?`border-color:${g.color};background:${g.color}22;color:#fff`:'';
+    });
+    renderContent(idx);
+}
+function renderContent(idx){
+    const area=document.getElementById('content');
+    const g=GALAXIES[idx];
+    let h=`<div class="page active"><h2 style="color:${g.color};margin-bottom:8px;font-size:1.5rem">${g.icon} ${g.name}</h2>`;
+    h+=`<p style="color:#8899bb;margin-bottom:18px;line-height:1.6">${g.headerDesc}</p>`;
+    h+=`<p style="color:#667799;font-size:0.82rem;margin-bottom:16px">📚 共 ${g.count} 个核心概念</p>`;
+    g.items.forEach(item=>{h+=buildCard(item,0);});
+    h+='</div>';
+    area.innerHTML=h;
+    area.querySelectorAll('.card-title, .sc-title').forEach(el=>{
+        el.onclick=function(){
+            const p=this.closest('[data-ch]');
+            if(!p)return;
+            const ch=p.querySelector(':scope>.card-children, :scope>.subs');
+            const ar=this.querySelector('.arrow');
+            if(ch){ch.classList.toggle('hidden');if(ar)ar.classList.toggle('open');}
+        };
+    });
+}
+function buildCard(item,level){
+    const hasSubs = item.subs && item.subs.length>0;
+    const hasLeafs = item.leafs && item.leafs.length>0;
+    const hasCh = hasSubs || hasLeafs;
+    let h='';
+    if(level===0){
+        h=`<div class="card" data-ch="${hasCh}">
+            <div class="card-title">
+                ${hasCh?'<span class="arrow open">▶</span>':'<span style="width:16px;display:inline-block"></span>'}
+                <span>${item.title||''}</span>
+                ${item.tag?`<span class="tag" style="border:1px solid ${GALAXIES[cur].color}33;color:${GALAXIES[cur].color}">${item.tag}</span>`:''}
+            </div>
+            ${item.desc?`<div class="card-desc">${item.desc}</div>`:''}`;
+        if(hasSubs){
+            h+='<div class="card-children">';
+            item.subs.forEach(s=>{h+=buildCard(s,1);});
+            h+='</div>';
+        }else if(hasLeafs){
+            h+='<div class="card-children">';
+            item.leafs.forEach(l=>{
+                h+=`<div class="leaf"><span class="dot">▸</span><div class="text"><div class="label">${l.l||l.label||''}</div>${l.e||l.explain?`<div class="exp">${l.e||l.explain}</div>`:''}</div></div>`;
+            });
+            h+='</div>';
         }
-    </script>
-
+        h+='</div>';
+    }else{
+        const hasSubs2 = item.subs && item.subs.length>0;
+        const hasLeafs2 = item.leafs && item.leafs.length>0;
+        const hasCh2 = hasSubs2 || hasLeafs2;
+        h=`<div class="sub-card" data-ch="${hasCh2}">
+            <div class="sc-title">
+                ${hasCh2?'<span class="arrow open">▶</span>':'<span style="width:14px;display:inline-block"></span>'}
+                <span>${item.title||''}</span>
+                ${item.tag?`<span style="font-size:0.55rem;padding:1px 8px;border-radius:8px;background:rgba(255,255,255,0.05);color:#8899bb;margin-left:auto">${item.tag}</span>`:''}
+            </div>
+            ${item.desc?`<div class="sc-desc">${item.desc}</div>`:''}
+            ${hasLeafs2?`<div class="subs">${item.leafs.map(l=>`<div class="leaf"><span class="dot">▸</span><div class="text"><div class="label">${l.l||l.label||''}</div>${l.e||l.explain?`<div class="exp">${l.e||l.explain}</div>`:''}</div></div>`).join('')}</div>`:''}
+            ${hasSubs2?`<div class="subs">${item.subs.map(s=>buildCard(s,2)).join('')}</div>`:''}
+        </div>`;
+    }
+    return h;
+}
+function renderMap(){
+    const grid=document.getElementById('mapGrid');
+    grid.innerHTML='';
+    GALAXIES.forEach((g,i)=>{
+        const item=document.createElement('div');
+        item.className='map-item';
+        item.innerHTML=`<span class="mi-icon">${g.icon}</span><div class="mi-text"><div class="mi-name" style="color:${g.color}">${g.name}</div><div class="mi-desc">${g.desc}</div></div><span style="color:#445577">→</span>`;
+        item.onclick=()=>{switchGal(i);document.querySelector('.tabs').scrollIntoView({behavior:'smooth'});};
+        grid.appendChild(item);
+    });
+}
+stars();renderTabs();renderContent(0);renderMap();
+</script>
 </body>
 </html>
