@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI广告体验引擎 · 完整版</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #0f0f1a; color: #e0e0e0; min-height: 100vh;
+        }
+        .app-container { max-width: 1440px; margin: 0 auto; padding: 14px; }
+
+        .header { display:flex; align-items:center; justify-content:space-between; padding:10px 0 14px; }
+        .header .logo { display:flex; align-items:center; gap:10px; }
+        .header .logo .lg-icon { width:36px; height:36px; background:linear-gradient(135deg,#7c3aed,#3b82f6); border-radius:10px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:18px; }
+        .header .logo .lg-text { font-size:20px; font-weight:700; color:#fff; }
+        .header .logo .lg-text span { color:#7c3aed; }
+
+        .page-indicator { display:flex; justify-content:center; gap:6px; margin-bottom:14px; }
+        .page-indicator .dot {
+            padding:5px 14px; border-radius:18px; background:rgba(255,255,255,0.08); color:#94a3b8; font-size:12px; font-weight:500;
+            cursor:pointer; border:none; transition:all .3s; display:flex; align-items:center; gap:4px;
+        }
+        .page-indicator .dot .num { display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; background:rgba(0,0,0,0.3); font-size:11px; font-weight:700; }
+        .page-indicator .dot.active { background:rgba(124,58,237,0.4); color:#a78bfa; }
+        .page-indicator .dot.active .num { background:rgba(124,58,237,0.6); color:#fff; }
+        .page { display:none; animation:fadeUp .35s ease; }
+        .page.active { display:block; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+        /* 第一页 */
+        .homepage { display:grid; grid-template-columns:1fr 380px; gap:16px; align-items:start; }
+        .hero-section {
+            background:linear-gradient(135deg,#1a1a2e,#16213e);
+            border-radius:20px; overflow:hidden; border:1px solid rgba(255,255,255,0.06);
+        }
+        .hero-section .hero-banner {
+            position:relative; aspect-ratio:16/9;
+            display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;
+        }
+        .hero-section .hero-banner .hero-bg { position:absolute; inset:0; background:linear-gradient(135deg,#1e1b4b,#312e81); opacity:0.6; }
+        .hero-section .hero-banner .hero-content { position:relative; z-index:2; text-align:center; padding:20px; }
+        .hero-section .hero-banner .hero-content .hero-icon { font-size:72px; margin-bottom:10px; display:block; }
+        .hero-section .hero-banner .hero-content .hero-title { font-size:28px; font-weight:700; color:#fff; margin-bottom:4px; }
+        .hero-section .hero-banner .hero-content .hero-desc { font-size:14px; color:#94a3b8; }
+        .hero-section .hero-banner .hero-content .hero-tags { display:flex; gap:6px; justify-content:center; margin-top:10px; }
+        .hero-section .hero-banner .hero-content .hero-tags span { padding:3px 12px; border-radius:12px; background:rgba(255,255,255,0.1); color:#c7d2fe; font-size:11px; }
+        .hero-section .hero-info {
+            padding:16px 20px 18px; display:flex; align-items:center; justify-content:space-between;
+            border-top:1px solid rgba(255,255,255,0.06);
+        }
+        .hero-section .hero-info .hi-left { display:flex; align-items:center; gap:12px; }
+        .hero-section .hero-info .hi-left .hi-btn {
+            padding:8px 24px; border-radius:10px; border:none;
+            background:linear-gradient(135deg,#7c3aed,#3b82f6); color:#fff; font-size:13px; font-weight:500; cursor:pointer;
+            transition:all .3s;
+        }
+        .hero-section .hero-info .hi-left .hi-btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(124,58,237,0.4); }
+        .hero-section .hero-info .hi-left .hi-btn.secondary { background:rgba(255,255,255,0.08); color:#94a3b8; }
+        .hero-section .hero-info .hi-right { font-size:12px; color:#64748b; }
+        .hero-section .hero-info .hi-right strong { color:#a78bfa; }
+
+        .sidebar-section {
+            background:rgba(255,255,255,0.03); border-radius:20px; padding:16px;
+            border:1px solid rgba(255,255,255,0.06); max-height:580px; overflow-y:auto;
+        }
+        .sidebar-section::-webkit-scrollbar { width:4px; }
+        .sidebar-section::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:2px; }
+        .sidebar-section .sb-title { font-size:13px; font-weight:600; color:#94a3b8; margin-bottom:12px; display:flex; align-items:center; gap:6px; }
+        .sidebar-section .sb-title .sb-count { font-size:11px; background:rgba(255,255,255,0.06); padding:1px 8px; border-radius:8px; }
+        .video-list-item {
+            display:flex; gap:12px; padding:10px 12px; border-radius:12px;
+            cursor:pointer; transition:all .2s; margin-bottom:4px; border:1px solid transparent;
+        }
+        .video-list-item:hover { background:rgba(255,255,255,0.05); }
+        .video-list-item.selected { background:rgba(124,58,237,0.12); border-color:rgba(124,58,237,0.3); }
+        .video-list-item .vli-thumb {
+            width:80px; aspect-ratio:16/9; border-radius:8px;
+            display:flex; align-items:center; justify-content:center; font-size:24px;
+            flex-shrink:0; position:relative;
+        }
+        .video-list-item .vli-thumb .vli-tag { position:absolute; top:3px; left:3px; padding:1px 6px; border-radius:3px; font-size:8px; color:#fff; font-weight:600; }
+        .video-list-item .vli-info { flex:1; min-width:0; }
+        .video-list-item .vli-info .vli-name { font-size:13px; font-weight:600; color:#e0e0e0; }
+        .video-list-item .vli-info .vli-meta { font-size:11px; color:#64748b; margin-top:2px; }
+        .video-list-item .vli-info .vli-desc { font-size:10px; color:#475569; margin-top:2px; }
+
+        .vt1 { background:#6366f1; } .vt2 { background:#f59e0b; } .vt3 { background:#10b981; }
+        .vt4 { background:#3b82f6; } .vt5 { background:#ec4899; } .vt6 { background:#a855f7; }
+        .vli-thumb.t1 { background:linear-gradient(135deg,#1e1b4b,#312e81); }
+        .vli-thumb.t2 { background:linear-gradient(135deg,#f59e0b,#d97706); }
+        .vli-thumb.t3 { background:linear-gradient(135deg,#065f46,#047857); }
+        .vli-thumb.t4 { background:linear-gradient(135deg,#1e40af,#2563eb); }
+        .vli-thumb.t5 { background:linear-gradient(135deg,#be185d,#db2777); }
+        .vli-thumb.t6 { background:linear-gradient(135deg,#7c3aed,#a855f7); }
+
+        /* 第二页 */
+        .play-section, .chain-section {
+            background:#1a1a2e; border-radius:20px; padding:20px;
+            border:1px solid rgba(255,255,255,0.06);
+        }
+        .ps-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; gap:8px; }
+        .ps-top .left { display:flex; align-items:center; gap:10px; }
+        .ps-top .left .title { font-size:16px; font-weight:600; color:#e0e0e0; }
+        .ps-top .left .mode-tag { padding:2px 10px; border-radius:10px; font-size:11px; font-weight:500; }
+        .mode-tag.bad { background:rgba(239,68,68,0.15); color:#f87171; }
+        .mode-tag.good { background:rgba(34,197,94,0.15); color:#4ade80; }
+        .mode-btns { display:flex; gap:5px; }
+        .mode-btns button {
+            padding:4px 14px; border-radius:8px;
+            border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04);
+            color:#94a3b8; font-size:11px; font-weight:500; cursor:pointer;
+        }
+        .mode-btns button.active-bad { border-color:#ef4444; background:rgba(239,68,68,0.12); color:#f87171; }
+        .mode-btns button.active-good { border-color:#22c55e; background:rgba(34,197,94,0.12); color:#4ade80; }
+
+        .player-and-curve { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+        .player-col { }
+        .player-col .pc-label { font-size:11px; font-weight:600; text-align:center; padding:3px 0 5px; }
+        .pc-label.bad-l { color:#f87171; }
+        .pc-label.good-l { color:#4ade80; }
+        .player-box { background:#000; border-radius:12px; aspect-ratio:16/9; position:relative; overflow:hidden; border:1px solid rgba(255,255,255,0.06); }
+        .player-box .pb-content { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; }
+        .player-box .pb-content .icon { font-size:34px; opacity:.6; }
+        .player-box .pb-content .scene { font-size:12px; color:#94a3b8; margin-top:3px; }
+        .player-box .pb-content .emotion { font-size:12px; margin-top:2px; padding:2px 10px; border-radius:10px; background:rgba(255,255,255,.08); }
+        .curve-section { margin-top:8px; }
+        .curve-section .curve-label { font-size:11px; color:#64748b; margin-bottom:3px; display:flex; justify-content:space-between; }
+        .curve-section .curve-bar { position:relative; height:40px; background:rgba(0,0,0,0.3); border-radius:6px; overflow:hidden; }
+        .curve-section .curve-bar canvas { width:100%; height:100%; display:block; }
+        .curve-section .curve-tags { display:flex; justify-content:space-between; font-size:9px; color:#64748b; margin-top:2px; }
+        .curve-section .curve-hint { font-size:10px; min-height:16px; text-align:right; }
+        .curve-hint.hint-green { color:#4ade80; }
+        .curve-hint.hint-purple { color:#a78bfa; }
+
+        .ad-overlay-player {
+            position:absolute; inset:0; background:rgba(0,0,0,.88);
+            display:none; flex-direction:column; align-items:center; justify-content:center; padding:14px; text-align:center; animation:fadeIn .35s;
+        }
+        .ad-overlay-player.show { display:flex; }
+        .ad-overlay-player .ap-badge { font-size:9px; letter-spacing:1px; padding:2px 8px; border-radius:8px; margin-bottom:4px; }
+        .ap-badge.ab { background:rgba(239,68,68,.2); color:#fca5a5; }
+        .ap-badge.ag { background:rgba(34,197,94,.2); color:#86efac; }
+        .ad-overlay-player .ap-title { font-size:18px; font-weight:600; }
+        .ad-overlay-player .ap-desc { font-size:11px; color:#94a3b8; margin:2px 0 3px; }
+        .ad-overlay-player .ap-reason { font-size:10px; color:#64748b; max-width:260px; }
+        .ad-overlay-player .ap-timer { font-size:11px; color:#64748b; margin-top:4px; }
+        .ad-overlay-player .ap-close { margin-top:6px; padding:4px 16px; border-radius:14px; border:1px solid #444; background:transparent; color:#ccc; cursor:pointer; font-size:10px; }
+        .ad-overlay-player .ap-close:hover { background:#2a2a3e; }
+        .ad-overlay-player.bad .ap-title { color:#f87171; }
+        .ad-overlay-player.good .ap-title { color:#4ade80; }
+
+        .timeline-row { display:flex; align-items:center; gap:8px; margin-top:6px; }
+        .timeline-row .bar-wrap { flex:1; height:4px; background:rgba(255,255,255,0.08); border-radius:2px; position:relative; }
+        .timeline-row .bar-wrap .prog { height:100%; border-radius:2px; width:0%; transition:width .2s; }
+        .prog.bp-bad { background:#ef4444; }
+        .prog.bp-good { background:#22c55e; }
+        .timeline-row .time { font-size:10px; color:#64748b; min-width:30px; }
+        .learning-badge { margin-top:6px; padding:4px 10px; border-radius:8px; font-size:10px; display:flex; align-items:center; gap:6px; background:rgba(124,58,237,0.12); border:1px solid rgba(124,58,237,0.2); color:#a78bfa; display:none; }
+        .learning-badge.show { display:flex; }
+
+        .play-controls { display:flex; gap:8px; justify-content:center; margin-top:10px; }
+        .play-controls button { padding:6px 20px; border-radius:10px; border:none; font-size:12px; font-weight:500; cursor:pointer; }
+        .play-controls .play-btn { background:linear-gradient(135deg,#7c3aed,#3b82f6); color:#fff; }
+        .play-controls .reset-btn { background:rgba(255,255,255,0.06); color:#94a3b8; }
+
+        .bottom-nav { display:flex; justify-content:center; gap:10px; margin-top:16px; }
+        .bottom-nav button { padding:8px 24px; border-radius:10px; border:none; font-size:12px; font-weight:500; cursor:pointer; }
+        .bottom-nav .primary { background:linear-gradient(135deg,#7c3aed,#3b82f6); color:#fff; }
+        .bottom-nav .primary:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(124,58,237,0.3); }
+        .bottom-nav .secondary { background:rgba(255,255,255,0.06); color:#94a3b8; }
+
+        /* 第三页 - 分析链条 */
+        .cs-top { margin-bottom:16px; }
+        .cs-top .title { font-size:16px; font-weight:600; color:#e0e0e0; }
+
+        .chain-flow { display:flex; flex-direction:column; gap:10px; margin-bottom:16px; }
+        .chain-step {
+            background:rgba(255,255,255,0.03); border-radius:12px;
+            padding:14px 18px; border:1px solid rgba(255,255,255,0.06);
+            display:flex; align-items:center; gap:14px;
+            opacity:0; animation:slideIn .5s forwards;
+        }
+        .chain-step:nth-child(1){animation-delay:0s;}
+        .chain-step:nth-child(2){animation-delay:.15s;}
+        .chain-step:nth-child(3){animation-delay:.3s;}
+        .chain-step:nth-child(4){animation-delay:.45s;}
+        .chain-step:nth-child(5){animation-delay:.6s;}
+        @keyframes slideIn { from { opacity:0; transform:translateX(-10px); } to { opacity:1; transform:translateX(0); } }
+        .chain-step:hover { background:rgba(255,255,255,0.06); }
+        .chain-step .cs-icon { font-size:28px; flex-shrink:0; }
+        .chain-step .cs-body { flex:1; }
+        .chain-step .cs-body .cs-title { font-weight:600; font-size:14px; color:#e0e0e0; margin-bottom:4px; }
+        .chain-step .cs-body .cs-detail { font-size:11px; color:#94a3b8; }
+        .chain-step .cs-body .cs-detail .cs-tag {
+            display:inline-block; padding:2px 10px; border-radius:6px; font-size:10px; margin:2px;
+        }
+        .cs-tag.tg-blue { background:rgba(59,130,246,0.12); color:#60a5fa; }
+        .cs-tag.tg-green { background:rgba(34,197,94,0.12); color:#4ade80; }
+        .cs-tag.tg-purple { background:rgba(124,58,237,0.12); color:#a78bfa; }
+        .chain-step .cs-action { flex-shrink:0; }
+        .chain-step .cs-action .cs-btn {
+            padding:6px 16px; border-radius:8px; border:none;
+            background:rgba(124,58,237,0.2); color:#a78bfa; font-size:11px; cursor:pointer;
+            transition:all .2s; font-weight:500;
+        }
+        .chain-step .cs-action .cs-btn:hover { background:rgba(124,58,237,0.3); }
+
+        /* 第三步的划线分析可视化 */
+        .curve-mini {
+            background:rgba(0,0,0,0.2); border-radius:8px; padding:8px 12px;
+            margin-top:6px; display:flex; align-items:center; gap:10px;
+        }
+        .curve-mini .cm-label { font-size:10px; color:#64748b; min-width:60px; }
+        .curve-mini .cm-bar {
+            flex:1; height:24px; background:rgba(255,255,255,0.04); border-radius:4px;
+            position:relative; overflow:hidden;
+        }
+        .curve-mini .cm-bar .cm-line {
+            position:absolute; top:0; left:0; right:0; bottom:0;
+            display:flex; align-items:center;
+        }
+        .curve-mini .cm-bar .cm-line canvas { width:100%; height:100%; }
+        .curve-mini .cm-markers { display:flex; gap:4px; }
+        .curve-mini .cm-markers span {
+            padding:1px 6px; border-radius:4px; font-size:8px;
+        }
+        .curve-mini .cm-markers .cm-red { background:rgba(239,68,68,0.15); color:#f87171; }
+        .curve-mini .cm-markers .cm-green { background:rgba(34,197,94,0.15); color:#4ade80; }
+
+        /* 最终结果卡 */
+        .final-node {
+            padding:14px 18px; border-radius:12px;
+            display:flex; align-items:center; gap:12px;
+            border:1px solid rgba(255,255,255,0.1);
+        }
+        .final-node.fg { background:rgba(34,197,94,0.06); border-color:rgba(34,197,94,0.2); }
+        .final-node .fn-icon { font-size:24px; }
+        .final-node .fn-body { flex:1; }
+        .final-node .fn-body .fn-title { font-weight:600; font-size:13px; color:#e0e0e0; }
+        .final-node .fn-body .fn-desc { font-size:11px; color:#94a3b8; margin-top:2px; }
+        .final-node .fn-body .fn-desc .hl { color:#a78bfa; font-weight:500; }
+        .final-node .fn-badge { padding:3px 12px; border-radius:14px; font-size:11px; font-weight:600; }
+        .fn-badge.fbg { background:rgba(34,197,94,0.15); color:#4ade80; }
+
+        /* 用户画像弹层 */
+        .profile-overlay {
+            position:fixed; top:0; left:0; right:0; bottom:0;
+            background:rgba(0,0,0,0.7); backdrop-filter:blur(12px);
+            z-index:100; display:none; align-items:center; justify-content:center; padding:20px;
+            animation:fadeIn .3s;
+        }
+        .profile-overlay.show { display:flex; }
+        .profile-modal {
+            background:#1a1a2e; border-radius:20px; max-width:680px; width:100%;
+            max-height:80vh; overflow-y:auto; padding:24px;
+            border:1px solid rgba(255,255,255,0.08); box-shadow:0 20px 60px rgba(0,0,0,0.5);
+        }
+        .profile-modal::-webkit-scrollbar { width:4px; }
+        .profile-modal::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:2px; }
+        .profile-modal .pm-header {
+            display:flex; align-items:center; justify-content:space-between;
+            margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.06);
+        }
+        .profile-modal .pm-header .pm-title { font-size:16px; font-weight:600; display:flex; align-items:center; gap:8px; }
+        .profile-modal .pm-header .pm-close {
+            width:32px; height:32px; border-radius:50%; border:none;
+            background:rgba(255,255,255,0.06); color:#94a3b8; cursor:pointer; font-size:16px;
+            transition:all .2s; display:flex; align-items:center; justify-content:center;
+        }
+        .profile-modal .pm-header .pm-close:hover { background:rgba(255,255,255,0.12); color:#fff; }
+        .profile-modal .pm-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+        .profile-modal .pm-card {
+            background:rgba(255,255,255,0.03); border-radius:12px; padding:14px;
+            border:1px solid rgba(255,255,255,0.06);
+        }
+        .profile-modal .pm-card .pmc-title { font-size:12px; font-weight:600; color:#94a3b8; margin-bottom:8px; }
+        .profile-modal .pm-card .pmc-row { display:flex; justify-content:space-between; padding:3px 0; font-size:12px; border-bottom:1px solid rgba(255,255,255,0.04); }
+        .profile-modal .pm-card .pmc-row .pmc-label { color:#64748b; }
+        .profile-modal .pm-card .pmc-row .pmc-value { color:#e0e0e0; font-weight:500; }
+        .profile-modal .pm-card .pmc-row .pmc-value.ai-color { color:#a78bfa; }
+        .profile-modal .pm-reason {
+            margin-top:10px; padding:10px 12px; background:rgba(124,58,237,0.1);
+            border-radius:8px; border-left:3px solid #7c3aed; font-size:12px; color:#c7d2fe;
+        }
+        .profile-modal .pm-reason .pmr-title { font-weight:600; color:#a78bfa; margin-bottom:6px; }
+        .profile-modal .pm-reason .pmr-chain { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+        .profile-modal .pm-reason .pmr-chain .pc-step {
+            padding:3px 10px; border-radius:6px; font-size:11px;
+            background:rgba(124,58,237,0.12); color:#a78bfa;
+        }
+        .profile-modal .pm-reason .pmr-chain .pc-arrow { color:#64748b; font-size:12px; }
+        .profile-modal .pm-predict { margin-top:14px; }
+        .profile-modal .pm-predict .pmp-title { font-size:12px; font-weight:600; color:#94a3b8; margin-bottom:8px; }
+        .profile-modal .pm-predict .pmp-item { padding:8px 12px; border-radius:8px; margin-bottom:4px; font-size:12px; display:flex; align-items:center; gap:8px; }
+        .profile-modal .pm-predict .pmp-item.pmp-bad { background:rgba(239,68,68,0.08); border-left:3px solid #ef4444; }
+        .profile-modal .pm-predict .pmp-item.pmp-good { background:rgba(34,197,94,0.08); border-left:3px solid #22c55e; }
+        .profile-modal .pm-predict .pmp-item .pmp-label { font-size:10px; font-weight:600; min-width:70px; }
+        .profile-modal .pm-predict .pmp-item.pmp-bad .pmp-label { color:#f87171; }
+        .profile-modal .pm-predict .pmp-item.pmp-good .pmp-label { color:#4ade80; }
+        .profile-modal .pm-predict .pmp-item .pmp-name { font-weight:500; }
+        .profile-modal .pm-predict .pmp-item .pmp-reason { font-size:10px; color:#64748b; }
+        .profile-modal .pm-survey { margin-top:14px; }
+        .profile-modal .pm-survey .pms-title { font-size:12px; font-weight:600; color:#94a3b8; margin-bottom:8px; }
+        .profile-modal .pm-survey .pms-item { display:flex; align-items:center; gap:8px; padding:4px 0; font-size:11px; }
+        .profile-modal .pm-survey .pms-item .pms-bar { flex:1; height:6px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden; }
+        .profile-modal .pm-survey .pms-item .pms-bar .pms-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,#7c3aed,#3b82f6); }
+        .profile-modal .pm-survey .pms-item .pms-label { min-width:120px; color:#94a3b8; }
+        .profile-modal .pm-survey .pms-item .pms-val { min-width:28px; text-align:right; font-weight:500; color:#e0e0e0; }
+
+        /* 商业部分 */
+        .principle-card {
+            margin-top:14px; background:rgba(34,197,94,0.06);
+            border-radius:12px; padding:14px 18px;
+            border:1px solid rgba(34,197,94,0.15);
+        }
+        .principle-card .pc-title { font-weight:600; font-size:13px; color:#4ade80; margin-bottom:8px; }
+        .principle-card .pc-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+        .principle-card .pc-item { background:rgba(0,0,0,0.2); border-radius:8px; padding:8px 10px; font-size:11px; }
+        .principle-card .pc-item .pci-label { color:#94a3b8; }
+        .principle-card .pc-item .pci-value { font-weight:600; color:#4ade80; margin-top:2px; }
+        .principle-card .pc-item .pci-source { font-size:9px; color:#64748b; margin-top:2px; }
+
+        .summary-table { margin-top:14px; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.06); font-size:11px; }
+        .summary-table table { width:100%; border-collapse:collapse; }
+        .summary-table th, .summary-table td { padding:8px 12px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.04); }
+        .summary-table th { background:rgba(255,255,255,0.03); font-weight:600; font-size:11px; color:#94a3b8; }
+        .summary-table td { color:#c7d2fe; }
+        .summary-table .td-bad { color:#f87171; }
+        .summary-table .td-good { color:#4ade80; }
+
+        .privacy-card {
+            margin-top:14px; background:rgba(124,58,237,0.06);
+            border-radius:12px; padding:14px 18px;
+            border:1px solid rgba(124,58,237,0.15);
+            display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;
+        }
+        .privacy-card .pc-item { text-align:center; }
+        .privacy-card .pc-item .pci-icon { font-size:20px; }
+        .privacy-card .pc-item .pci-title { font-size:12px; font-weight:600; color:#a78bfa; margin:2px 0; }
+        .privacy-card .pc-item .pci-desc { font-size:10px; color:#64748b; }
+
+        .win-card { margin-top:14px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+        .win-card .wc-item { border-radius:10px; padding:12px; text-align:center; border:1px solid rgba(255,255,255,0.06); }
+        .win-card .wc-item.wc-user { background:rgba(99,102,241,0.06); border-color:rgba(99,102,241,0.15); }
+        .win-card .wc-item.wc-platform { background:rgba(34,197,94,0.06); border-color:rgba(34,197,94,0.15); }
+        .win-card .wc-item.wc-brand { background:rgba(239,68,68,0.06); border-color:rgba(239,68,68,0.15); }
+        .win-card .wc-item .wc-icon { font-size:20px; }
+        .win-card .wc-item .wc-title { font-size:12px; font-weight:600; margin:4px 0 2px; color:#e0e0e0; }
+        .win-card .wc-item .wc-desc { font-size:10px; color:#64748b; }
+
+        @media (max-width:900px) {
+            .homepage { grid-template-columns:1fr; }
+            .player-and-curve { grid-template-columns:1fr; }
+            .principle-card .pc-grid { grid-template-columns:1fr; }
+            .win-card { grid-template-columns:1fr; }
+            .privacy-card { grid-template-columns:1fr; }
+            .profile-modal .pm-grid { grid-template-columns:1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+
+<div class="header">
+    <div class="logo">
+        <span class="lg-icon">📺</span>
+        <span class="lg-text">腾讯视频 <span>·</span> AI 推荐</span>
+    </div>
+</div>
+
+<div class="page-indicator">
+    <button class="dot active" onclick="goPage(1)" id="dot1"><span class="num">1</span> 前端首页</button>
+    <button class="dot" onclick="goPage(2)" id="dot2"><span class="num">2</span> 体验对比</button>
+    <button class="dot" onclick="goPage(3)" id="dot3"><span class="num">3</span> 后端AI分析</button>
+</div>
+
+<!-- ===== 第一页 ===== -->
+<div class="page active" id="page1">
+    <div class="homepage">
+        <div class="hero-section">
+            <div class="hero-banner" id="heroBanner">
+                <div class="hero-bg"></div>
+                <div class="hero-content">
+                    <span class="hero-icon" id="heroIcon">🕵️</span>
+                    <div class="hero-title" id="heroTitle">深渊回响</div>
+                    <div class="hero-desc" id="heroDesc">悬疑 · 高能反转 · 全程无尿点</div>
+                    <div class="hero-tags" id="heroTags">
+                        <span>🔥 热播</span>
+                        <span>⭐ 9.2</span>
+                        <span>2024</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-info">
+                <div class="hi-left">
+                    <button class="hi-btn secondary" onclick="goPage(2)">▶ 体验播放对比</button>
+                </div>
+                <div class="hi-right">
+                    <strong id="heroViewers">12.3万</strong> 人正在看
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sb-title">🎬 选择视频 <span class="sb-count">6部</span></div>
+            <div id="videoList">
+                <div class="video-list-item selected" data-v="drama" onclick="selVid(this)">
+                    <div class="vli-thumb t1"><span class="vli-tag vt1">悬疑</span>🕵️</div>
+                    <div class="vli-info"><div class="vli-name">深渊回响</div><div class="vli-meta">悬疑 · 高能反转</div><div class="vli-desc">全程无尿点的烧脑体验</div></div>
+                </div>
+                <div class="video-list-item" data-v="comedy" onclick="selVid(this)">
+                    <div class="vli-thumb t2"><span class="vli-tag vt2">喜剧</span>😂</div>
+                    <div class="vli-info"><div class="vli-name">欢乐一家人</div><div class="vli-meta">喜剧 · 轻松下饭</div><div class="vli-desc">笑到停不下来的家庭喜剧</div></div>
+                </div>
+                <div class="video-list-item" data-v="doc" onclick="selVid(this)">
+                    <div class="vli-thumb t3"><span class="vli-tag vt3">纪录片</span>🌍</div>
+                    <div class="vli-info"><div class="vli-name">风味人间</div><div class="vli-meta">美食 · 治愈慢节奏</div><div class="vli-desc">舌尖上的世界美食之旅</div></div>
+                </div>
+                <div class="video-list-item" data-v="sci" onclick="selVid(this)">
+                    <div class="vli-thumb t4"><span class="vli-tag vt4">科幻</span>🚀</div>
+                    <div class="vli-info"><div class="vli-name">星际迷航</div><div class="vli-meta">科幻 · 视觉震撼</div><div class="vli-desc">宏大宇宙的史诗冒险</div></div>
+                </div>
+                <div class="video-list-item" data-v="romance" onclick="selVid(this)">
+                    <div class="vli-thumb t5"><span class="vli-tag vt5">言情</span>💕</div>
+                    <div class="vli-info"><div class="vli-name">遇见你之前</div><div class="vli-meta">言情 · 温情催泪</div><div class="vli-desc">感动千万人的爱情故事</div></div>
+                </div>
+                <div class="video-list-item" data-v="variety" onclick="selVid(this)">
+                    <div class="vli-thumb t6"><span class="vli-tag vt6">综艺</span>🎤</div>
+                    <div class="vli-info"><div class="vli-name">开心大本营</div><div class="vli-meta">综艺 · 明星互动</div><div class="vli-desc">每周六的欢乐时光</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 用户画像弹层 ===== -->
+<div class="profile-overlay" id="profileOverlay">
+    <div class="profile-modal">
+        <div class="pm-header">
+            <div class="pm-title">👤 用户画像推理过程</div>
+            <button class="pm-close" onclick="hideProfile()">✕</button>
+        </div>
+        <div id="profileModalContent"><div style="text-align:center;color:#64748b;padding:30px 0;">加载中...</div></div>
+    </div>
+</div>
+
+<!-- ===== 第二页 ===== -->
+<div class="page" id="page2">
+    <div class="play-section">
+        <div class="ps-top">
+            <div class="left">
+                <span class="title" id="p2Title">播放体验对比</span>
+                <span class="mode-tag bad" id="p2ModeTag">❌ 传统模式</span>
+            </div>
+            <div class="mode-btns">
+                <button class="active-bad" id="p2BadBtn" onclick="switchP2Mode('bad')">❌ 传统</button>
+                <button onclick="switchP2Mode('good')" id="p2GoodBtn">✅ AI</button>
+            </div>
+        </div>
+        <div class="player-and-curve">
+            <div class="player-col">
+                <div class="pc-label bad-l">❌ 传统广告体验</div>
+                <div class="player-box" id="p2PlayerBad">
+                    <div class="pb-content" id="p2BadContent">
+                        <div class="icon">🎬</div>
+                        <div class="scene" id="p2BadScene">准备播放</div>
+                        <div class="emotion" id="p2BadEmotion">😐</div>
+                    </div>
+                    <div class="ad-overlay-player bad" id="p2BadAd">
+                        <div class="ap-badge ab">📢 广告</div>
+                        <div class="ap-title" id="p2BadAdTitle">××× 洗衣液</div>
+                        <div class="ap-desc" id="p2BadAdDesc">强效去渍</div>
+                        <div class="ap-reason" id="p2BadAdReason">通用投放策略</div>
+                        <div class="ap-timer" id="p2BadTimer">⏱ 30s</div>
+                        <button class="ap-close" onclick="closeP2Ad('bad')">跳过 ▸</button>
+                    </div>
+                </div>
+                <div class="timeline-row">
+                    <span class="time" id="p2BadTime">0:00</span>
+                    <div class="bar-wrap"><div class="prog bp-bad" id="p2BadProg" style="width:0%"></div></div>
+                    <span class="time">2:00</span>
+                </div>
+                <div class="curve-section">
+                    <div class="curve-label"><span>📊 剧情曲线</span><span id="p2BadCurveInfo">等待播放</span></div>
+                    <div class="curve-bar"><canvas id="p2BadCanvas" height="40"></canvas></div>
+                    <div class="curve-tags"><span>😐 平静</span><span>😰 紧张</span><span>😌 回落</span></div>
+                </div>
+            </div>
+            <div class="player-col">
+                <div class="pc-label good-l">✅ AI 智能广告体验</div>
+                <div class="player-box" id="p2PlayerGood">
+                    <div class="pb-content" id="p2GoodContent">
+                        <div class="icon">🎬</div>
+                        <div class="scene" id="p2GoodScene">准备播放</div>
+                        <div class="emotion" id="p2GoodEmotion">😐</div>
+                    </div>
+                    <div class="ad-overlay-player good" id="p2GoodAd">
+                        <div class="ap-badge ag">🎯 广告</div>
+                        <div class="ap-title" id="p2GoodAdTitle">☕ 某品牌咖啡</div>
+                        <div class="ap-desc" id="p2GoodAdDesc">慢享生活</div>
+                        <div class="ap-reason" id="p2GoodAdReason">AI智能匹配</div>
+                        <div class="ap-timer" id="p2GoodTimer">⏱ 15s</div>
+                        <button class="ap-close" onclick="closeP2Ad('good')">跳过 ▸</button>
+                    </div>
+                </div>
+                <div class="timeline-row">
+                    <span class="time" id="p2GoodTime">0:00</span>
+                    <div class="bar-wrap"><div class="prog bp-good" id="p2GoodProg" style="width:0%"></div></div>
+                    <span class="time">2:00</span>
+                </div>
+                <div class="curve-section">
+                    <div class="curve-label"><span>📊 剧情曲线（AI分析）</span><span id="p2GoodCurveInfo">等待播放</span></div>
+                    <div class="curve-bar"><canvas id="p2GoodCanvas" height="40"></canvas></div>
+                    <div class="curve-tags"><span>😐 平静</span><span>😰 紧张</span><span>😌 回落</span></div>
+                    <div class="curve-hint" id="p2GoodCurveHint"></div>
+                </div>
+                <div class="learning-badge" id="learningBadge">
+                    <span>🧠</span>
+                    <span id="learningText">AI正在学习用户反馈…</span>
+                </div>
+            </div>
+        </div>
+        <div class="play-controls">
+            <button class="play-btn" id="p2PlayBtn" onclick="toggleP2Play()">▶ 同步播放</button>
+            <button class="reset-btn" onclick="resetP2()">⟳ 重置</button>
+        </div>
+        <div class="bottom-nav">
+            <button class="secondary" onclick="goPage(1)">← 前端首页</button>
+            <button class="primary" onclick="goPage(3)">查看后端AI分析 →</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 第三页：后端AI分析链条 ===== -->
+<div class="page" id="page3">
+    <div class="chain-section">
+        <div class="cs-top">
+            <span class="title">🧠 后端AI分析 · 从浅入深</span>
+        </div>
+
+        <div class="chain-flow">
+            <!-- 第一步：广告分析 -->
+            <div class="chain-step" id="step1">
+                <div class="cs-icon">📦</div>
+                <div class="cs-body">
+                    <div class="cs-title">① 广告理解分析</div>
+                    <div class="cs-detail">
+                        <span class="cs-tag tg-blue">NLP文本关键词提取</span>
+                        <span class="cs-tag tg-blue">ResNet50视觉场景识别</span>
+                        <span class="cs-tag tg-blue">BGM情绪分类</span>
+                        <span class="cs-tag tg-purple">→ 输出：情感基调·场景标签</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第二步：用户画像（可点击） -->
+            <div class="chain-step" id="step2" onclick="showProfile()">
+                <div class="cs-icon">👤</div>
+                <div class="cs-body">
+                    <div class="cs-title">② 用户画像分析 <span style="font-size:10px;color:#a78bfa;">（点击查看完整推理链）</span></div>
+                    <div class="cs-detail">
+                        <span class="cs-tag tg-purple">LSTM行为序列建模</span>
+                        <span class="cs-tag tg-purple">256维兴趣向量</span>
+                        <span class="cs-tag tg-purple">实时更新微调</span>
+                    </div>
+                </div>
+                <div class="cs-action">
+                    <button class="cs-btn" onclick="event.stopPropagation();showProfile()">👤 查看画像</button>
+                </div>
+            </div>
+
+            <!-- 第三步：影音分析 + 划线展示 -->
+            <div class="chain-step" id="step3">
+                <div class="cs-icon">🎬</div>
+                <div class="cs-body">
+                    <div class="cs-title">③ 影音实时分析（画线分析过程）</div>
+                    <div class="cs-detail">
+                        <span class="cs-tag tg-green">YOLOv8画面检测</span>
+                        <span class="cs-tag tg-green">字幕NLP对话密度</span>
+                        <span class="cs-tag tg-green">BGM情绪曲线</span>
+                    </div>
+                    <div class="curve-mini">
+                        <span class="cm-label">情绪曲线</span>
+                        <div class="cm-bar">
+                            <div class="cm-line">
+                                <canvas id="miniCurveCanvas" height="24"></canvas>
+                            </div>
+                        </div>
+                        <div class="cm-markers">
+                            <span class="cm-red">⚠高潮</span>
+                            <span class="cm-green">✅回落</span>
+                            <span class="cm-red">⚠高潮</span>
+                            <span class="cm-green">✅回落</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第四步：黄金窗口 + 场景共生 -->
+            <div class="chain-step" id="step4">
+                <div class="cs-icon">🧠</div>
+                <div class="cs-body">
+                    <div class="cs-title">④ 黄金窗口判定 + 场景共生匹配</div>
+                    <div class="cs-detail">
+                        <span class="cs-tag tg-green">情绪回落 > 20%</span>
+                        <span class="cs-tag tg-green">非关键对话场景</span>
+                        <span class="cs-tag tg-green">视觉风格 + 语义双重匹配</span>
+                        <span class="cs-tag tg-purple">→ 输出：最佳推送时机·广告选择</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第五步：反馈学习 -->
+            <div class="chain-step" id="step5">
+                <div class="cs-icon">🔄</div>
+                <div class="cs-body">
+                    <div class="cs-title">⑤ 反馈学习闭环</div>
+                    <div class="cs-detail">
+                        <span class="cs-tag tg-blue">用户行为采集（跳过/点击/看完）</span>
+                        <span class="cs-tag tg-blue">LSTM模型在线微调</span>
+                        <span class="cs-tag tg-blue">下次推送策略优化</span>
+                        <span class="cs-tag tg-purple">→ 持续迭代·越推越准</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 最终结果 -->
+        <div class="final-node fg">
+            <span class="fn-icon">🎯</span>
+            <div class="fn-body">
+                <div class="fn-title">最终推送：个性化广告</div>
+                <div class="fn-desc">
+                    经过 <span class="hl">广告理解</span> → <span class="hl">用户画像</span> → <span class="hl">影音画线分析</span> → <span class="hl">黄金窗口</span> → <span class="hl">反馈学习</span> 五步分析<br>
+                    <span style="color:#4ade80;font-size:10px;">🔄 反馈回路：用户行为→LSTM微调→下次优化</span>
+                </div>
+            </div>
+            <span class="fn-badge fbg">✅ AI 推送</span>
+        </div>
+
+        <!-- 商业部分 -->
+        <div class="principle-card">
+            <div class="pc-title">📊 原理验证 · 为什么AI推送更有效？</div>
+            <div class="pc-grid">
+                <div class="pc-item"><div class="pci-label">高广告接受度→品牌影响力</div><div class="pci-value">提升 7 倍</div><div class="pci-source">凯度2023媒介触点研究</div></div>
+                <div class="pc-item"><div class="pci-label">积极 vs 消极广告价值</div><div class="pci-value">4.1 vs 0.6</div><div class="pci-source">凯度场景实验室</div></div>
+                <div class="pc-item"><div class="pci-label">场景匹配→用户记忆度</div><div class="pci-value">提升 45%</div><div class="pci-source">场景匹配研究</div></div>
+                <div class="pc-item"><div class="pci-label">精准触达 vs 通用投放</div><div class="pci-value">ROI 3.2 倍</div><div class="pci-source">CTR 2024趋势报告</div></div>
+            </div>
+        </div>
+
+        <div class="summary-table"><table>
+            <thead><tr><th>维度</th><th>❌ 传统模式</th><th>✅ AI 模式</th></tr></thead>
+            <tbody>
+                <tr><td><strong>用户理解</strong></td><td class="td-bad">粗粒度标签</td><td class="td-good">LSTM序列建模·256维·实时更新</td></tr>
+                <tr><td><strong>内容理解</strong></td><td class="td-bad">频道级别分类</td><td class="td-good">多模态分析（画面+字幕+BGM）</td></tr>
+                <tr><td><strong>时机判断</strong></td><td class="td-bad">固定时间点</td><td class="td-good">情绪曲线检测·黄金窗口</td></tr>
+                <tr><td><strong>学习能力</strong></td><td class="td-bad">❌ 无·规则固定</td><td class="td-good">✅ 用户反馈→模型微调→优化</td></tr>
+                <tr><td><strong>隐私保护</strong></td><td class="td-bad">依赖跨App追踪</td><td class="td-good">✅ 仅在腾讯视频生态内</td></tr>
+                <tr><td><strong>商业价值</strong></td><td class="td-bad">跳过率>70%</td><td class="td-good">品牌影响力提升7倍</td></tr>
+            </tbody>
+        </table></div>
+
+        <div class="privacy-card">
+            <div class="pc-item"><div class="pci-icon">🚫</div><div class="pci-title">反监控经济</div><div class="pci-desc">不追踪其他App行为</div></div>
+            <div class="pc-item"><div class="pci-icon">🔐</div><div class="pci-title">权限保护</div><div class="pci-desc">用户授权·可随时撤销</div></div>
+            <div class="pc-item"><div class="pci-icon">🧠</div><div class="pci-title">智能学习</div><div class="pci-desc">差分隐私·联邦学习</div></div>
+        </div>
+
+        <div class="win-card">
+            <div class="wc-item wc-user"><div class="wc-icon">😊</div><div class="wc-title">用户</div><div class="wc-desc">广告与场景共生·不打断体验</div></div>
+            <div class="wc-item wc-platform"><div class="wc-icon">📺</div><div class="wc-title">平台</div><div class="wc-desc">留存↑·广告填充率↑30%</div></div>
+            <div class="wc-item wc-brand"><div class="wc-icon">🏢</div><div class="wc-title">广告主</div><div class="wc-desc">完播率↑50%·品牌记忆↑45%</div></div>
+        </div>
+
+        <div class="bottom-nav">
+            <button class="secondary" onclick="goPage(2)">← 返回播放</button>
+            <button class="primary" onclick="goPage(1)">🔄 重新开始</button>
+        </div>
+    </div>
+</div>
+
+</div><!-- app-container -->
+
+<script>
+    const USER_DATA = {
+        drama: { name:'张明', age:'28岁', avatar:'👨‍💼', tag:'深度观影者', habit:'悬疑/科幻偏好', time:'21:00-23:00', tolerance:'🔋 78%', consumeLevel:'中高消费力',
+            aiInfer:'悬疑爱好者→安全感需求高→隐私保护倾向→安全软件', aiReason:'28岁·男性·悬疑偏好·夜间活跃·中高消费力',
+            hero:{icon:'🕵️',title:'深渊回响',desc:'悬疑 · 高能反转 · 全程无尿点',viewers:'12.3万'},
+            survey:[{label:'25-35岁悬疑用户',v:72,desc:'愿为安全付费'},{label:'男性数码偏好',v:68,desc:'数码产品关注'},{label:'夜间活跃消费力',v:55,desc:'中高消费'}],
+            badAd:'××× 洗衣液 · 通用投放', goodAdPre:'🔒 某安全软件 · 安全感需求', goodAdMid:'☕ 某品牌咖啡 · 深夜提神' },
+        comedy: { name:'李悦', age:'24岁', avatar:'👩‍💼', tag:'轻松娱乐型', habit:'喜剧/综艺偏好', time:'12:00-14:00', tolerance:'🔋 85%', consumeLevel:'中等消费力',
+            aiInfer:'喜剧爱好者→娱乐社交需求→休闲消费倾向→游戏/饮品', aiReason:'24岁·女性·喜剧偏好·碎片时间·中等消费力',
+            hero:{icon:'😂',title:'欢乐一家人',desc:'喜剧 · 轻松下饭 · 笑到停不下来',viewers:'8.7万'},
+            survey:[{label:'20-25岁喜剧用户',v:85,desc:'娱乐消费高频'},{label:'女性休闲零食',v:78,desc:'即时消费品类'},{label:'碎片时间',v:62,desc:'短内容消费'}],
+            badAd:'××× 洗衣液 · 通用投放', goodAdPre:'🎮 某休闲游戏 · 轻松娱乐', goodAdMid:'🥤 某快乐水 · 快乐氛围' },
+        doc: { name:'王磊', age:'35岁', avatar:'👨‍🍳', tag:'品质生活型', habit:'纪录片/美食偏好', time:'周末10:00-12:00', tolerance:'🔋 90%', consumeLevel:'高消费力',
+            aiInfer:'美食爱好者→品质生活追求→高端消费品→厨具/食品', aiReason:'35岁·男性·美食偏好·整块时间·高消费力',
+            hero:{icon:'🌍',title:'风味人间',desc:'美食 · 治愈慢节奏 · 舌尖上的世界',viewers:'6.2万'},
+            survey:[{label:'30-40岁美食用户',v:80,desc:'高端品倾向'},{label:'男性品质消费力',v:75,desc:'厨具预算高'},{label:'周末时间',v:60,desc:'深度内容'}],
+            badAd:'××× 洗衣液 · 通用投放', goodAdPre:'🍳 某高端厨具 · 品质烹饪', goodAdMid:'🌾 某有机食品 · 健康生活' },
+        sci: { name:'赵一航', age:'22岁', avatar:'🧑‍💻', tag:'科技极客型', habit:'科幻/科技偏好', time:'22:00-01:00', tolerance:'🔋 75%', consumeLevel:'中等消费力',
+            aiInfer:'科技爱好者→前沿产品关注→效率工具需求→手机/云存储', aiReason:'22岁·男性·科技偏好·深夜活跃·数码消费倾向高',
+            hero:{icon:'🚀',title:'星际迷航',desc:'科幻 · 视觉震撼 · 宏大宇宙史诗',viewers:'9.8万'},
+            survey:[{label:'18-25岁科技用户',v:90,desc:'数码购买力'},{label:'男性科技消费',v:82,desc:'手机/PC'},{label:'深夜决策',v:70,desc:'夜间转化'}],
+            badAd:'××× 洗衣液 · 通用投放', goodAdPre:'📱 某旗舰手机 · 科技美学', goodAdMid:'💻 某云存储 · 效率工具' },
+        romance: { name:'陈思思', age:'26岁', avatar:'👩‍🎨', tag:'感性体验型', habit:'言情/情感剧偏好', time:'20:00-22:00', tolerance:'🔋 80%', consumeLevel:'中等消费力',
+            aiInfer:'情感剧爱好者→情感消费倾向→礼物/饰品需求→珠宝/香氛', aiReason:'26岁·女性·言情偏好·晚间活跃·情感消费力',
+            hero:{icon:'💕',title:'遇见你之前',desc:'言情 · 温情催泪 · 感动千万人',viewers:'7.5万'},
+            survey:[{label:'20-30岁言情用户',v:75,desc:'情感消费'},{label:'女性礼物消费',v:70,desc:'珠宝/饰品'},{label:'晚间购物',v:65,desc:'夜间下单'}],
+            badAd:'××× 洗衣液 · 通用投放', goodAdPre:'💎 某珠宝品牌 · 情感表达', goodAdMid:'🌸 某香氛品牌 · 浪漫氛围' },
+        variety: { name:'刘欢', age:'22岁', avatar:'🧑‍🎤', tag:'社交娱乐型', habit:'综艺/音乐偏好', time:'周末14:00-18:00', tolerance:'🔋 88%', consumeLevel:'中等消费力',
+            aiInfer:'综艺爱好者→社交娱乐需求→潮流消费→音乐/盲盒', aiReason:'22岁·女性·综艺偏好·周末活跃·潮流消费力',
+            hero:{icon:'🎤',title:'开心大本营',desc:'综艺 · 明星互动 · 每周六欢乐时光',viewers:'15.2万'},
+            survey:[{label:'18-24岁综艺用户',v:88,desc:'潮流消费'},{label:'女性盲盒消费',v:72,desc:'IP衍生品'},{label:'周末社交',v:80,desc:'社交传播'}],
+            badAd:'××× 洗衣液 · 通用投放', goodAdPre:'🎵 某音乐App · 社交娱乐', goodAdMid:'🎁 某盲盒品牌 · 潮玩消费' }
+    };
+
+    const SCENE_DATA = {
+        drama:{scenes:['开场悬念','案件浮现','高潮对峙','真相浮出'],emotions:['😰 紧张','🤔 疑惑','😨 高压','😌 释然']},
+        comedy:{scenes:['家庭早餐','夫妻斗嘴','亲戚来访','爆笑误会'],emotions:['😊 轻松','😂 搞笑','🤣 爆笑','😅 尴尬']},
+        doc:{scenes:['食材采集','烹饪过程','美食特写','食客故事'],emotions:['😌 平静','🤤 馋','😊 治愈','😢 感动']},
+        sci:{scenes:['太空航行','外星探索','科技对决','宇宙奇观'],emotions:['🤩 震撼','😲 惊叹','😰 紧张','🤯 震撼']},
+        romance:{scenes:['初次相遇','甜蜜互动','情感波折','深情告白'],emotions:['🥰 心动','😊 甜蜜','😢 揪心','😭 感动']},
+        variety:{scenes:['开场热舞','游戏环节','嘉宾访谈','搞笑模仿'],emotions:['🎉 兴奋','😂 爆笑','😄 开心','🤣 捧腹']},
+    };
+
+    let state = {
+        page:1, selectedVideo:'drama',
+        p2Mode:'bad', p2Playing:false, p2Timer:null,
+        p2Prog:{bad:0, good:0}, p2AdShowing:{bad:false, good:false},
+        p2AdCount:{bad:30, good:15}, p2AdTimers:{bad:null, good:null},
+        p2AdHistory:{bad:[], good:[]}, p2Skipped:false,
+    };
+    let badCanvasCtx, goodCanvasCtx;
+
+    function goPage(n) {
+        state.page=n;
+        document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active', i+1===n));
+        document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active', i+1===n));
+        if (n===2) initP2();
+        if (n===3) initMiniCurve();
+    }
+
+    function initMiniCurve() {
+        const canvas=document.getElementById('miniCurveCanvas');
+        if(!canvas)return;
+        const ctx=canvas.getContext('2d');
+        const w=canvas.parentElement.clientWidth||200;
+        canvas.width=w; canvas.height=24;
+        ctx.clearRect(0,0,w,24);
+        ctx.strokeStyle='#4ade80'; ctx.lineWidth=1.5;
+        ctx.beginPath();
+        for(let x=0;x<w;x+=1){
+            const pct=x/w*100;
+            const base=0.2+0.5*Math.sin(pct*Math.PI/20)+0.2*Math.sin(pct*Math.PI/6);
+            const y=24-base*24;
+            x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+        // 标记黄金窗口
+        const greenZones=[25,55,82];
+        greenZones.forEach(pct=>{
+            const x=pct/100*w;
+            ctx.beginPath(); ctx.fillStyle='rgba(34,197,94,0.3)';
+            ctx.arc(x,24-(0.2+0.5*Math.sin(pct*Math.PI/20)+0.2*Math.sin(pct*Math.PI/6))*24,4,0,2*Math.PI);
+            ctx.fill();
+        });
+    }
+
+    function selVid(el) {
+        document.querySelectorAll('.video-list-item').forEach(c=>c.classList.remove('selected'));
+        el.classList.add('selected');
+        state.selectedVideo=el.dataset.v;
+        const u=USER_DATA[state.selectedVideo];
+        document.getElementById('heroIcon').textContent=u.hero.icon;
+        document.getElementById('heroTitle').textContent=u.hero.title;
+        document.getElementById('heroDesc').textContent=u.hero.desc;
+        document.getElementById('heroViewers').textContent=u.hero.viewers;
+        document.getElementById('p2Title').textContent=`播放体验 · ${u.name}`;
+    }
+
+    function showProfile() {
+        const overlay=document.getElementById('profileOverlay'); overlay.classList.add('show');
+        const u=USER_DATA[state.selectedVideo];
+        const inferItems=u.aiReason.split('·').map(s=>`<span class="pc-step">${s.trim()}</span>`).join('<span class="pc-arrow">→</span>');
+        document.getElementById('profileModalContent').innerHTML=`
+            <div class="pm-grid">
+                <div class="pm-card">
+                    <div class="pmc-title">👤 用户基础信息</div>
+                    <div class="pmc-row"><span class="pmc-label">用户</span><span class="pmc-value">${u.avatar} ${u.name} · ${u.age}</span></div>
+                    <div class="pmc-row"><span class="pmc-label">观影偏好</span><span class="pmc-value">${u.habit}</span></div>
+                    <div class="pmc-row"><span class="pmc-label">活跃时段</span><span class="pmc-value">${u.time}</span></div>
+                    <div class="pmc-row"><span class="pmc-label">广告耐受度</span><span class="pmc-value">${u.tolerance}</span></div>
+                    <div class="pmc-row"><span class="pmc-label">消费力分层</span><span class="pmc-value">${u.consumeLevel}</span></div>
+                </div>
+                <div class="pm-card">
+                    <div class="pmc-title">🧠 AI 技术画像</div>
+                    <div class="pmc-row"><span class="pmc-label">序列建模</span><span class="pmc-value ai-color">LSTM + Attention</span></div>
+                    <div class="pmc-row"><span class="pmc-label">向量维度</span><span class="pmc-value ai-color">256维</span></div>
+                    <div class="pmc-row"><span class="pmc-label">更新频率</span><span class="pmc-value ai-color">反馈后实时微调</span></div>
+                    <div class="pmc-row"><span class="pmc-label">特征来源</span><span class="pmc-value ai-color">多模态(腾讯视频内)</span></div>
+                    <div class="pmc-row"><span class="pmc-label">用户标签</span><span class="pmc-value">${u.tag}</span></div>
+                </div>
+            </div>
+            <div class="pm-reason">
+                <div class="pmr-title">🔍 AI推理链（从数据到结论）</div>
+                <div class="pmr-chain">${inferItems}</div>
+                <div style="margin-top:8px;font-size:12px;color:#c7d2fe;">→ <strong style="color:#a78bfa;">${u.aiInfer}</strong></div>
+            </div>
+            <div class="pm-predict">
+                <div class="pmp-title">📢 两种模式广告推送对比</div>
+                <div class="pmp-item pmp-bad"><span class="pmp-label">❌ 传统</span><span class="pmp-name">${u.badAd}</span><span class="pmp-reason">无用户分析·无场景匹配</span></div>
+                <div class="pmp-item pmp-good"><span class="pmp-label">✅ AI前贴</span><span class="pmp-name">${u.goodAdPre}</span><span class="pmp-reason">基于画像推理链</span></div>
+                <div class="pmp-item pmp-good"><span class="pmp-label">✅ AI中插</span><span class="pmp-name">${u.goodAdMid}</span><span class="pmp-reason">情绪检测+场景共生</span></div>
+            </div>
+            <div class="pm-survey">
+                <div class="pms-title">📊 人群调研数据（同类用户·腾讯视频平台内）</div>
+                ${u.survey.map(d=>`<div class="pms-item"><span class="pms-label">${d.label}</span><div class="pms-bar"><div class="pms-fill" style="width:${d.v}%"></div></div><span class="pms-val">${d.v}%</span><span style="font-size:9px;color:#64748b;">${d.desc}</span></div>`).join('')}
+                <div style="margin-top:6px;font-size:9px;color:#64748b;text-align:center;">数据来源：腾讯视频平台内用户调研 · N=10000</div>
+            </div>
+        `;
+    }
+    function hideProfile() { document.getElementById('profileOverlay').classList.remove('show'); }
+
+    function initP2() {
+        if(state.p2Timer){clearInterval(state.p2Timer);state.p2Timer=null;}
+        state.p2Playing=false;state.p2Prog={bad:0,good:0};state.p2AdShowing={bad:false,good:false};state.p2AdCount={bad:30,good:15};state.p2AdHistory={bad:[],good:[]};state.p2Skipped=false;
+        if(state.p2AdTimers.bad){clearInterval(state.p2AdTimers.bad);state.p2AdTimers.bad=null;}if(state.p2AdTimers.good){clearInterval(state.p2AdTimers.good);state.p2AdTimers.good=null;}
+        document.getElementById('p2PlayBtn').textContent='▶ 同步播放';document.getElementById('p2BadProg').style.width='0%';document.getElementById('p2GoodProg').style.width='0%';
+        document.getElementById('p2BadTime').textContent='0:00';document.getElementById('p2GoodTime').textContent='0:00';
+        closeP2Ad('bad');closeP2Ad('good');updateP2Scene('bad',0);updateP2Scene('good',0);
+        document.getElementById('p2BadCurveInfo').textContent='等待播放';document.getElementById('p2GoodCurveInfo').textContent='等待播放';
+        document.getElementById('p2GoodCurveHint').textContent='';document.getElementById('p2GoodCurveHint').className='curve-hint';
+        document.getElementById('learningBadge').classList.remove('show');
+        const bc=document.getElementById('p2BadCanvas'),gc=document.getElementById('p2GoodCanvas');
+        badCanvasCtx=bc.getContext('2d');goodCanvasCtx=gc.getContext('2d');
+        [bc,gc].forEach(c=>{c.width=c.clientWidth;c.height=c.clientHeight;});
+        drawCurve(badCanvasCtx,0,'#ef4444',[]);drawCurve(goodCanvasCtx,0,'#22c55e',[]);
+    }
+
+    function drawCurve(ctx,p,color,pts) {
+        if(!ctx||!ctx.canvas)return;const w=ctx.canvas.width,h=ctx.canvas.height;if(w===0||h===0)return;
+        ctx.clearRect(0,0,w,h);
+        ctx.strokeStyle='rgba(255,255,255,0.05)';ctx.lineWidth=0.5;
+        for(let x=0;x<w;x+=20){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+        for(let y=0;y<h;y+=10){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+        ctx.beginPath();ctx.strokeStyle=color;ctx.lineWidth=2;
+        for(let x=0;x<=w;x+=2){const pct=x/w*100,base=0.3+0.4*Math.sin(pct*Math.PI/25)+0.2*Math.sin(pct*Math.PI/8);const y=h-base*h;x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+        ctx.stroke();
+        pts.forEach(pct=>{const x=pct/100*w,base=0.3+0.4*Math.sin(pct*Math.PI/25)+0.2*Math.sin(pct*Math.PI/8),y=h-base*h;ctx.beginPath();ctx.fillStyle='#22c55e';ctx.shadowColor='#22c55e';ctx.shadowBlur=8;ctx.arc(x,y,6,0,2*Math.PI);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='#fff';ctx.font='8px sans-serif';ctx.textAlign='center';ctx.fillText('🎯',x,y-10);});
+        const mx=p/100*w,baseM=0.3+0.4*Math.sin(p*Math.PI/25)+0.2*Math.sin(p*Math.PI/8),my=h-baseM*h;
+        ctx.beginPath();ctx.fillStyle='#fff';ctx.arc(mx,my,4,0,2*Math.PI);ctx.fill();
+        ctx.beginPath();ctx.strokeStyle=color;ctx.lineWidth=1;ctx.setLineDash([3,3]);ctx.moveTo(mx,0);ctx.lineTo(mx,h);ctx.stroke();ctx.setLineDash([]);
+    }
+
+    function switchP2Mode(m){state.p2Mode=m;document.getElementById('p2BadBtn').className=m==='bad'?'active-bad':'';document.getElementById('p2GoodBtn').className=m==='good'?'active-good':'';document.getElementById('p2ModeTag').textContent=m==='bad'?'❌ 传统模式':'✅ AI 模式';document.getElementById('p2ModeTag').className=`mode-tag ${m}`;}
+    function toggleP2Play(){if(state.p2Playing){clearInterval(state.p2Timer);state.p2Timer=null;state.p2Playing=false;document.getElementById('p2PlayBtn').textContent='▶ 同步播放';}else{state.p2Playing=true;document.getElementById('p2PlayBtn').textContent='⏸ 暂停';state.p2Timer=setInterval(tickP2,100);}}
+    function resetP2(){
+        if(state.p2Timer){clearInterval(state.p2Timer);state.p2Timer=null;}
+        state.p2Playing=false;state.p2Prog={bad:0,good:0};state.p2AdShowing={bad:false,good:false};state.p2AdCount={bad:30,good:15};state.p2AdHistory={bad:[],good:[]};state.p2Skipped=false;
+        if(state.p2AdTimers.bad){clearInterval(state.p2AdTimers.bad);state.p2AdTimers.bad=null;}if(state.p2AdTimers.good){clearInterval(state.p2AdTimers.good);state.p2AdTimers.good=null;}
+        document.getElementById('p2PlayBtn').textContent='▶ 同步播放';document.getElementById('p2BadProg').style.width='0%';document.getElementById('p2GoodProg').style.width='0%';
+        document.getElementById('p2BadTime').textContent='0:00';document.getElementById('p2GoodTime').textContent='0:00';
+        closeP2Ad('bad');closeP2Ad('good');updateP2Scene('bad',0);updateP2Scene('good',0);
+        if(badCanvasCtx)drawCurve(badCanvasCtx,0,'#ef4444',[]);if(goodCanvasCtx)drawCurve(goodCanvasCtx,0,'#22c55e',[]);
+        document.getElementById('p2BadCurveInfo').textContent='等待播放';document.getElementById('p2GoodCurveInfo').textContent='等待播放';
+        document.getElementById('p2GoodCurveHint').textContent='';document.getElementById('p2GoodCurveHint').className='curve-hint';document.getElementById('learningBadge').classList.remove('show');
+    }
+
+    function tickP2(){
+        if(!state.p2Playing)return;
+        const sp=0.8;
+        if(!state.p2AdShowing.bad){state.p2Prog.bad=Math.min(state.p2Prog.bad+sp,100);document.getElementById('p2BadProg').style.width=state.p2Prog.bad+'%';const secs=Math.floor(state.p2Prog.bad/100*120);document.getElementById('p2BadTime').textContent=`${Math.floor(secs/60)}:${String(secs%60).padStart(2,'0')}`;updateP2Scene('bad',state.p2Prog.bad);drawCurve(badCanvasCtx,state.p2Prog.bad,'#ef4444',state.p2AdHistory.bad);document.getElementById('p2BadCurveInfo').textContent=`进度 ${Math.round(state.p2Prog.bad)}%`;checkP2Ad('bad');}
+        if(!state.p2AdShowing.good){state.p2Prog.good=Math.min(state.p2Prog.good+sp,100);document.getElementById('p2GoodProg').style.width=state.p2Prog.good+'%';const secs=Math.floor(state.p2Prog.good/100*120);document.getElementById('p2GoodTime').textContent=`${Math.floor(secs/60)}:${String(secs%60).padStart(2,'0')}`;updateP2Scene('good',state.p2Prog.good);drawCurve(goodCanvasCtx,state.p2Prog.good,'#22c55e',state.p2AdHistory.good);const rising=state.p2Prog.good<30;document.getElementById('p2GoodCurveInfo').textContent=`进度 ${Math.round(state.p2Prog.good)}% · ${rising?'情绪上升中':'情绪回落·黄金窗口'}`;checkP2Ad('good');}
+        if(state.p2Prog.bad>=100&&!state.p2AdShowing.bad&&state.p2Prog.good>=100&&!state.p2AdShowing.good){clearInterval(state.p2Timer);state.p2Timer=null;state.p2Playing=false;document.getElementById('p2PlayBtn').textContent='▶ 同步播放';}
+    }
+    function updateP2Scene(side,pct){const d=SCENE_DATA[state.selectedVideo];if(!d)return;const idx=Math.min(Math.floor(pct/100*d.scenes.length),d.scenes.length-1);if(side==='bad'){document.getElementById('p2BadScene').textContent=d.scenes[idx]||'';document.getElementById('p2BadEmotion').textContent=d.emotions[idx]||'😐';}else{document.getElementById('p2GoodScene').textContent=d.scenes[idx]||'';document.getElementById('p2GoodEmotion').textContent=d.emotions[idx]||'😐';}}
+
+    function checkP2Ad(side){
+        if(side==='bad'){for(let pt of[3,42,72]){if(Math.abs(state.p2Prog.bad-pt)<0.8&&!state.p2AdHistory.bad.includes(pt)){showP2Ad('bad',pt===3?'前贴':'中插');state.p2AdHistory.bad.push(pt);return;}}}
+        else{for(let pt of[5,38,65]){if(Math.abs(state.p2Prog.good-pt)<0.8&&!state.p2AdHistory.good.includes(pt)){let adjusted=false;if(state.p2Skipped&&pt===38)adjusted=true;showP2Ad('good',pt===5?'前贴':'中插',adjusted);state.p2AdHistory.good.push(pt);const h=document.getElementById('p2GoodCurveHint');if(adjusted){h.textContent='🎯 AI已学习·切换游戏广告';h.className='curve-hint hint-purple';document.getElementById('learningBadge').classList.add('show');document.getElementById('learningText').textContent='🧠 已学习·跳过后换品类';}else{h.textContent=pt===5?'🎯 AI基于画像推送前贴':'🎯 情绪回落·黄金窗口';h.className='curve-hint hint-green';}return;}}}
+    }
+
+    function showP2Ad(side,type,adjusted){
+        if(state.p2AdShowing[side])return;state.p2AdShowing[side]=true;
+        const u=USER_DATA[state.selectedVideo];
+        const el=side==='bad'?{ov:document.getElementById('p2BadAd'),tm:document.getElementById('p2BadTimer'),ti:document.getElementById('p2BadAdTitle'),de:document.getElementById('p2BadAdDesc'),re:document.getElementById('p2BadAdReason')}:{ov:document.getElementById('p2GoodAd'),tm:document.getElementById('p2GoodTimer'),ti:document.getElementById('p2GoodAdTitle'),de:document.getElementById('p2GoodAdDesc'),re:document.getElementById('p2GoodAdReason')};
+        if(side==='bad'){el.ti.textContent=type==='前贴'?u.badAd.split('·')[0]:'××× 汽车广告';el.de.textContent=type==='前贴'?u.badAd.split('·')[1]||'通用产品':'驾驭未来';el.re.textContent=type==='前贴'?'通用投放·无用户分析':'固定时间点·无视剧情';state.p2AdCount.bad=30;el.tm.textContent='⏱ 30s';}
+        else{if(adjusted){el.ti.textContent='🎮 某休闲游戏';el.de.textContent='轻松一刻';el.re.textContent='✅ AI学习：跳过原广告→切换品类';}else if(type==='前贴'){el.ti.textContent=u.goodAdPre.split('·')[0];el.de.textContent=u.goodAdPre.split('·')[1]||'推荐';el.re.textContent=`✅ ${u.aiReason.split('·')[0]}→${u.aiInfer.split('→')[0]}`;}else{el.ti.textContent=u.goodAdMid.split('·')[0];el.de.textContent=u.goodAdMid.split('·')[1]||'推荐';el.re.textContent=`✅ 场景+${u.aiInfer.split('→')[1]||'情绪'}`;}state.p2AdCount.good=15;el.tm.textContent='⏱ 15s';}
+        el.ov.classList.add('show');
+        if(state.p2AdTimers[side])clearInterval(state.p2AdTimers[side]);
+        state.p2AdTimers[side]=setInterval(()=>{if(side==='bad'){state.p2AdCount.bad--;if(state.p2AdCount.bad<=0){closeP2Ad('bad');return;}document.getElementById('p2BadTimer').textContent=`⏱ ${state.p2AdCount.bad}s`;}else{state.p2AdCount.good--;if(state.p2AdCount.good<=0){closeP2Ad('good');document.getElementById('p2GoodCurveHint').textContent='';document.getElementById('p2GoodCurveHint').className='curve-hint';return;}document.getElementById('p2GoodTimer').textContent=`⏱ ${state.p2AdCount.good}s`;}},1000);
+    }
+
+    function closeP2Ad(side){
+        if(side==='good'&&state.p2AdShowing.good)state.p2Skipped=true;
+        state.p2AdShowing[side]=false;
+        if(side==='bad'){document.getElementById('p2BadAd').classList.remove('show');if(state.p2AdTimers.bad){clearInterval(state.p2AdTimers.bad);state.p2AdTimers.bad=null;}state.p2AdCount.bad=30;}
+        else{document.getElementById('p2GoodAd').classList.remove('show');if(state.p2AdTimers.good){clearInterval(state.p2AdTimers.good);state.p2AdTimers.good=null;}state.p2AdCount.good=15;}
+    }
+
+    selVid(document.querySelector('.video-list-item'));
+    window.addEventListener('resize',()=>{if(badCanvasCtx&&goodCanvasCtx){const bc=document.getElementById('p2BadCanvas'),gc=document.getElementById('p2GoodCanvas');if(bc&&gc){[bc,gc].forEach(c=>{c.width=c.clientWidth;c.height=c.clientHeight;});drawCurve(badCanvasCtx,state.p2Prog.bad,'#ef4444',state.p2AdHistory.bad);drawCurve(goodCanvasCtx,state.p2Prog.good,'#22c55e',state.p2AdHistory.good);}}});
+    console.log('✅ 完整版：第三页包含完整5步逻辑链条');
+</script>
+</body>
+</html>
