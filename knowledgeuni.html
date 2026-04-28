@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌌 知识宇宙 · 七大星系全景</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0e1a;
+            color: #e0e6f0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .stars {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0; overflow: hidden;
+        }
+        .star {
+            position: absolute; border-radius: 50%; background: #fff;
+            animation: twinkle var(--duration) ease-in-out infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+        .container {
+            position: relative; z-index: 1;
+            max-width: 1300px; margin: 0 auto; padding: 20px 20px 60px;
+        }
+        .header {
+            text-align: center; padding: 50px 20px 40px;
+        }
+        .header h1 {
+            font-size: 3.2rem; font-weight: 800;
+            background: linear-gradient(135deg, #f0e6ff, #a78bfa, #60a5fa, #34d399);
+            background-size: 300% 300%;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 6s ease-in-out infinite;
+            letter-spacing: 4px;
+        }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .header .subtitle {
+            font-size: 1.15rem; color: #8899bb; margin-top: 12px;
+            letter-spacing: 2px; font-weight: 300;
+        }
+        .galaxy-tabs {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 12px; margin: 35px 0 30px;
+        }
+        .galaxy-tab {
+            display: flex; align-items: center; gap: 8px;
+            padding: 12px 22px; border-radius: 50px;
+            border: 2px solid transparent;
+            background: rgba(20, 26, 46, 0.75);
+            backdrop-filter: blur(8px); cursor: pointer;
+            transition: all 0.35s;
+            font-size: 0.95rem; font-weight: 600;
+            color: #8899bb; user-select: none;
+        }
+        .galaxy-tab:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+        }
+        .galaxy-tab.active { color: #fff; transform: translateY(-3px); }
+        .galaxy-tab .badge {
+            font-size: 0.7rem;
+            background: rgba(255,255,255,0.1);
+            padding: 2px 10px; border-radius: 20px;
+            color: #aabbdd;
+        }
+        .content-area { position: relative; min-height: 400px; margin-top: 10px; }
+        .galaxy-content { display: none; }
+        .galaxy-content.active { display: block; }
+        .knowledge-tree { display: flex; flex-direction: column; gap: 8px; }
+        .node-level-0 {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 14px; padding: 18px 24px;
+        }
+        .node-level-0 .node-title {
+            font-size: 1.15rem; font-weight: 700;
+            display: flex; align-items: center; gap: 10px;
+            cursor: pointer; user-select: none;
+        }
+        .node-level-0 .node-title .toggle {
+            font-size: 0.85rem; color: #7788aa;
+            transition: transform 0.3s;
+            display: inline-block; width: 18px; text-align: center;
+        }
+        .node-level-0 .node-title .toggle.open { transform: rotate(90deg); }
+        .node-level-0 .node-title .tag {
+            font-size: 0.7rem; padding: 2px 12px; border-radius: 20px;
+            background: rgba(255,255,255,0.08); color: #99aacd;
+            margin-left: auto;
+        }
+        .node-level-0 .node-desc {
+            color: #99aacd; font-size: 0.92rem;
+            margin-top: 6px; line-height: 1.6; padding-left: 28px;
+        }
+        .node-level-0 .node-children {
+            padding-left: 20px; margin-top: 10px;
+            display: flex; flex-direction: column; gap: 6px;
+            border-left: 2px solid rgba(255,255,255,0.06);
+        }
+        .node-level-0 .node-children.collapsed { display: none; }
+        .node-level-1 {
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px; padding: 12px 18px;
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+        .node-level-1 .node-title {
+            font-size: 1rem; font-weight: 600;
+            display: flex; align-items: center; gap: 8px;
+            cursor: pointer; user-select: none;
+        }
+        .node-level-1 .node-title .toggle {
+            font-size: 0.8rem; color: #667799;
+            transition: transform 0.3s;
+            display: inline-block; width: 16px; text-align: center;
+        }
+        .node-level-1 .node-title .toggle.open { transform: rotate(90deg); }
+        .node-level-1 .node-desc {
+            color: #8899bb; font-size: 0.88rem;
+            margin-top: 4px; line-height: 1.5; padding-left: 24px;
+        }
+        .node-level-1 .node-children {
+            padding-left: 16px; margin-top: 8px;
+            display: flex; flex-direction: column; gap: 4px;
+            border-left: 2px solid rgba(255,255,255,0.04);
+        }
+        .node-level-1 .node-children.collapsed { display: none; }
+        .node-level-2 {
+            padding: 8px 14px 8px 20px; border-radius: 8px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.03);
+            display: flex; align-items: flex-start; gap: 8px;
+        }
+        .node-level-2 .bullet { color: #667799; font-size: 0.8rem; margin-top: 2px; flex-shrink: 0; }
+        .node-level-2 .text { flex: 1; }
+        .node-level-2 .text .label { font-weight: 500; font-size: 0.9rem; }
+        .node-level-2 .text .explain { color: #7788aa; font-size: 0.82rem; margin-top: 1px; }
+        .footer-map {
+            margin-top: 60px; padding: 30px; border-radius: 16px;
+            background: rgba(20,26,46,0.5); backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .footer-map h3 {
+            text-align: center; font-size: 1.3rem; font-weight: 600;
+            color: #aabbdd; margin-bottom: 20px; letter-spacing: 2px;
+        }
+        .footer-map .map-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+        }
+        .footer-map .map-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 16px; border-radius: 10px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.04);
+            cursor: pointer; transition: all 0.25s;
+        }
+        .footer-map .map-item:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateX(4px);
+        }
+        .footer-map .map-item .mi-icon { font-size: 1.5rem; flex-shrink: 0; }
+        .footer-map .map-item .mi-text { flex: 1; }
+        .footer-map .map-item .mi-text .mi-name { font-weight: 600; font-size: 0.95rem; }
+        .footer-map .map-item .mi-text .mi-desc { color: #7788aa; font-size: 0.8rem; }
+        .footer-map .map-item .mi-arrow { color: #445577; font-size: 1.1rem; }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .galaxy-tab { padding: 8px 14px; font-size: 0.8rem; }
+            .galaxy-tab .badge { display: none; }
+            .node-level-0 { padding: 14px 16px; }
+            .node-level-1 { padding: 10px 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="container">
+        <div class="header">
+            <h1>🌌 知识宇宙</h1>
+            <p class="subtitle">从 Clash 到 AI · 七大星系全景知识图谱</p>
+        </div>
+        <div class="galaxy-tabs" id="galaxyTabs"></div>
+        <div class="content-area" id="contentArea">
+            <div style="text-align:center;padding:60px;color:#667799;">⏳ 加载中...</div>
+        </div>
+        <div class="footer-map">
+            <h3>🗺️ 知识宇宙全景图</h3>
+            <div class="map-grid" id="mapGrid"></div>
+        </div>
+    </div>
+    <script>
+        // 星系数据
+        const GALAXIES = [
+            { id:0, name:'网络代理', icon:'🔌', color:'#ff6b6b', desc:'Clash Verge、代理协议、机场', count:12,
+              trees: [
+                  { title:'🔌 Clash Verge', tag:'工具', desc:'Clash 的图形界面客户端',
+                    children: [
+                        { title:'Clash 核心引擎', tag:'引擎', desc:'开源代理工具核心',
+                          children: [
+                              { label:'配置文件格式', explain:'YAML 格式' },
+                              { label:'核心版本', explain:'Clash Meta 最活跃' }
+                          ]
+                        },
+                        { title:'代理协议', tag:'协议', desc:'代理通信语言',
+                          children: [
+                              { label:'V2Ray / VMess', explain:'最主流协议' },
+                              { label:'Shadowsocks', explain:'早期主流' },
+                              { label:'Trojan', explain:'伪装 HTTPS' }
+                          ]
+                        },
+                        { title:'机场', tag:'服务', desc:'代理服务商',
+                          children: [
+                              { label:'节点质量', explain:'延迟、丢包率、带宽' },
+                              { label:'流量计费', explain:'按 GB/TB 计费' }
+                          ]
+                        },
+                        { title:'规则模式', tag:'配置', desc:'流量分流规则',
+                          children: [
+                              { label:'全局', explain:'全部走代理' },
+                              { label:'规则', explain:'国内直连国外代理' },
+                              { label:'直连', explain:'全部不走代理' }
+                          ]
+                        }
+                    ]
+                  }
+              ]
+            },
+            { id:1, name:'开源协作', icon:'🐙', color:'#4ecdc4', desc:'GitHub、Git、开源许可证', count:10,
+              trees: [
+                  { title:'🐙 GitHub 核心功能', tag:'平台', desc:'全球最大代码托管平台',
+                    children: [
+                        { title:'仓库', tag:'基础', desc:'存放代码的地方' },
+                        { title:'Fork', tag:'协作', desc:'复制别人仓库' },
+                        { title:'Pull Request', tag:'协作', desc:'提交修改建议' },
+                        { title:'Actions', tag:'CI/CD', desc:'自动化工作流' }
+                    ]
+                  },
+                  { title:'🔧 Git 进阶', tag:'工具', desc:'版本控制工具',
+                    children: [
+                        { label:'Branch', explain:'分支开发' },
+                        { label:'Merge', explain:'合并分支' },
+                        { label:'Rebase', explain:'变基' }
+                    ]
+                  },
+                  { title:'📜 开源许可证', tag:'法律', desc:'代码使用规则',
+                    children: [
+                        { label:'MIT', explain:'最宽松' },
+                        { label:'GPL', explain:'必须开源' }
+                    ]
+                  }
+              ]
+            },
+            { id:2, name:'企业协作', icon:'📋', color:'#45b7d1', desc:'飞书、钉钉、Slack', count:8,
+              trees: [
+                  { title:'📋 协作工具市场', tag:'概览', desc:'不同产品定位不同',
+                    children: [
+                        { label:'飞书', explain:'字节跳动出品' },
+                        { label:'钉钉', explain:'阿里出品' },
+                        { label:'企业微信', explain:'腾讯出品' },
+                        { label:'Slack', explain:'美国最主流' }
+                    ]
+                  },
+                  { title:'✨ 飞书特色', tag:'深度', desc:'不只是聊天工具',
+                    children: [
+                        { label:'多维表格', explain:'比 Excel 更像数据库' },
+                        { label:'飞书妙记', explain:'会议自动转文字' }
+                    ]
+                  }
+              ]
+            },
+            { id:3, name:'AI 工具调用', icon:'🔧', color:'#96ceb4', desc:'API、MCP、Skills、Agent', count:14,
+              trees: [
+                  { title:'🔌 API', tag:'核心', desc:'程序间通信接口',
+                    children: [
+                        { label:'RESTful API', explain:'最主流' },
+                        { label:'GraphQL', explain:'精确请求' },
+                        { label:'API Key', explain:'认证方式' }
+                    ]
+                  },
+                  { title:'📡 MCP', tag:'标准', desc:'模型上下文协议',
+                    children: [
+                        { label:'核心思想', explain:'标准化 AI 工具连接' },
+                        { label:'应用场景', explain:'AI 查数据库、读文件' }
+                    ]
+                  },
+                  { title:'🛠️ Skills', tag:'能力', desc:'给 AI 装外挂',
+                    children: [
+                        { label:'搜索技能', explain:'联网查信息' },
+                        { label:'代码执行', explain:'运行 Python' }
+                    ]
+                  },
+                  { title:'🤖 Agent', tag:'未来', desc:'自主规划执行' },
+                  { title:'📚 RAG', tag:'准确', desc:'检索增强生成' }
+              ]
+            },
+            { id:4, name:'AI 黑话大全', icon:'🧠', color:'#ffeaa7', desc:'LLM、Token、幻觉', count:22,
+              trees: [
+                  { title:'🧠 模型相关', tag:'基础', desc:'AI 模型核心概念',
+                    children: [
+                        { label:'LLM', explain:'大语言模型' },
+                        { label:'多模态', explain:'文字+图片+音频' },
+                        { label:'参数', explain:'模型大小指标' },
+                        { label:'上下文窗口', explain:'最大处理文本量' },
+                        { label:'幻觉', explain:'AI 编造事实' }
+                    ]
+                  },
+                  { title:'🏋️ 训练相关', tag:'训练', desc:'模型怎么学出来的',
+                    children: [
+                        { label:'预训练', explain:'从零训练' },
+                        { label:'微调', explain:'特定数据训练' },
+                        { label:'LoRA', explain:'轻量微调' }
+                    ]
+                  },
+                  { title:'💡 推理相关', tag:'使用', desc:'实际使用概念',
+                    children: [
+                        { label:'Temperature', explain:'控制创造性' },
+                        { label:'Token', explain:'最小处理单位' },
+                        { label:'思维链', explain:'一步步推理' }
+                    ]
+                  },
+                  { title:'🌐 产品平台', tag:'生态', desc:'主流 AI 产品',
+                    children: [
+                        { label:'ChatGPT', explain:'OpenAI' },
+                        { label:'Claude', explain:'Anthropic' },
+                        { label:'Gemini', explain:'Google' },
+                        { label:'DeepSeek', explain:'深度求索' }
+                    ]
+                  }
+              ]
+            },
+            { id:5, name:'编程语言', icon:'💻', color:'#dda0dd', desc:'语言分类、生态框架', count:16,
+              trees: [
+                  { title:'📊 语言分类', tag:'全景', desc:'按离硬件距离',
+                    children: [
+                        { label:'底层', explain:'C/C++/Rust' },
+                        { label:'中层', explain:'Go/Java/C#' },
+                        { label:'高层', explain:'Python/JS/TS' }
+                    ]
+                  },
+                  { title:'🐍 Python 生态', tag:'Python', desc:'最简单语言',
+                    children: [
+                        { label:'Web 框架', explain:'Django/Flask' },
+                        { label:'AI/ML', explain:'PyTorch/TensorFlow' }
+                    ]
+                  },
+                  { title:'🌐 JavaScript 生态', tag:'JS', desc:'浏览器唯一语言',
+                    children: [
+                        { label:'前端框架', explain:'React/Vue' },
+                        { label:'TypeScript', explain:'JS 超集' }
+                    ]
+                  }
+              ]
+            },
+            { id:6, name:'数据库生态', icon:'🗄️', color:'#f0b27a', desc:'SQL、NoSQL、向量数据库', count:11,
+              trees: [
+                  { title:'🗄️ 关系型数据库', tag:'经典', desc:'表结构存储',
+                    children: [
+                        { label:'MySQL', explain:'最流行' },
+                        { label:'PostgreSQL', explain:'功能最强' },
+                        { label:'SQLite', explain:'轻量嵌入式' }
+                    ]
+                  },
+                  { title:'📦 NoSQL', tag:'灵活', desc:'非关系型',
+                    children: [
+                        { label:'MongoDB', explain:'文档型' },
+                        { label:'Redis', explain:'内存型' }
+                    ]
+                  },
+                  { title:'🔢 向量数据库', tag:'前沿', desc:'AI 时代核心',
+                    children: [
+                        { label:'Milvus', explain:'最主流' },
+                        { label:'Pinecone', explain:'商业托管' }
+                    ]
+                  },
+                  { title:'📝 SQL 基础', tag:'技能', desc:'核心查询语言',
+                    children: [
+                        { label:'SELECT', explain:'查询' },
+                        { label:'INSERT', explain:'插入' },
+                        { label:'JOIN', explain:'关联表' }
+                    ]
+                  }
+              ]
+            }
+        ];
+
+        // 渲染
+        let currentGalaxy = 0;
+
+        function createStars() {
+            const c = document.getElementById('stars');
+            for (let i = 0; i < 120; i++) {
+                const s = document.createElement('div');
+                s.className = 'star';
+                const size = Math.random() * 2.5 + 1;
+                s.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--duration:${Math.random()*3+2}s;animation-delay:${Math.random()*5}s;opacity:${Math.random()*0.5+0.2}`;
+                c.appendChild(s);
+            }
+        }
+
+        function renderTabs() {
+            const c = document.getElementById('galaxyTabs');
+            c.innerHTML = '';
+            GALAXIES.forEach((g, i) => {
+                const t = document.createElement('div');
+                t.className = `galaxy-tab${i===0?' active':''}`;
+                t.style.borderColor = i===0 ? g.color : 'transparent';
+                t.style.background = i===0 ? `${g.color}22` : '';
+                t.innerHTML = `<span style="font-size:1.3rem">${g.icon}</span><span>${g.name}</span><span class="badge">${g.count}</span>`;
+                t.onclick = () => switchGalaxy(i);
+                c.appendChild(t);
+            });
+        }
+
+        function switchGalaxy(idx) {
+            currentGalaxy = idx;
+            document.querySelectorAll('.galaxy-tab').forEach((t, i) => {
+                const g = GALAXIES[i];
+                t.classList.toggle('active', i===idx);
+                t.style.borderColor = i===idx ? g.color : 'transparent';
+                t.style.background = i===idx ? `${g.color}22` : '';
+            });
+            renderContent(idx);
+        }
+
+        function renderContent(idx) {
+            const area = document.getElementById('contentArea');
+            const g = GALAXIES[idx];
+            let html = `<div class="galaxy-content active">`;
+            html += `<h2 style="font-size:1.8rem;margin-bottom:20px;color:${g.color};">${g.icon} ${g.name}</h2>`;
+            html += `<p style="color:#99aacd;margin-bottom:24px;">${g.headerDesc || g.desc}</p>`;
+            html += `<div class="knowledge-tree">`;
+            g.trees.forEach(node => {
+                html += buildNode(node, 0);
+            });
+            html += `</div></div>`;
+            area.innerHTML = html;
+            // 绑定点击事件
+            area.querySelectorAll('.node-title').forEach(el => {
+                el.onclick = function(e) {
+                    e.stopPropagation();
+                    const parent = this.closest('[data-children]');
+                    if (!parent) return;
+                    const children = parent.querySelector(':scope > .node-children');
+                    const toggle = this.querySelector('.toggle');
+                    if (children) {
+                        children.classList.toggle('collapsed');
+                        if (toggle) toggle.classList.toggle('open');
+                    }
+                };
+            });
+        }
+
+        function buildNode(node, level) {
+            const hasChildren = node.children && node.children.length > 0;
+            let html = '';
+            if (level === 0) {
+                html = `<div class="node-level-0" data-children="${hasChildren}">
+                    <div class="node-title">
+                        ${hasChildren ? '<span class="toggle open">▶</span>' : '<span style="width:18px"></span>'}
+                        <span>${node.title||''}</span>
+                        ${node.tag ? `<span class="tag">${node.tag}</span>` : ''}
+                    </div>
+                    ${node.desc ? `<div class="node-desc">${node.desc}</div>` : ''}
+                    ${hasChildren ? buildChildren(node.children, 1) : ''}
+                </div>`;
+            } else {
+                html = `<div class="node-level-1" data-children="${hasChildren}">
+                    <div class="node-title">
+                        ${hasChildren ? '<span class="toggle open">▶</span>' : '<span style="width:16px"></span>'}
+                        <span>${node.title||''}</span>
+                        ${node.tag ? `<span class="tag">${node.tag}</span>` : ''}
+                    </div>
+                    ${node.desc ? `<div class="node-desc">${node.desc}</div>` : ''}
+                    ${hasChildren ? buildChildren(node.children, 2) : ''}
+                </div>`;
+            }
+            return html;
+        }
+
+        function buildChildren(children, level) {
+            let html = '<div class="node-children">';
+            children.forEach(child => {
+                if (level === 1) {
+                    html += buildNode(child, 1);
+                } else {
+                    html += `<div class="node-level-2">
+                        <span class="bullet">▸</span>
+                        <div class="text">
+                            <div class="label">${child.label||child.title||''}</div>
+                            ${child.explain||child.desc ? `<div class="explain">${child.explain||child.desc}</div>` : ''}
+                        </div>
+                    </div>`;
+                }
+            });
+            html += '</div>';
+            return html;
+        }
+
+        function renderMap() {
+            const grid = document.getElementById('mapGrid');
+            grid.innerHTML = '';
+            GALAXIES.forEach((g, i) => {
+                const item = document.createElement('div');
+                item.className = 'map-item';
+                item.innerHTML = `
+                    <span class="mi-icon">${g.icon}</span>
+                    <div class="mi-text">
+                        <div class="mi-name" style="color:${g.color}">${g.name}</div>
+                        <div class="mi-desc">${g.desc}</div>
+                    </div>
+                    <span class="mi-arrow">→</span>
+                `;
+                item.onclick = () => {
+                    switchGalaxy(i);
+                    document.querySelector('.galaxy-tabs').scrollIntoView({behavior:'smooth'});
+                };
+                grid.appendChild(item);
+            });
+        }
+
+        createStars();
+        renderTabs();
+        renderContent(0);
+        renderMap();
+    </script>
+</body>
+</html>
