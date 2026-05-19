@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>人格心理学 · 跨学科全量知识库 — 思维导图</title>
+<title>人格心理学 · 跨学科全量知识库 — 完整思维导图</title>
 <style>
   :root {
-    --bg: #0f0f1a;
-    --card: #1a1a2e;
-    --card2: #16213e;
+    --bg: #0d0d1a;
+    --card: #141425;
+    --card2: #1a1a35;
     --accent: #e94560;
     --gold: #f5c518;
     --cyan: #00d4ff;
@@ -17,98 +17,71 @@
     --pink: #ff80ab;
     --orange: #ffab40;
     --teal: #1de9b6;
-    --text: #e8e8e8;
-    --text2: #a0a0b8;
-    --border: #2a2a4a;
-    --shadow: rgba(0,0,0,0.4);
+    --text: #eaeaea;
+    --text2: #9090b0;
+    --border: #2a2a50;
+    --shadow: rgba(0,0,0,0.5);
+    --red: #e94560;
+    --blue: #00d4ff;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
   }
-
-  /* ===== HEADER ===== */
   .header {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    padding: 40px 30px 30px;
+    background: linear-gradient(135deg, #0f0f2a 0%, #1a1a3e 50%, #0f3460 100%);
+    padding: 36px 20px 24px;
     text-align: center;
     border-bottom: 2px solid var(--accent);
     position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: radial-gradient(circle at 30% 50%, rgba(233,69,96,0.06) 0%, transparent 60%),
-                radial-gradient(circle at 70% 30%, rgba(0,212,255,0.06) 0%, transparent 60%);
-    pointer-events: none;
   }
   .header h1 {
-    font-size: 2.4em;
+    font-size: 2.2em;
     font-weight: 800;
     background: linear-gradient(135deg, #f5c518, #e94560, #00d4ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     letter-spacing: 2px;
-    position: relative;
-    z-index: 1;
   }
-  .header .subtitle {
-    color: var(--text2);
-    font-size: 1.05em;
-    margin-top: 12px;
-    position: relative;
-    z-index: 1;
-  }
-  .header .stats {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px 30px;
-    margin-top: 18px;
-    position: relative;
-    z-index: 1;
-  }
+  .header .sub { color: var(--text2); font-size: 0.95em; margin-top: 8px; }
+  .header .stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 12px; margin-top: 14px; }
   .header .stats span {
-    background: rgba(255,255,255,0.06);
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 0.9em;
+    background: rgba(255,255,255,0.05);
+    padding: 4px 12px;
+    border-radius: 14px;
+    font-size: 0.78em;
     color: var(--text2);
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.06);
   }
-  .header .stats span strong { color: var(--gold); }
+  .header .stats span b { color: var(--gold); }
 
-  /* ===== CONTROLS ===== */
   .controls {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    padding: 16px 20px;
-    background: rgba(26,26,46,0.8);
-    backdrop-filter: blur(10px);
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(20,20,37,0.92);
+    backdrop-filter: blur(12px);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
     border-bottom: 1px solid var(--border);
   }
   .controls button {
     background: var(--card2);
     color: var(--text2);
     border: 1px solid var(--border);
-    padding: 8px 18px;
+    padding: 7px 16px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 0.85em;
-    transition: all 0.3s;
+    font-size: 0.82em;
+    transition: all 0.25s;
   }
   .controls button:hover {
     background: var(--accent);
@@ -116,1692 +89,1151 @@
     border-color: var(--accent);
     transform: translateY(-1px);
   }
+  .controls .search-wrap {
+    position: relative;
+    display: inline-block;
+  }
   .controls input {
     background: var(--card);
     color: var(--text);
     border: 1px solid var(--border);
-    padding: 8px 16px;
+    padding: 7px 14px 7px 32px;
     border-radius: 8px;
-    font-size: 0.85em;
-    width: 240px;
+    font-size: 0.83em;
+    width: 260px;
     max-width: 100%;
     outline: none;
     transition: border-color 0.3s;
   }
   .controls input:focus { border-color: var(--cyan); }
-
-  /* ===== MAIN CONTENT ===== */
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px;
+  .controls .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text2);
+    font-size: 0.85em;
+    pointer-events: none;
   }
+  .controls .search-count {
+    font-size: 0.78em;
+    color: var(--text2);
+    padding: 7px 12px;
+    display: none;
+  }
+  .controls .search-count.show { display: inline-block; }
 
-  /* ===== OVERVIEW CARDS ===== */
+  .container { max-width: 1460px; margin: 0 auto; padding: 16px; }
+
+  /* Overview Cards */
   .overview {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 14px;
-    margin-bottom: 40px;
+    gap: 10px;
+    margin-bottom: 32px;
   }
-  .overview-card {
+  .card {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 16px 18px;
+    padding: 14px 16px;
     cursor: pointer;
     transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
   }
-  .overview-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  .card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+  .card .badge {
+    display: inline-flex; width: 26px; height: 26px;
+    border-radius: 50%; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.8em; color: #fff; margin-right: 8px; flex-shrink: 0;
   }
-  .overview-card .badge {
-    display: inline-block;
-    width: 28px; height: 28px;
-    line-height: 28px;
-    text-align: center;
-    border-radius: 50%;
-    font-weight: 700;
-    font-size: 0.85em;
-    margin-right: 8px;
-    color: #fff;
-  }
-  .overview-card h3 {
-    display: inline;
-    font-size: 1em;
-    color: var(--text);
-  }
-  .overview-card .question {
-    color: var(--text2);
-    font-size: 0.82em;
-    margin-top: 6px;
-    line-height: 1.5;
-  }
-  .overview-card .tags {
-    margin-top: 8px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-  }
-  .overview-card .tags span {
-    background: rgba(255,255,255,0.05);
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.72em;
+  .card h3 { display: inline; font-size: 0.95em; color: var(--text); }
+  .card .q { color: var(--text2); font-size: 0.78em; margin-top: 5px; line-height: 1.5; }
+  .card .tags { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 3px; }
+  .card .tags span {
+    background: rgba(255,255,255,0.04);
+    padding: 1px 7px;
+    border-radius: 3px;
+    font-size: 0.68em;
     color: var(--text2);
   }
 
-  /* ===== TREE MIND MAP ===== */
-  .mindmap-section {
-    margin-bottom: 30px;
-  }
-  .mindmap-section > h2 {
-    font-size: 1.5em;
-    padding-bottom: 12px;
-    margin-bottom: 20px;
+  /* Sections */
+  .section { margin-bottom: 28px; }
+  .section > h2 {
+    font-size: 1.35em;
+    padding-bottom: 10px;
+    margin-bottom: 16px;
     border-bottom: 2px solid var(--border);
     display: flex;
     align-items: center;
     gap: 10px;
   }
-  .mindmap-section > h2 .badge-lg {
-    display: inline-flex;
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    color: #fff;
-    font-size: 0.9em;
-    flex-shrink: 0;
+  .section > h2 .blg {
+    display: inline-flex; width: 34px; height: 34px;
+    border-radius: 50%; align-items: center; justify-content: center;
+    font-weight: 800; color: #fff; font-size: 0.85em; flex-shrink: 0;
   }
 
-  /* Tree base */
-  .tree-root { position: relative; }
-
+  /* Tree */
   .tree { margin-left: 0; }
-
   .tree ul {
     list-style: none;
     position: relative;
-    padding-left: 28px;
+    padding-left: 26px;
     margin: 0;
   }
   .tree ul::before {
     content: '';
     position: absolute;
-    left: 12px;
+    left: 11px;
     top: 0;
     bottom: 0;
     width: 2px;
     background: linear-gradient(to bottom, var(--border), transparent);
   }
-
   .tree li {
     position: relative;
-    padding: 3px 0;
+    padding: 2px 0;
     margin: 0;
   }
   .tree li::before {
     content: '';
     position: absolute;
-    left: -16px;
-    top: 16px;
-    width: 16px;
+    left: -15px;
+    top: 15px;
+    width: 15px;
     height: 2px;
     background: var(--border);
   }
-  .tree li:last-child::after {
-    content: none;
-  }
-
-  /* Node styling */
-  .tree details, .tree .leaf { position: relative; }
+  .tree li:last-child::after { content: none; }
 
   .tree summary {
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 6px 12px;
-    border-radius: 8px;
-    background: rgba(255,255,255,0.03);
+    padding: 5px 12px;
+    border-radius: 7px;
+    background: rgba(255,255,255,0.02);
     border: 1px solid transparent;
+    border-left: 3px solid var(--text2);
     transition: all 0.25s;
-    font-size: 0.92em;
+    font-size: 0.9em;
     line-height: 1.5;
     user-select: none;
   }
   .tree summary:hover {
-    background: rgba(255,255,255,0.07);
-    border-color: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.08);
   }
   .tree summary::-webkit-details-marker { display: none; }
   .tree summary::before {
     content: '▶';
-    font-size: 0.6em;
+    font-size: 0.55em;
     color: var(--text2);
     transition: transform 0.3s;
     display: inline-block;
-    width: 14px;
+    width: 12px;
   }
-  .tree details[open] > summary::before {
-    transform: rotate(90deg);
-  }
+  .tree details[open] > summary::before { transform: rotate(90deg); }
 
   .tree .leaf {
     display: inline-flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 6px;
-    padding: 5px 12px;
-    border-radius: 8px;
-    font-size: 0.9em;
-    line-height: 1.5;
-    border: 1px solid transparent;
+    padding: 4px 12px;
+    border-radius: 7px;
+    font-size: 0.87em;
+    line-height: 1.6;
+    border-left: 3px solid var(--text2);
+    max-width: 100%;
   }
+  .tree .leaf-wrap { padding: 1px 0; }
 
-  /* Node colors by domain */
-  .node-A summary, .node-A.leaf { border-left: 3px solid #e94560; }
-  .node-B summary, .node-B.leaf { border-left: 3px solid #f5c518; }
-  .node-C summary, .node-C.leaf { border-left: 3px solid #00d4ff; }
-  .node-D summary, .node-D.leaf { border-left: 3px solid #4ecca3; }
-  .node-E summary, .node-E.leaf { border-left: 3px solid #b388ff; }
-  .node-F summary, .node-F.leaf { border-left: 3px solid #ff80ab; }
-  .node-G summary, .node-G.leaf { border-left: 3px solid #ffab40; }
-  .node-H summary, .node-H.leaf { border-left: 3px solid #1de9b6; }
-  .node-I summary, .node-I.leaf { border-left: 3px solid #7c4dff; }
-  .node-J summary, .node-J.leaf { border-left: 3px solid #ff6e40; }
-  .node-K summary, .node-K.leaf { border-left: 3px solid #18d5ab; }
-  .node-L summary, .node-L.leaf { border-left: 3px solid #d500f9; }
-  .node-M summary, .node-M.leaf { border-left: 3px solid #ffab00; }
-  .node-N summary, .node-N.leaf { border-left: 3px solid #00bfa5; }
-  .node-X summary, .node-X.leaf { border-left: 3px solid var(--gold); }
+  /* Domain colors */
+  .cA { border-left-color: #e94560 !important; }
+  .cB { border-left-color: #f5c518 !important; }
+  .cC { border-left-color: #00d4ff !important; }
+  .cD { border-left-color: #4ecca3 !important; }
+  .cE { border-left-color: #b388ff !important; }
+  .cF { border-left-color: #ff80ab !important; }
+  .cG { border-left-color: #ffab40 !important; }
+  .cH { border-left-color: #1de9b6 !important; }
+  .cI { border-left-color: #7c4dff !important; }
+  .cJ { border-left-color: #ff6e40 !important; }
+  .cK { border-left-color: #18d5ab !important; }
+  .cL { border-left-color: #d500f9 !important; }
+  .cM { border-left-color: #ffab00 !important; }
+  .cN { border-left-color: #00bfa5 !important; }
 
-  .tag { 
-    font-size: 0.72em; 
-    padding: 1px 7px; 
-    border-radius: 4px; 
-    background: rgba(255,255,255,0.06); 
+  .tag {
+    display: inline-block;
+    font-size: 0.72em;
+    padding: 1px 7px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.05);
     color: var(--text2);
     white-space: nowrap;
+    margin: 1px 2px;
   }
-  .tag-blue { background: rgba(0,212,255,0.15); color: var(--cyan); }
-  .tag-red { background: rgba(233,69,96,0.15); color: var(--accent); }
-  .tag-green { background: rgba(78,204,163,0.15); color: var(--green); }
-  .tag-gold { background: rgba(245,197,24,0.15); color: var(--gold); }
-  .tag-purple { background: rgba(179,136,255,0.15); color: var(--purple); }
+  .tr { background: rgba(233,69,96,0.15); color: #e94560; }
+  .tb { background: rgba(0,212,255,0.15); color: #00d4ff; }
+  .tg { background: rgba(78,204,163,0.15); color: #4ecca3; }
+  .tgo { background: rgba(245,197,24,0.15); color: #f5c518; }
+  .tp { background: rgba(179,136,255,0.15); color: #b388ff; }
+  .to { background: rgba(255,107,64,0.15); color: #ff6b40; }
 
-  .highlight { color: var(--gold); font-weight: 600; }
-  .highlight-cyan { color: var(--cyan); }
-  .highlight-green { color: var(--green); }
-  .highlight-pink { color: var(--pink); }
+  .hl { color: var(--gold); font-weight: 600; }
+  .hlc { color: var(--cyan); }
+  .hlg { color: var(--green); }
+  .dim { color: var(--text2); }
+  .sm { font-size: 0.82em; }
 
-  .tree .dim { color: var(--text2); font-size: 0.85em; }
-  .tree .small { font-size: 0.82em; }
+  /* Search results */
+  .sr mark {
+    background: rgba(245,197,24,0.3);
+    color: var(--gold);
+    padding: 0 3px;
+    border-radius: 3px;
+  }
+  .tree li.sr-match > summary,
+  .tree li.sr-match > .leaf {
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 8px rgba(245,197,24,0.1);
+  }
+  .tree li.sr-hidden {
+    display: none;
+  }
 
-  /* ===== CROSS CONNECTIONS ===== */
-  .connections {
+  /* Connections */
+  .conn-box {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 24px;
-    margin: 30px 0;
+    padding: 22px;
+    margin: 28px 0;
   }
-  .connections h3 { 
-    color: var(--gold); 
-    margin-bottom: 16px; 
-    font-size: 1.2em;
-  }
-  .connections-grid {
+  .conn-box h3 { color: var(--gold); margin-bottom: 14px; font-size: 1.15em; }
+  .conn-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 10px;
-  }
-  .connections-grid .conn {
-    background: rgba(255,255,255,0.03);
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-size: 0.85em;
-    border-left: 3px solid var(--accent);
-  }
-  .connections-grid .conn strong { color: var(--cyan); }
-
-  /* ===== SCHOLAR INDEX ===== */
-  .scholar-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 8px;
-    margin-top: 12px;
   }
-  .scholar-item {
+  .conn-grid .c {
+    background: rgba(255,255,255,0.02);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.82em;
+    border-left: 3px solid var(--accent);
+    line-height: 1.6;
+  }
+  .conn-grid .c strong { color: var(--cyan); }
+
+  /* Scholars */
+  .sg {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .sg .si {
     background: rgba(255,255,255,0.02);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 0.82em;
-    transition: all 0.2s;
+    border-radius: 7px;
+    padding: 7px 10px;
+    font-size: 0.8em;
+    line-height: 1.5;
   }
-  .scholar-item:hover {
-    background: rgba(255,255,255,0.05);
-    border-color: rgba(255,255,255,0.1);
-  }
-  .scholar-item .name { color: var(--gold); font-weight: 600; }
-  .scholar-item .domain { color: var(--cyan); font-size: 0.85em; }
-  .scholar-item .contrib { color: var(--text2); font-size: 0.85em; margin-top: 2px; }
+  .sg .si .nm { color: var(--gold); font-weight: 600; }
+  .sg .si .dm { color: var(--cyan); font-size: 0.85em; }
+  .sg .si .co { color: var(--text2); font-size: 0.85em; }
 
-  /* ===== UNANSWERED QUESTIONS ===== */
-  .questions {
+  /* Questions */
+  .qbox {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 24px;
-    margin: 30px 0;
+    padding: 22px;
+    margin: 28px 0;
   }
-  .questions h3 { 
-    color: var(--accent); 
-    margin-bottom: 16px; 
-    font-size: 1.2em;
-  }
-  .questions-grid {
+  .qbox h3 { color: var(--accent); margin-bottom: 14px; font-size: 1.15em; }
+  .qg {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 8px;
   }
-  .questions-grid .q-item {
-    background: rgba(233,69,96,0.04);
-    padding: 10px 14px;
+  .qg .qi {
+    background: rgba(233,69,96,0.03);
+    padding: 8px 12px;
     border-radius: 8px;
-    font-size: 0.83em;
+    font-size: 0.81em;
     border-left: 3px solid var(--accent);
-    line-height: 1.5;
+    line-height: 1.6;
   }
-  .questions-grid .q-item .q-badge {
+  .qg .qi .qb {
     display: inline-block;
     background: rgba(233,69,96,0.15);
     color: var(--accent);
     padding: 0 6px;
     border-radius: 3px;
-    font-size: 0.75em;
-    margin-right: 4px;
+    font-size: 0.73em;
+    margin-right: 3px;
   }
 
-  /* ===== FOOTER ===== */
   .footer {
     text-align: center;
-    padding: 40px 20px;
+    padding: 36px 20px;
     border-top: 1px solid var(--border);
-    margin-top: 40px;
+    margin-top: 36px;
   }
   .footer q {
     display: block;
-    font-size: 1.1em;
+    font-size: 1.05em;
     color: var(--text2);
     font-style: italic;
     max-width: 700px;
     margin: 0 auto;
     line-height: 1.8;
   }
-  .footer .formula {
-    margin-top: 16px;
-    font-size: 0.95em;
+  .footer .fml {
+    margin-top: 14px;
+    font-size: 0.92em;
     color: var(--text2);
   }
-  .footer .formula strong { color: var(--gold); }
+  .footer .fml strong { color: var(--gold); }
 
-  /* ===== SCROLLBAR ===== */
-  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--text2); }
 
-  /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
-    .header h1 { font-size: 1.6em; }
+    .header h1 { font-size: 1.5em; }
     .overview { grid-template-columns: 1fr; }
-    .tree ul { padding-left: 20px; }
-    .controls { flex-direction: column; align-items: center; }
+    .tree ul { padding-left: 18px; }
+    .controls { flex-direction: column; align-items: stretch; }
     .controls input { width: 100%; }
-    .scholar-grid { grid-template-columns: 1fr; }
-  }
-
-  /* ===== ANIMATIONS ===== */
-  @keyframes fadeInUp {
-    from { opacity:0; transform:translateY(20px); }
-    to { opacity:1; transform:translateY(0); }
-  }
-  .overview-card { animation: fadeInUp 0.5s both; }
-  .overview-card:nth-child(1) { animation-delay:0.02s; }
-  .overview-card:nth-child(2) { animation-delay:0.04s; }
-  .overview-card:nth-child(3) { animation-delay:0.06s; }
-  .overview-card:nth-child(4) { animation-delay:0.08s; }
-  .overview-card:nth-child(5) { animation-delay:0.10s; }
-  .overview-card:nth-child(6) { animation-delay:0.12s; }
-  .overview-card:nth-child(7) { animation-delay:0.14s; }
-  .overview-card:nth-child(8) { animation-delay:0.16s; }
-  .overview-card:nth-child(9) { animation-delay:0.18s; }
-  .overview-card:nth-child(10) { animation-delay:0.20s; }
-  .overview-card:nth-child(11) { animation-delay:0.22s; }
-  .overview-card:nth-child(12) { animation-delay:0.24s; }
-  .overview-card:nth-child(13) { animation-delay:0.26s; }
-  .overview-card:nth-child(14) { animation-delay:0.28s; }
-
-  /* Search highlight */
-  .search-highlight {
-    background: rgba(245,197,24,0.25);
-    border-radius: 3px;
-    padding: 0 2px;
-  }
-
-  /* Matching nodes */
-  .match-node { 
-    border-color: var(--gold) !important; 
-    box-shadow: 0 0 12px rgba(245,197,24,0.15);
+    .sg { grid-template-columns: 1fr; }
+    .conn-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
-<!-- ===== HEADER ===== -->
 <div class="header">
   <h1>🧠 人格心理学 · 跨学科全量知识库</h1>
-  <div class="subtitle">14大主题领域 · 42+位学者 · 50+篇核心文献 · 30+种心理机制 · 20+个未解之问</div>
+  <div class="sub">14大主题领域 · 42+位学者 · 50+篇核心文献 · 30+种心理机制 · 20+个未解之问</div>
   <div class="stats">
-    <span>🧬 <strong>A</strong> 人格的生物学基础</span>
-    <span>⚖️ <strong>B</strong> 天生vs后天vs保护</span>
-    <span>🔍 <strong>C</strong> MBTI批判与八维</span>
-    <span>🔗 <strong>D</strong> Big Five ↔ MBTI</span>
-    <span>🔄 <strong>E</strong> 神经可塑性</span>
-    <span>🏷️ <strong>F</strong> 自我规训与标签</span>
-    <span>📜 <strong>G</strong> 历史心理学</span>
-    <span>🎭 <strong>H</strong> 身份驱动动机</span>
-    <span>📖 <strong>I</strong> 记忆叙事建构</span>
-    <span>⚡ <strong>J</strong> 认知失调与自洽</span>
-    <span>💬 <strong>K</strong> 与自洽者沟通</span>
-    <span>📊 <strong>L</strong> 历史人格偏好</span>
-    <span>🏛️ <strong>M</strong> 哲学框架</span>
-    <span>🌏 <strong>N</strong> 东亚辩证思维</span>
+    <span><b>A</b> 生物学基础</span>
+    <span><b>B</b> 天生vs后天vs保护</span>
+    <span><b>C</b> MBTI批判与八维</span>
+    <span><b>D</b> Big Five ↔ MBTI</span>
+    <span><b>E</b> 神经可塑性</span>
+    <span><b>F</b> 自我规训与标签</span>
+    <span><b>G</b> 历史心理学</span>
+    <span><b>H</b> 身份驱动动机</span>
+    <span><b>I</b> 记忆叙事建构</span>
+    <span><b>J</b> 认知失调与自洽</span>
+    <span><b>K</b> 与自洽者沟通</span>
+    <span><b>L</b> 历史人格偏好</span>
+    <span><b>M</b> 哲学框架</span>
+    <span><b>N</b> 东亚辩证思维</span>
   </div>
 </div>
 
-<!-- ===== CONTROLS ===== -->
 <div class="controls">
-  <button onclick="expandAll()">📂 全部展开</button>
-  <button onclick="collapseAll()">📁 全部折叠</button>
-  <button onclick="scrollToTop()">⬆ 回到顶部</button>
-  <input type="text" id="searchInput" placeholder="🔎 搜索关键词..." oninput="searchMindMap()">
+  <button onclick="xall(true)">📂 全部展开</button>
+  <button onclick="xall(false)">📁 全部折叠</button>
+  <button onclick="st()">⬆ 回到顶部</button>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="si" placeholder="搜索关键词 (Ctrl+F)" oninput="dosearch()">
+  </div>
+  <span class="search-count" id="sc"></span>
 </div>
 
 <div class="container">
 
-<!-- ===== OVERVIEW CARDS ===== -->
-<div class="overview" id="overview">
-  <div class="overview-card" onclick="scrollToSection('mindmap-A')">
-    <div><span class="badge" style="background:#e94560">A</span><h3>人格的生物学基础</h3></div>
-    <div class="question">人格在成年期"成型"的物理基础是什么？</div>
-    <div class="tags"><span>🧬 神经科学</span><span>📊 发展心理学</span><span>🧪 行为遗传学</span></div>
-  </div>
-  <div class="overview-card" onclick="scrollToSection('mindmap-B')">
-    <div><span class="badge" style="background:#f5c518;color:#000">B</span><h3>天生 vs 后天 vs 保护</h3></div>
-    <div class="question">如何区分"真正的我"、"我的适应"和"我的防御"？</div>
-    <div class="tags"><span>🧬 演化心理学</span><span>🩺 临床心理学</span><span>🧒 发展心理病理学</span></div>
-  </div>
-  <div class="overview-card" onclick="scrollToSection('mindmap-C')">
-    <div><span class="badge" style="background:#00d4ff;color:#000">C</span><h3>MBTI批判与八维价值</h3></div>
-    <div class="question">为什么MBTI不被认可？荣格八维还有价值吗？</div>
-    <div class="tags"><span>📐 类型学</span><span>📏 心理测量学</span><span>🧠 分析心理学</span></div>
-  </div>
-  <div class="overview-card" onclick="scrollToSection('mindmap-D')">
-    <div><span class="badge" style="background:#4ecca3;color:#000">D</span><h3>Big Five ↔ MBTI映射</h3></div>
-    <div class="question">两种体系如何对应？各自强弱在哪？</div>
-    <div class="tags"><span>🧩 人格心理学</span><span>📏 心理测量学</span></div>
-  </div>
-  <div class="overview-card" onclick="scrollToSection('mindmap-E')">
-    <div><span class="badge" style="background:#b388ff">E</span><h3>神经可塑性与改变</h3></div>
-    <div class="question">成年后人真能改变吗？怎么变？</div>
-    <div class="tags"><span>🧬 神经科学</span><span>💊 干预研究</span></div>
-  </div>
-  <div class="overview-card" onclick="scrollToSection('mindmap-F')">
-    <div><span class="badge" style="background:#ff80ab">F</span><h3>自我规训与标签内化</h3></div>
-    <div class="question">相信一个标签会变成那样吗？效应多大？</div>
-    <div class="tags"><span>👥 社会心理学</span><span>🧠 自我心理学</span></div>
-  </div>
-  <div class="overview-card" onclick="scrollToSection('mindmap-G')">
-    <div><span class="badge" style="background:#ffab40">G</span><h3>历史心理学方法论</h3></div>
-    <div class="question">没有数据的古代人格如何研究？</div>
-    <div class="tags"><span>📜 历史心理学</span><span>💻 计算语言学</span><span>❤️ 情绪史</span></div>
-  </div>
-  <div class="overview-card" onclick="scrollToSection('mindmap-H')">
-    <div><span class="badge" style="background:#1de9b6;color:#000">H</span><h3>身份驱动动机 (IBM)</h3></div>
-    <div class="question">如何利用"身份"驱动持久改变？</div>
-    <div class="tags"><span>🎯 动机心理学</span><span>🧠 社会认知</span></div>
-  </div>
-  <div class="overview-card" onclick="scrollToSection('mindmap-I')">
-    <div><span class="badge" style="background:#7c4dff">I</span><h3>记忆叙事建构</h3></div>
-    <div class="question">过去是"真实的"还是"被讲述的"？</div>
-    <div class="tags"><span>🧠 认知心理学</span><span>🧬 神经科学</span><span>📖 叙事心理学</span></div>
-  </div>
-  <div class="overview-card" onclick="scrollToSection('mindmap-J')">
-    <div><span class="badge" style="background:#ff6e40">J</span><h3>认知失调与自洽</h3></div>
-    <div class="question">自洽是好事吗？矛盾有价值吗？</div>
-    <div class="tags"><span>👥 社会心理学</span><span>🧘 辩证思维研究</span></div>
-  </div>
-  <div class="overview-card" onclick="scrollToSection('mindmap-K')">
-    <div><span class="badge" style="background:#18d5ab;color:#000">K</span><h3>与自洽者沟通</h3></div>
-    <div class="question">如何不威胁地影响一个自洽的人？</div>
-    <div class="tags"><span>🩺 临床心理学</span><span>💬 沟通心理学</span></div>
-  </div>
-  <div class="overview-card" onclick="scrollToSection('mindmap-L')">
-    <div><span class="badge" style="background:#d500f9">L</span><h3>历史人格偏好</h3></div>
-    <div class="question">时代在偏好什么样的"我"？</div>
-    <div class="tags"><span>🌍 宏观心理学</span><span>🤝 人-环境匹配</span></div>
-  </div>
-  <div class="overview-card" onclick="scrollToSection('mindmap-M')">
-    <div><span class="badge" style="background:#ffab00;color:#000">M</span><h3>哲学框架与解释</h3></div>
-    <div class="question">人格是被决定的还是自由的？</div>
-    <div class="tags"><span>🏛️ 理论心理学</span><span>📊 社会学</span><span>📚 文化-历史理论</span></div>
-  </div>
-  <div class="overview-card" onclick="scrollToSection('mindmap-N')">
-    <div><span class="badge" style="background:#00bfa5;color:#000">N</span><h3>东亚辩证思维起源</h3></div>
-    <div class="question">为什么东方更能容纳矛盾？</div>
-    <div class="tags"><span>🌏 文化心理学</span><span>🧠 跨文化认知</span><span>💰 经济史</span></div>
-  </div>
+<!-- Overview Cards -->
+<div class="overview" id="ov">
+  <div class="card" onclick="gs('s-A')"><div><span class="badge" style="background:#e94560">A</span><h3>人格的生物学基础</h3></div><div class="q">人格在成年期"成型"的物理基础是什么？</div><div class="tags"><span>🧬神经科学</span><span>📊发展心理学</span><span>🧪行为遗传学</span></div></div>
+  <div class="card" onclick="gs('s-B')"><div><span class="badge" style="background:#f5c518;color:#000">B</span><h3>天生 vs 后天 vs 保护</h3></div><div class="q">如何区分"真正的我"、"我的适应"和"我的防御"？</div><div class="tags"><span>🧬演化心理学</span><span>🩺临床心理学</span><span>🧒发展心理病理学</span></div></div>
+  <div class="card" onclick="gs('s-C')"><div><span class="badge" style="background:#00d4ff;color:#000">C</span><h3>MBTI批判与八维价值</h3></div><div class="q">为什么MBTI不被认可？荣格八维还有价值吗？</div><div class="tags"><span>📐类型学</span><span>📏心理测量学</span><span>🧠分析心理学</span></div></div>
+  <div class="card" onclick="gs('s-D')"><div><span class="badge" style="background:#4ecca3;color:#000">D</span><h3>Big Five ↔ MBTI映射</h3></div><div class="q">两种体系如何对应？各自强弱在哪？</div><div class="tags"><span>🧩人格心理学</span><span>📏心理测量学</span></div></div>
+  <div class="card" onclick="gs('s-E')"><div><span class="badge" style="background:#b388ff">E</span><h3>神经可塑性与改变</h3></div><div class="q">成年后人真能改变吗？怎么变？</div><div class="tags"><span>🧬神经科学</span><span>💊干预研究</span></div></div>
+  <div class="card" onclick="gs('s-F')"><div><span class="badge" style="background:#ff80ab">F</span><h3>自我规训与标签内化</h3></div><div class="q">相信一个标签会变成那样吗？效应多大？</div><div class="tags"><span>👥社会心理学</span><span>🧠自我心理学</span></div></div>
+  <div class="card" onclick="gs('s-G')"><div><span class="badge" style="background:#ffab40">G</span><h3>历史心理学方法论</h3></div><div class="q">没有数据的古代人格如何研究？</div><div class="tags"><span>📜历史心理学</span><span>💻计算语言学</span><span>❤️情绪史</span></div></div>
+  <div class="card" onclick="gs('s-H')"><div><span class="badge" style="background:#1de9b6;color:#000">H</span><h3>身份驱动动机 (IBM)</h3></div><div class="q">如何利用"身份"驱动持久改变？</div><div class="tags"><span>🎯动机心理学</span><span>🧠社会认知</span></div></div>
+  <div class="card" onclick="gs('s-I')"><div><span class="badge" style="background:#7c4dff">I</span><h3>记忆叙事建构</h3></div><div class="q">过去是"真实的"还是"被讲述的"？</div><div class="tags"><span>🧠认知心理学</span><span>🧬神经科学</span><span>📖叙事心理学</span></div></div>
+  <div class="card" onclick="gs('s-J')"><div><span class="badge" style="background:#ff6e40">J</span><h3>认知失调与自洽</h3></div><div class="q">自洽是好事吗？矛盾有价值吗？</div><div class="tags"><span>👥社会心理学</span><span>🧘辩证思维研究</span></div></div>
+  <div class="card" onclick="gs('s-K')"><div><span class="badge" style="background:#18d5ab;color:#000">K</span><h3>与自洽者沟通</h3></div><div class="q">如何不威胁地影响一个自洽的人？</div><div class="tags"><span>🩺临床心理学</span><span>💬沟通心理学</span></div></div>
+  <div class="card" onclick="gs('s-L')"><div><span class="badge" style="background:#d500f9">L</span><h3>历史人格偏好</h3></div><div class="q">时代在偏好什么样的"我"？</div><div class="tags"><span>🌍宏观心理学</span><span>🤝人-环境匹配</span></div></div>
+  <div class="card" onclick="gs('s-M')"><div><span class="badge" style="background:#ffab00;color:#000">M</span><h3>哲学框架与解释</h3></div><div class="q">人格是被决定的还是自由的？</div><div class="tags"><span>🏛️理论心理学</span><span>📊社会学</span><span>📚文化-历史理论</span></div></div>
+  <div class="card" onclick="gs('s-N')"><div><span class="badge" style="background:#00bfa5;color:#000">N</span><h3>东亚辩证思维起源</h3></div><div class="q">为什么东方更能容纳矛盾？</div><div class="tags"><span>🌏文化心理学</span><span>🧠跨文化认知</span><span>💰经济史</span></div></div>
 </div>
 
-<!-- ===== TREE MIND MAPS ===== -->
-
-<!-- ===== DOMAIN A ===== -->
-<div class="mindmap-section" id="mindmap-A">
-  <h2><span class="badge-lg" style="background:#e94560">A</span> 人格的生物学基础</h2>
-  <div class="tree-root">
-    <div class="tree">
-      <ul>
-        <li>
-          <details open class="node-A">
-            <summary>🔬 关键发现</summary>
-            <ul>
-              <li><span class="leaf node-A">🧬 双生子研究：大五人格遗传率约 <span class="highlight">40%~60%</span>（Bouchard, 1994; Plomin, 2018）</span></li>
-              <li><span class="leaf node-A">📊 成年25~30岁趋于稳定——这是现象，下文是其物理机制</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-A">
-            <summary>⚙️ 四大物理机制</summary>
-            <ul>
-              <li>
-                <details class="node-A">
-                  <summary>① 前额叶皮质髓鞘化</summary>
-                  <ul>
-                    <li><span class="leaf node-A dim">神经信号路径"物理固化"——PFC髓鞘化持续至25~30岁，完成后神经回路信号路径相对固定</span></li>
-                    <li><span class="leaf node-A small">📄 Gogtay et al., 2004, PNAS "Dynamic mapping of human cortical development"</span></li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-A">
-                  <summary>② 突触修剪</summary>
-                  <ul>
-                    <li><span class="leaf node-A dim">不常用连接被清除，常用连接被强化——神经网络的效率↑灵活性↓</span></li>
-                    <li><span class="leaf node-A small">📄 Petanjek et al., 2011, PNAS "Extraordinary neoteny of synaptic spines in the human prefrontal cortex"</span></li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-A">
-                  <summary>③ 表观遗传修饰</summary>
-                  <ul>
-                    <li><span class="leaf node-A dim">环境经历在DNA上留下化学印记（甲基化/组蛋白修饰），改变基因表达开关而不改变序列</span></li>
-                    <li><span class="leaf node-A small">📄 McGowan et al., 2009, Nature Neuroscience</span></li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-A">
-                  <summary>④ 神经递质基线稳定</summary>
-                  <ul>
-                    <li><span class="leaf node-A dim">多巴胺/5-羟色胺/去甲肾上腺素系统的受体密度和转运体效率趋于固定</span></li>
-                    <li><span class="leaf node-A small">📄 Caspi et al., 2003, Science</span></li>
-                  </ul>
-                </details>
-              </li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-A">
-            <summary>🧪 关键分子/基因</summary>
-            <ul>
-              <li><span class="leaf node-A"><span class="tag tag-red">5-HTTLPR</span> 神经质——短等位基因与压力敏感性↑</span></li>
-              <li><span class="leaf node-A"><span class="tag tag-blue">DRD4</span> 感觉寻求 / 外向性</span></li>
-              <li><span class="leaf node-A"><span class="tag tag-green">NR3C1</span> HPA轴压力应对——甲基化模式受童年经历改变</span></li>
-              <li><span class="leaf node-A"><span class="tag tag-purple">COMT</span> 前额叶多巴胺代谢——认知灵活性/稳定性平衡</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-A">
-            <summary>❓ 未解之问</summary>
-            <ul>
-              <li><span class="leaf node-A dim">遗传率40~60%的"剩余40%"中，共享环境 vs 非共享环境的精确比例？</span></li>
-              <li><span class="leaf node-A dim">表观遗传修饰在多大程度上可逆？边界未知。</span></li>
-              <li><span class="leaf node-A dim">感觉寻求、行为抑制等气质的跨文化普遍性验证</span></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </div>
+<!-- ===== A ===== -->
+<div class="section" id="s-A">
+  <h2><span class="blg" style="background:#e94560">A</span> 人格的生物学基础</h2>
+  <div class="tree"><ul>
+    <li><details open class="cA"><summary>🔬 <b>关键发现</b></summary><ul>
+      <li><span class="leaf cA">🧬 双生子研究：大五人格遗传率约 <span class="hl">40%~60%</span>（Bouchard, 1994; Plomin, 2018）</span></li>
+      <li><span class="leaf cA">📊 成年25~30岁趋于稳定——这是现象，以下为其物理机制</span></li>
+    </ul></details></li>
+    <li><details open class="cA"><summary>⚙️ <b>四大物理机制</b></summary><ul>
+      <li><details class="cA"><summary>① 前额叶皮质髓鞘化</summary><ul>
+        <li><span class="leaf cA dim">神经信号路径"<b>物理固化</b>"——PFC髓鞘化持续至25~30岁，完成后神经回路信号路径相对固定</span></li>
+        <li><span class="leaf cA sm">📄 Gogtay et al., 2004, <i>PNAS</i> "Dynamic mapping of human cortical development"</span></li>
+      </ul></details></li>
+      <li><details class="cA"><summary>② 突触修剪</summary><ul>
+        <li><span class="leaf cA dim">不常用连接被清除，常用连接被强化——神经网络的<b>效率↑灵活性↓</b></span></li>
+        <li><span class="leaf cA sm">📄 Petanjek et al., 2011, <i>PNAS</i> "Extraordinary neoteny of synaptic spines in the human prefrontal cortex"</span></li>
+      </ul></details></li>
+      <li><details class="cA"><summary>③ 表观遗传修饰</summary><ul>
+        <li><span class="leaf cA dim">环境经历在DNA上留下化学印记（甲基化/组蛋白修饰），改变基因表达开关而不改变序列</span></li>
+        <li><span class="leaf cA sm">📄 McGowan et al., 2009, <i>Nature Neuroscience</i> "Epigenetic regulation of the glucocorticoid receptor in human brain"</span></li>
+      </ul></details></li>
+      <li><details class="cA"><summary>④ 神经递质基线稳定</summary><ul>
+        <li><span class="leaf cA dim">多巴胺/5-羟色胺/去甲肾上腺素系统的受体密度和转运体效率趋于固定</span></li>
+        <li><span class="leaf cA sm">📄 Caspi et al., 2003, <i>Science</i> "Influence of life stress on depression: moderation by 5-HTTLPR"</span></li>
+      </ul></details></li>
+    </ul></details></li>
+    <li><details open class="cA"><summary>🧪 <b>关键分子/基因</b></summary><ul>
+      <li><span class="leaf cA"><span class="tag tr">5-HTTLPR</span> (5-羟色胺转运体基因多态性) → <b>神经质</b>——短等位基因与压力敏感性↑</span></li>
+      <li><span class="leaf cA"><span class="tag tb">DRD4</span> (多巴胺D4受体基因) → <b>感觉寻求</b> / 外向性（多篇行为遗传学）</span></li>
+      <li><span class="leaf cA"><span class="tag tg">NR3C1</span> (糖皮质激素受体基因) → <b>HPA轴压力应对</b>——甲基化模式受童年经历改变（McGowan et al., 2009）</span></li>
+      <li><span class="leaf cA"><span class="tag tp">COMT</span> (儿茶酚-O-甲基转移酶) → 前额叶多巴胺代谢——<b>认知灵活性/稳定性平衡</b></span></li>
+    </ul></details></li>
+    <li><details class="cA"><summary>❓ <b>未解之问</b></summary><ul>
+      <li><span class="leaf cA dim">遗传率40~60%的"剩余40%"中，共享环境 vs 非共享环境的精确比例是多少？（经典行为遗传学难题）</span></li>
+      <li><span class="leaf cA dim">表观遗传修饰在多大程度上可逆？目前已知某些甲基化模式可通过心理治疗/药物干预改变，但边界未知。</span></li>
+      <li><span class="leaf cA dim">感觉寻求、行为抑制等气质的跨文化普遍性验证——Kagan的样本主要是西方中产家庭。</span></li>
+    </ul></details></li>
+  </ul></div>
 </div>
 
-<!-- ===== DOMAIN B ===== -->
-<div class="mindmap-section" id="mindmap-B">
-  <h2><span class="badge-lg" style="background:#f5c518;color:#000">B</span> 天生人格 vs 保护机制 vs 适应性策略</h2>
-  <div class="tree-root">
-    <div class="tree">
-      <ul>
-        <li>
-          <details open class="node-B">
-            <summary>📊 三元区分框架</summary>
-            <ul>
-              <li>
-                <details class="node-B">
-                  <summary>🧬 天生人格 (Temperament)</summary>
-                  <ul>
-                    <li><span class="leaf node-B dim">起源：遗传+早期神经发育</span></li>
-                    <li><span class="leaf node-B dim">出现时间：婴儿期（3~6个月）</span></li>
-                    <li><span class="leaf node-B dim">跨情境性：高（所有场合一致）</span></li>
-                    <li><span class="leaf node-B dim">生理基础：强（杏仁核/多巴胺系统等）</span></li>
-                    <li><span class="leaf node-B dim">变化难度：很难改变</span></li>
-                    <li><span class="leaf node-B dim">功能：无特定功能，只是"基线"</span></li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-B">
-                  <summary>🛡️ 保护机制 (Defense)</summary>
-                  <ul>
-                    <li><span class="leaf node-B dim">起源：应对心理威胁</span></li>
-                    <li><span class="leaf node-B dim">出现时间：任何时期，通常在创伤后</span></li>
-                    <li><span class="leaf node-B dim">跨情境性：低（只在特定触发下出现）</span></li>
-                    <li><span class="leaf node-B dim">生理基础：中（压力通路/HPA轴）</span></li>
-                    <li><span class="leaf node-B dim">变化难度：可通过治疗/觉察改变</span></li>
-                    <li><span class="leaf node-B dim">功能：保护自尊/回避焦虑/维持社会联系</span></li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-B">
-                  <summary>🌱 适应性策略 (Adaptation)</summary>
-                  <ul>
-                    <li><span class="leaf node-B dim">起源：环境学习</span></li>
-                    <li><span class="leaf node-B dim">出现时间：童年至成年</span></li>
-                    <li><span class="leaf node-B dim">跨情境性：中</span></li>
-                    <li><span class="leaf node-B dim">生理基础：中（表观遗传）</span></li>
-                    <li><span class="leaf node-B dim">变化难度：中等</span></li>
-                    <li><span class="leaf node-B dim">功能：适应特定社会环境</span></li>
-                  </ul>
-                </details>
-              </li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-B">
-            <summary>🔬 关键学者与经典研究</summary>
-            <ul>
-              <li><span class="leaf node-B"><span class="tag tag-red">Jerome Kagan</span> 行为抑制——约15%婴儿天生对新异刺激高度警惕，与杏仁核高敏感性相关 (Galen's Prophecy, 1994)</span></li>
-              <li><span class="leaf node-B"><span class="tag tag-blue">Marvin Zuckerman</span> 感觉寻求——与DRD4基因变异、MAO水平相关 (1994)</span></li>
-              <li><span class="leaf node-B"><span class="tag tag-green">George Vaillant</span> 防御机制的层级分类——Grant Study纵向追踪50年 (Ego Mechanisms of Defense, 1992)</span></li>
-              <li><span class="leaf node-B"><span class="tag tag-purple">John Bowlby / Mary Main</span> 依恋理论——安全型/回避型/矛盾型/混乱型 (1969; 1990)</span></li>
-              <li><span class="leaf node-B"><span class="tag tag-gold">Mary Ainsworth</span> 陌生情境实验——依恋类型的实证测量 (1978)</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-B">
-            <summary>🩺 三角验证思路（临床判断）</summary>
-            <ul>
-              <li><span class="leaf node-B dim">纵向追踪：天生气质在生命非常早期就显现（Kagan认为4个月大就能识别）</span></li>
-              <li><span class="leaf node-B dim">神经影像：fMRI检测杏仁核对新异刺激的反应强度</span></li>
-              <li><span class="leaf node-B dim">治疗反应：对单一干预（如CBT）反应快速，更可能是"适应策略"</span></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </div>
+<!-- ===== B ===== -->
+<div class="section" id="s-B">
+  <h2><span class="blg" style="background:#f5c518;color:#000">B</span> 天生人格 vs 保护机制 vs 适应性策略</h2>
+  <div class="tree"><ul>
+    <li><details open class="cB"><summary>📊 <b>三元区分框架</b></summary><ul>
+      <li><details class="cB"><summary>🧬 <b>天生人格</b>（Temperament）</summary><ul>
+        <li><span class="leaf cB dim">起源：遗传+早期神经发育</span></li>
+        <li><span class="leaf cB dim">出现时间：婴儿期（3~6个月）</span></li>
+        <li><span class="leaf cB dim">跨情境性：<b>高</b>（所有场合一致）</span></li>
+        <li><span class="leaf cB dim">生理基础：<b>强</b>（杏仁核/多巴胺系统等）</span></li>
+        <li><span class="leaf cB dim">变化难度：<b>很难改变</b></span></li>
+        <li><span class="leaf cB dim">功能：无特定功能，只是"基线"</span></li>
+      </ul></details></li>
+      <li><details class="cB"><summary>🛡️ <b>保护机制</b>（Defense）</summary><ul>
+        <li><span class="leaf cB dim">起源：应对心理威胁</span></li>
+        <li><span class="leaf cB dim">出现时间：任何时期，<b>通常在创伤后</b></span></li>
+        <li><span class="leaf cB dim">跨情境性：<b>低</b>（只在特定触发下出现）</span></li>
+        <li><span class="leaf cB dim">生理基础：中（压力通路/HPA轴）</span></li>
+        <li><span class="leaf cB dim">变化难度：<b>可通过治疗/觉察改变</b></span></li>
+        <li><span class="leaf cB dim">功能：保护自尊/回避焦虑/维持社会联系</span></li>
+      </ul></details></li>
+      <li><details class="cB"><summary>🌱 <b>适应性策略</b>（Adaptation）</summary><ul>
+        <li><span class="leaf cB dim">起源：环境学习</span></li>
+        <li><span class="leaf cB dim">出现时间：童年至成年</span></li>
+        <li><span class="leaf cB dim">跨情境性：中</span></li>
+        <li><span class="leaf cB dim">生理基础：中（表观遗传）</span></li>
+        <li><span class="leaf cB dim">变化难度：中等</span></li>
+        <li><span class="leaf cB dim">功能：适应特定社会环境</span></li>
+      </ul></details></li>
+    </ul></details></li>
+    <li><details open class="cB"><summary>🔬 <b>关键学者与经典研究</b></summary><ul>
+      <li><span class="leaf cB"><span class="tag tr">Jerome Kagan</span> 行为抑制（Behavioral Inhibition）——约<b>15%</b>婴儿天生对新异刺激高度警惕，与杏仁核高敏感性相关（<i>Galen's Prophecy</i>, 1994）</span></li>
+      <li><span class="leaf cB"><span class="tag tb">Marvin Zuckerman</span> 感觉寻求（Sensation Seeking）——与DRD4基因变异、单胺氧化酶(MAO)水平相关（1994）</span></li>
+      <li><span class="leaf cB"><span class="tag tg">George Vaillant</span> 防御机制的层级分类（成熟型→神经症型→不成熟型→精神病型），<b>纵向追踪50年</b>（Grant Study）（<i>Ego Mechanisms of Defense</i>, 1992）</span></li>
+      <li><span class="leaf cB"><span class="tag tp">John Bowlby / Mary Main</span> 依恋理论——安全型/回避型/矛盾型/混乱型，早期关系内化为"内部工作模型"（1969; 1990）</span></li>
+      <li><span class="leaf cB"><span class="tag tgo">Mary Ainsworth</span> 陌生情境实验——依恋类型的实证测量（1978）</span></li>
+    </ul></details></li>
+    <li><details class="cB"><summary>🩺 <b>临床判断的"三角验证"思路</b></summary><ul>
+      <li><span class="leaf cB dim"><b>纵向追踪</b>：天生气质在生命非常早期就显现（Kagan认为4个月大就能识别行为抑制倾向）</span></li>
+      <li><span class="leaf cB dim"><b>神经影像</b>：fMRI检测杏仁核对新异刺激的反应强度</span></li>
+      <li><span class="leaf cB dim"><b>治疗反应</b>：如果对单一干预（如CBT）反应快速，更可能是"适应策略"而非"天生气质"</span></li>
+    </ul></details></li>
+    <li><details class="cB"><summary>❓ <b>未解之问</b></summary><ul>
+      <li><span class="leaf cB dim">临床上如何精确解析一个个案中"天生+适应+防御"的三元混合比例？</span></li>
+      <li><span class="leaf cB dim">是否存在"适应策略→特质固化→看起来像天生"的路径？如果有，时间窗口和机制是什么？</span></li>
+    </ul></details></li>
+  </ul></div>
 </div>
 
-<!-- ===== DOMAIN C ===== -->
-<div class="mindmap-section" id="mindmap-C">
-  <h2><span class="badge-lg" style="background:#00d4ff;color:#000">C</span> MBTI批判与荣格八维价值</h2>
-  <div class="tree-root">
-    <div class="tree">
-      <ul>
-        <li>
-          <details open class="node-C">
-            <summary>⚠️ MBTI四大硬伤</summary>
-            <ul>
-              <li><span class="leaf node-C"><span class="highlight">① 二分法</span> 人格特质在人群中呈正态分布（连续谱），而非二元对立</span></li>
-              <li><span class="leaf node-C"><span class="highlight">② 重测信度低</span> 同一人间隔几周重测，约<span class="highlight">50%</span>被重新分类 (Pittenger, 2005)</span></li>
-              <li><span class="leaf node-C"><span class="highlight">③ 预测效度缺乏</span> 远不如Big Five (Furnham, 1996)</span></li>
-              <li><span class="leaf node-C"><span class="highlight">④ A/T真相</span> 16Personalities的A/T = Big Five中的神经质 (NERIS, 2011)</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-C">
-            <summary>💎 荣格八维的深层价值</summary>
-            <ul>
-              <li>
-                <details class="node-C">
-                  <summary>🧩 功能堆栈架构</summary>
-                  <ul>
-                    <li><span class="leaf node-C dim">如INFP = Fi主导→Ne辅助→Si第三→Te劣势——动态认知操作系统</span></li>
-                    <li><span class="leaf node-C dim">提供了"为什么同一类型的人内部有层级差异"的解释</span></li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-C">
-                  <summary>💚 健康/不健康表达谱</summary>
-                  <ul>
-                    <li><span class="leaf node-C dim">每个功能有"健康"和"不健康"的表达方式——如Ne健康=创造联想，不健康=思维离散逃避</span></li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-C">
-                  <summary>🌱 毕生发展序列</summary>
-                  <ul>
-                    <li><span class="leaf node-C dim">主导(~7岁)→辅助(~青春期)→第三(~中年)→劣势(~后半生)</span></li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-C">
-                  <summary>⚡ 心理能量方向</summary>
-                  <ul>
-                    <li><span class="leaf node-C dim">内倾/外倾不是"爱不爱社交"，而是注意力/能量的天然流向偏好</span></li>
-                  </ul>
-                </details>
-              </li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-C">
-            <summary>🔬 为什么学界不接受？</summary>
-            <ul>
-              <li><span class="leaf node-C dim">缺乏可靠测量工具——自陈问卷测到刻板印象和社会期望</span></li>
-              <li><span class="leaf node-C dim">堆栈假设未验证——大样本研究没有找到"Fe主导必配Ti辅助"</span></li>
-              <li><span class="leaf node-C dim">fMRI无对应脑区——没有找到独立的"Se"认知模块神经回路</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-C">
-            <summary>🎯 折中定位</summary>
-            <ul>
-              <li><span class="leaf node-C dim">八维 = "认知风格的隐喻性描述"——不是科学分类，而是认知诗学。在心理咨询和生涯规划中有指导价值，但不能替代Big Five的实证预测力。</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-C">
-            <summary>📚 关键学者</summary>
-            <ul>
-              <li><span class="leaf node-C"><span class="tag tag-red">Carl Jung</span> Psychological Types (1921)</span></li>
-              <li><span class="leaf node-C"><span class="tag tag-blue">Isabel Myers & Katharine Briggs</span> MBTI量表开发</span></li>
-              <li><span class="leaf node-C"><span class="tag tag-green">Pittenger (2005)</span> 系统性批判MBTI</span></li>
-              <li><span class="leaf node-C"><span class="tag tag-purple">Furnham (1996)</span> Big Five vs MBTI比较元分析</span></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </div>
+<!-- ===== C ===== -->
+<div class="section" id="s-C">
+  <h2><span class="blg" style="background:#00d4ff;color:#000">C</span> MBTI批判与荣格八维的深层价值</h2>
+  <div class="tree"><ul>
+    <li><details open class="cC"><summary>⚠️ <b>MBTI的四大硬伤</b></summary><ul>
+      <li><span class="leaf cC"><span class="hl">① 二分法</span> 人格特质在人群中呈正态分布（连续谱），而非二元对立。绝大多数人是中间值。（McCrae & Costa, 1989）</span></li>
+      <li><span class="leaf cC"><span class="hl">② 重测信度低</span> 同一人间隔几周重测，约有 <b>50%</b> 被重新分类到不同类型（Pittenger, 2005, <i>Journal of Psychological Type</i>）</span></li>
+      <li><span class="leaf cC"><span class="hl">③ 预测效度缺乏</span> 在预测工作表现、领导力、长期生活结果上，远不如Big Five（Furnham, 1996）</span></li>
+      <li><span class="leaf cC"><span class="hl">④ A/T真相</span> 16Personalities加入的A/T = Big Five中的<b>神经质</b>（Neuroticism）——用Big Five修补MBTI（NERIS公司, 2011）</span></li>
+    </ul></details></li>
+    <li><details open class="cC"><summary>💎 <b>荣格八维的"深层价值"</b></summary><ul>
+      <li><details class="cC"><summary>🧩 功能堆栈架构</summary><ul>
+        <li><span class="leaf cC dim">如 INFP = Fi主导 → Ne辅助 → Si第三 → Te劣势——描述<b>动态运行</b>的认知操作系统，而非标签粘贴</span></li>
+        <li><span class="leaf cC dim">提供了"为什么同一类型的人内部有层级差异"的解释</span></li>
+      </ul></details></li>
+      <li><details class="cC"><summary>💚 健康/不健康表达谱</summary><ul>
+        <li><span class="leaf cC dim">每个功能有"健康"和"不健康"的表达方式——如 Ne健康=创造联想，不健康=思维离散逃避</span></li>
+        <li><span class="leaf cC dim">超越了静止分类，进入心理病理/发展维度</span></li>
+      </ul></details></li>
+      <li><details class="cC"><summary>🌱 毕生发展序列</summary><ul>
+        <li><span class="leaf cC dim">主导(~7岁) → 辅助(~青春期) → 第三(~中年) → 劣势(~后半生)</span></li>
+        <li><span class="leaf cC dim">在直觉上符合人的毕生发展规律——许多人在中年后确实开始发展劣势功能</span></li>
+      </ul></details></li>
+      <li><details class="cC"><summary>⚡ 心理能量方向</summary><ul>
+        <li><span class="leaf cC dim">内倾/外倾不是"爱不爱社交"，而是注意力/能量的天然流向偏好——比MBTI的外倾定义更精微</span></li>
+      </ul></details></li>
+    </ul></details></li>
+    <li><details class="cC"><summary>🔬 <b>为什么学界不接受？</b></summary><ul>
+      <li><span class="leaf cC dim"><b>缺乏可靠测量工具</b>：自陈问卷测到的是刻板印象和社会期望反应，而非真实的认知过程</span></li>
+      <li><span class="leaf cC dim"><b>堆栈假设未验证</b>：大样本研究没有找到"Fe主导必配Ti辅助"这种必然层级结构</span></li>
+      <li><span class="leaf cC dim"><b>fMRI无对应脑区</b>：如果有独立的"Se"认知模块，应有对应的神经回路——目前没有找到</span></li>
+    </ul></details></li>
+    <li><details class="cC"><summary>🎯 <b>一个折中的定位</b></summary><ul>
+      <li><span class="leaf cC dim">八维 = "<b>认知风格的隐喻性描述</b>"——不是科学分类，而是<b>认知诗学</b>。它在心理咨询和生涯规划中有指导价值（提供理解自我盲点和成长方向的语言系统），但不能替代Big Five的实证预测力。</span></li>
+    </ul></details></li>
+    <li><details class="cC"><summary>📚 <b>关键学者</b></summary><ul>
+      <li><span class="leaf cC"><span class="tag tr">Carl Jung</span> 原始理论——<i>Psychological Types</i> (1921)，提出八种认知功能</span></li>
+      <li><span class="leaf cC"><span class="tag tb">Isabel Myers & Katharine Briggs</span> 开发MBTI量表（基于Jung的理论，但简化为二分法）</span></li>
+      <li><span class="leaf cC"><span class="tag tg">Pittenger (2005)</span> 系统性批判MBTI的心理测量学缺陷</span></li>
+      <li><span class="leaf cC"><span class="tag tp">Furnham (1996)</span> Big Five vs MBTI的比较元分析</span></li>
+    </ul></details></li>
+    <li><details class="cC"><summary>❓ <b>未解之问</b></summary><ul>
+      <li><span class="leaf cC dim">如果八维是"好用的虚构"，它的工具性价值如何被严谨评估？（什么时候有益，什么时候有害？）</span></li>
+      <li><span class="leaf cC dim">有没有可能通过更先进的测量方法（如经验取样法、行为观察编码）来验证功能堆栈？或者它本质上就是无法被科学验证的？</span></li>
+      <li><span class="leaf cC dim">健康/不健康表达谱与DSM诊断轴之间是否存在映射关系？</span></li>
+    </ul></details></li>
+  </ul></div>
 </div>
 
-<!-- ===== DOMAIN D ===== -->
-<div class="mindmap-section" id="mindmap-D">
-  <h2><span class="badge-lg" style="background:#4ecca3;color:#000">D</span> Big Five ↔ MBTI映射关系</h2>
-  <div class="tree-root">
-    <div class="tree">
-      <ul>
-        <li>
-          <details open class="node-D">
-            <summary>📊 量化映射表</summary>
-            <ul>
-              <li>
-                <details class="node-D">
-                  <summary>E/I ↔ 外倾性 <span class="tag tag-green">r=0.70~0.80 ✅很强</span></summary>
-                  <ul><li><span class="leaf node-D dim">MBTI中最有实证基础的维度</span></li></ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-D">
-                  <summary>S/N ↔ 开放性 <span class="tag tag-green">r≈0.70 ✅强</span></summary>
-                  <ul><li><span class="leaf node-D dim">但S/N测量的"开放性"偏窄（集中在审美/想象层面）</span></li></ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-D">
-                  <summary>T/F ↔ 宜人性 <span class="tag tag-gold">r=0.40~0.50 ⚠️中等偏弱</span></summary>
-                  <ul><li><span class="leaf node-D dim">MBTI的T/F与"决策方式"更相关，Big Five宜人性与"人际合作"更相关</span></li></ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-D">
-                  <summary>J/P ↔ 尽责性 <span class="tag tag-gold">r=0.40~0.50 ⚠️中等偏弱</span></summary>
-                  <ul><li><span class="leaf node-D dim">J/P测量"对结构的需求"，尽责性还包括自律/成就动机</span></li></ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-D">
-                  <summary>无对应 ↔ 神经质 <span class="tag tag-red">🔶 16Personalities用A/T填补</span></summary>
-                  <ul><li><span class="leaf node-D dim">16Personalities用A/T维度填补了这个空缺</span></li></ul>
-                </details>
-              </li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-D">
-            <summary>🧩 八维功能与大五的关联（社区研究趋势）</summary>
-            <ul>
-              <li><span class="leaf node-D">Se ↔ 外倾性(+) · 开放性(+)</span></li>
-              <li><span class="leaf node-D">Si ↔ 尽责性(+) · 开放性(–)</span></li>
-              <li><span class="leaf node-D">Ne ↔ 开放性(++) · 外倾性(+)</span></li>
-              <li><span class="leaf node-D">Ni ↔ 开放性(+) · 尽责性(±)</span></li>
-              <li><span class="leaf node-D">Te ↔ 尽责性(+) · 宜人性(–)</span></li>
-              <li><span class="leaf node-D">Ti ↔ 开放性(+) · 宜人性(–)</span></li>
-              <li><span class="leaf node-D">Fe ↔ 宜人性(++) · 外倾性(+)</span></li>
-              <li><span class="leaf node-D">Fi ↔ 宜人性(+) · 神经质(+)</span></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </div>
+<!-- ===== D ===== -->
+<div class="section" id="s-D">
+  <h2><span class="blg" style="background:#4ecca3;color:#000">D</span> Big Five ↔ MBTI映射关系</h2>
+  <div class="tree"><ul>
+    <li><details open class="cD"><summary>📊 <b>量化映射表</b></summary><ul>
+      <li><details class="cD"><summary>E(外倾) vs I(内倾) ↔ 外倾性 <span class="tag tg">r=0.70~0.80 ✅很强</span></summary>
+        <ul><li><span class="leaf cD dim">这是MBTI中最有实证基础的维度</span></li></ul>
+      </details></li>
+      <li><details class="cD"><summary>S(感觉) vs N(直觉) ↔ 开放性 <span class="tag tg">r≈0.70 ✅强</span></summary>
+        <ul><li><span class="leaf cD dim">但S/N测量的"开放性"偏窄（集中在审美/想象层面）</span></li></ul>
+      </details></li>
+      <li><details class="cD"><summary>T(思维) vs F(情感) ↔ 宜人性 <span class="tag tgo">r=0.40~0.50 ⚠️中等偏弱</span></summary>
+        <ul><li><span class="leaf cD dim">MBTI的T/F与"决策方式"更相关，而Big Five的宜人性与"人际合作"更相关</span></li></ul>
+      </details></li>
+      <li><details class="cD"><summary>J(判断) vs P(感知) ↔ 尽责性 <span class="tag tgo">r=0.40~0.50 ⚠️中等偏弱</span></summary>
+        <ul><li><span class="leaf cD dim">J/P测量的是"对结构的需求"，尽责性还包括自律/成就动机</span></li></ul>
+      </details></li>
+      <li><details class="cD"><summary>无对应 ↔ 神经质 <span class="tag tr">🔶 16Personalities用A/T填补</span></summary>
+        <ul><li><span class="leaf cD dim">16Personalities用A/T（坚决/动荡）维度填补了这个空缺，A/T = Big Five中的神经质</span></li></ul>
+      </details></li>
+    </ul></details></li>
+    <li><details open class="cD"><summary>🧩 <b>八维功能与大五的关联</b>（社区研究趋势，非正式）</summary><ul>
+      <li><span class="leaf cD"><b>Se</b>（外倾感觉）↔ 外倾性(+) · 开放性(+)</span></li>
+      <li><span class="leaf cD"><b>Si</b>（内倾感觉）↔ 尽责性(+) · 开放性(–)</span></li>
+      <li><span class="leaf cD"><b>Ne</b>（外倾直觉）↔ 开放性(++) · 外倾性(+)</span></li>
+      <li><span class="leaf cD"><b>Ni</b>（内倾直觉）↔ 开放性(+) · 尽责性(±)</span></li>
+      <li><span class="leaf cD"><b>Te</b>（外倾思维）↔ 尽责性(+) · 宜人性(–)</span></li>
+      <li><span class="leaf cD"><b>Ti</b>（内倾思维）↔ 开放性(+) · 宜人性(–)</span></li>
+      <li><span class="leaf cD"><b>Fe</b>（外倾情感）↔ 宜人性(++) · 外倾性(+)</span></li>
+      <li><span class="leaf cD"><b>Fi</b>（内倾情感）↔ 宜人性(+) · 神经质(+)</span></li>
+      <li><span class="leaf cD dim" style="border-left-color:#4ecca3"><b>含义</b>：你的"高Fe"可以用"高宜人性+中高外倾性"来解释；"高Ti"可以用"高开放性+低宜人性"来解释。<b>八维人格在Big Five连续谱上可以被重新描述。</b></span></li>
+    </ul></details></li>
+    <li><details class="cD"><summary>📄 <b>核心文献</b></summary><ul>
+      <li><span class="leaf cD dim">McCrae & Costa, 1989, <i>Journal of Personality</i>——"Reinterpreting the MBTI from the perspective of the FFM" 奠基之作</span></li>
+      <li><span class="leaf cD dim">Furnham, 1996, <i>Personality and Individual Differences</i>——"The big five versus the big four"</span></li>
+      <li><span class="leaf cD dim">Pittenger, 2005——综合批判</span></li>
+    </ul></details></li>
+  </ul></div>
 </div>
 
-<!-- ===== DOMAIN E ===== -->
-<div class="mindmap-section" id="mindmap-E">
-  <h2><span class="badge-lg" style="background:#b388ff">E</span> 神经可塑性与意志性人格改变</h2>
-  <div class="tree-root">
-    <div class="tree">
-      <ul>
-        <li>
-          <details open class="node-E">
-            <summary>📈 核心观点的历史演变</summary>
-            <ul>
-              <li><span class="leaf node-E dim">~2006之前："人格在30岁凝固"</span></li>
-              <li><span class="leaf node-E dim">2006：Roberts等的元分析证明人格在整个生命周期都在缓慢变化 <span class="tag tag-green">旧观点被推翻</span></span></li>
-              <li><span class="leaf node-E dim">2015：Hudson & Fraley证明有意改变是可能的——volitional personality change <span class="tag tag-blue">不仅能变，还能主动变</span></span></li>
-              <li><span class="leaf node-E dim">2021：Stieger等的RCT：3个月数字干预可改变Big Five <span class="tag tag-purple">干预有效</span></span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-E">
-            <summary>⚙️ 四大可塑性机制</summary>
-            <ul>
-              <li>
-                <details class="node-E">
-                  <summary>① 突触可塑性 (Hebbian学习)</summary>
-                  <ul><li><span class="leaf node-E dim">"一起放电的神经元连接在一起"——反复练习→神经回路强化</span></li></ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-E">
-                  <summary>② 髓鞘可塑性</summary>
-                  <ul><li><span class="leaf node-E dim">PFC主要髓鞘化25~30岁完成，但髓鞘增厚/修整终身持续</span></li></ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-E">
-                  <summary>③ 神经发生</summary>
-                  <ul><li><span class="leaf node-E dim">海马体终身产生新神经元</span></li></ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-E">
-                  <summary>④ 长时程抑制 (LTD)</summary>
-                  <ul><li><span class="leaf node-E dim">不使用的神经连接被削弱——刻意不执行旧模式→削弱旧神经回路</span></li></ul>
-                </details>
-              </li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-E">
-            <summary>💊 有效干预策略（循证）</summary>
-            <ul>
-              <li><span class="leaf node-E"><span class="tag tag-red">↓神经质</span> CBT + 正念冥想 → 减弱杏仁核反应，强化PFC对情绪的调控</span></li>
-              <li><span class="leaf node-E"><span class="tag tag-blue">↑外向性</span> 行为激活 → 强化多巴胺奖赏回路对正向社交的反应</span></li>
-              <li><span class="leaf node-E"><span class="tag tag-green">↑尽责性</span> 微习惯 + 执行功能训练 → 强化前额叶-纹状体的规划-执行回路</span></li>
-              <li><span class="leaf node-E"><span class="tag tag-purple">↑开放性</span> 刻意接触新事物/新文化/新技能 → 增加可塑性储备</span></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </div>
+<!-- ===== E ===== -->
+<div class="section" id="s-E">
+  <h2><span class="blg" style="background:#b388ff">E</span> 神经可塑性与意志性人格改变</h2>
+  <div class="tree"><ul>
+    <li><details open class="cE"><summary>📈 <b>核心观点的历史演变</b></summary><ul>
+      <li><span class="leaf cE dim">~2006之前："人格在30岁凝固"</span></li>
+      <li><span class="leaf cE dim"><b>2006</b>：Roberts等的元分析证明人格在整个生命周期都在缓慢变化 <span class="tag tg">旧观点被推翻</span></span></li>
+      <li><span class="leaf cE dim"><b>2015</b>：Hudson & Fraley证明有意改变是可能的——volitional personality change <span class="tag tb">不仅会变，还能主动变</span></span></li>
+      <li><span class="leaf cE dim"><b>2021</b>：Stieger等的随机对照试验：3个月数字干预可改变Big Five特质（情绪稳定性、尽责性最显著）<span class="tag tp">干预有效</span></span></li>
+    </ul></details></li>
+    <li><details open class="cE"><summary>⚙️ <b>四大可塑性机制</b></summary><ul>
+      <li><details class="cE"><summary>① 突触可塑性 (Hebbian学习)</summary>
+        <ul><li><span class="leaf cE dim">"一起放电的神经元连接在一起"——反复练习→神经回路强化。行为先于认知：先做改变行为，大脑回路会跟随适应</span></li></ul>
+      </details></li>
+      <li><details class="cE"><summary>② 髓鞘可塑性</summary>
+        <ul><li><span class="leaf cE dim">PFC主要髓鞘化25~30岁完成，但髓鞘增厚/修整终身持续。长期使用的模式→神经通路髓鞘继续增厚</span></li></ul>
+      </details></li>
+      <li><details class="cE"><summary>③ 神经发生</summary>
+        <ul><li><span class="leaf cE dim">海马体终身产生新神经元。学习和新体验→树突棘形成→认知储备增加</span></li></ul>
+      </details></li>
+      <li><details class="cE"><summary>④ 长时程抑制 (LTD)</summary>
+        <ul><li><span class="leaf cE dim">不使用的神经连接被削弱。刻意不执行旧模式→削弱旧神经回路</span></li></ul>
+      </details></li>
+    </ul></details></li>
+    <li><details open class="cE"><summary>💊 <b>有效干预策略（循证）</b></summary><ul>
+      <li><span class="leaf cE"><span class="tag tr">↓神经质（情绪稳定性↑）</span> CBT认知行为疗法 + 正念冥想 → 减弱杏仁核反应，强化PFC对情绪的调控</span></li>
+      <li><span class="leaf cE"><span class="tag tb">↑外向性</span> 行为激活（安排社交活动） → 强化多巴胺奖赏回路对正向社交的反应</span></li>
+      <li><span class="leaf cE"><span class="tag tg">↑尽责性</span> 微习惯 + 执行功能训练 → 强化前额叶-纹状体的规划-执行回路</span></li>
+      <li><span class="leaf cE"><span class="tag tp">↑开放性</span> 刻意接触新事物/新文化/新技能 → 增加海马体和内侧颞叶的可塑性储备</span></li>
+    </ul></details></li>
+    <li><details class="cE"><summary>📚 <b>核心学者</b></summary><ul>
+      <li><span class="leaf cE"><span class="tag tr">Brent Roberts</span> Roberts et al., 2006, <i>Psychological Bulletin</i>：元分析——大五人格在整个生命周期持续变化，情绪稳定性和自信在中年↑，社交活力在老年↓</span></li>
+      <li><span class="leaf cE"><span class="tag tb">Hudson & Fraley</span> 2015, <i>JPSP</i>：你想改变→就会采取微行为→长期累积→特质偏移。意志性改变的关键在于"想要改变"本身</span></li>
+      <li><span class="leaf cE"><span class="tag tg">Mathias Stieger</span> 2021, <i>PNAS</i>：3个月数字干预（每日微任务）显著改变Big Five——<b>首次RCT证据</b></span></li>
+      <li><span class="leaf cE"><span class="tag tp">McCrae & Costa</span> 人格的"成熟原则"：大多数人随着年龄增长变得更情绪稳定、更尽责、更宜人</span></li>
+    </ul></details></li>
+  </ul></div>
 </div>
 
-<!-- ===== DOMAIN F ===== -->
-<div class="mindmap-section" id="mindmap-F">
-  <h2><span class="badge-lg" style="background:#ff80ab">F</span> 自我规训与标签内化</h2>
-  <div class="tree-root">
-    <div class="tree">
-      <ul>
-        <li>
-          <details open class="node-F">
-            <summary>🔄 三阶段反馈回路</summary>
-            <ul>
-              <li><span class="leaf node-F highlight-cyan">信以为真 → 调整行为 → 行为被环境强化 → 认知固化 → 人格偏移</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-F">
-            <summary>🧩 四个子机制</summary>
-            <ul>
-              <li>
-                <details class="node-F">
-                  <summary>① 巴纳姆效应</summary>
-                  <ul><li><span class="leaf node-F dim">模糊/普遍/正面的人格描述→人们认为精准描述了自己。Forer (1948)：评分4.26/5</span></li></ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-F">
-                  <summary>② 自我刻板化</summary>
-                  <ul><li><span class="leaf node-F dim">认定某个标签→不自觉地优先选择符合标签的行为 (Hogg & Turner, 1987)</span></li></ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-F">
-                  <summary>③ 行为证实</summary>
-                  <ul><li><span class="leaf node-F dim">标签→行为调整→他人回应→标签被"证实" (Snyder, Tanke & Berscheid, 1977)</span></li></ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-F">
-                  <summary>④ 身份内化 (标签理论)</summary>
-                  <ul><li><span class="leaf node-F dim">外部标签被反复使用并获得社会认可→最终内化为自我概念 (Becker, 1963; Scheff, 1966)</span></li></ul>
-                </details>
-              </li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-F">
-            <summary>📏 效应量的边界条件</summary>
-            <ul>
-              <li><span class="leaf node-F dim">标签越模糊 → 效应越大（模糊标签容易符合任何行为）</span></li>
-              <li><span class="leaf node-F dim">标签社会认可度越高 → 效应越大（社会强化机制启动）</span></li>
-              <li><span class="leaf node-F dim">个体批判性思维越高 → 效应越小（能抵抗标签的内化）</span></li>
-              <li><span class="leaf node-F dim">标签与真实倾向越吻合 → 效应越大（原本就有被证实）</span></li>
-              <li><span class="leaf node-F dim">时间跨度越长 → 效应累积可能更大</span></li>
-              <li><span class="leaf node-F highlight">结论：效应量小到中等（Cohen's d≈0.2~0.4）</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-F">
-            <summary>📖 "语法 vs 剧本"隐喻</summary>
-            <ul>
-              <li><span class="leaf node-F dim">天生气质 = 语言的语法（硬约束，难改）</span></li>
-              <li><span class="leaf node-F dim">自我规训+标签内化 = 你选择的剧本（语法允许范围内，你可以选择演什么角色）</span></li>
-              <li><span class="leaf node-F dim">长期累积 → 语法本身也被轻微修改</span></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </div>
+<!-- ===== F ===== -->
+<div class="section" id="s-F">
+  <h2><span class="blg" style="background:#ff80ab">F</span> 自我规训与标签内化</h2>
+  <div class="tree"><ul>
+    <li><details open class="cF"><summary>🔄 <b>三阶段反馈回路</b></summary>
+      <ul><li><span class="leaf cF hlc"><b>信以为真 → 调整行为 → 行为被环境强化 → 认知固化 → 人格偏移</b></span></li></ul>
+    </details></li>
+    <li><details open class="cF"><summary>🧩 <b>四个子机制</b></summary><ul>
+      <li><details class="cF"><summary>① 巴纳姆效应</summary>
+        <ul><li><span class="leaf cF dim">当一段人格描述足够模糊/普遍/正面→人们认为它精准描述了自己。Forer (1948)：学生给同一段假描述打评分<b>4.26/5</b></span></li></ul>
+      </details></li>
+      <li><details class="cF"><summary>② 自我刻板化</summary>
+        <ul><li><span class="leaf cF dim">认定某个标签→不自觉地优先选择符合标签的行为。Hogg & Turner, 1987：自我归类理论</span></li></ul>
+      </details></li>
+      <li><details class="cF"><summary>③ 行为证实</summary>
+        <ul><li><span class="leaf cF dim">标签→行为调整→他人回应→标签被"证实"。Snyder, Tanke & Berscheid, 1977, <i>JPSP</i>：让对方相信自己很漂亮/很丑→对方真的表现出了相应的行为</span></li></ul>
+      </details></li>
+      <li><details class="cF"><summary>④ 身份内化 (标签理论)</summary>
+        <ul><li><span class="leaf cF dim">外部标签被反复使用并获得社会认可→最终内化为自我概念。Becker, 1963 (<i>Outsiders</i>); Scheff, 1966 (<i>Being Mentally Ill</i>)</span></li></ul>
+      </details></li>
+    </ul></details></li>
+    <li><details open class="cF"><summary>📏 <b>效应量的边界条件</b></summary><ul>
+      <li><span class="leaf cF dim">标签越模糊（星座/血型）→ <b>效应越大</b>（模糊标签容易符合任何行为）</span></li>
+      <li><span class="leaf cF dim">标签社会认可度越高 → <b>效应越大</b>（社会强化机制启动）</span></li>
+      <li><span class="leaf cF dim">个体批判性思维越高 → <b>效应越小</b>（能抵抗标签的内化）</span></li>
+      <li><span class="leaf cF dim">标签与真实倾向越吻合 → <b>效应越大</b>（但因果难分——原本就有的倾向被标签"证实"）</span></li>
+      <li><span class="leaf cF dim">时间跨度越长 → 效应累积可能更大（反复强化→固化）</span></li>
+      <li><span class="leaf cF"><b>结论</b>：标签的塑造效应真实存在，但效应量小到中等（Cohen's d≈0.2~0.4）。你从51%E/49%I可变成60%E/40%I，但不会从极端I变成极端E。</span></li>
+    </ul></details></li>
+    <li><details class="cF"><summary>📖 <b>"语法 vs 剧本"隐喻</b></summary><ul>
+      <li><span class="leaf cF dim">天生气质 = <b>语言的语法</b>（硬约束，难改——神经质基线、外向性基线）</span></li>
+      <li><span class="leaf cF dim">自我规训+标签内化 = <b>你选择的剧本</b>（语法允许范围内，你可以选择演什么角色）</span></li>
+      <li><span class="leaf cF dim">长期累积 → 语法本身也被轻微修改</span></li>
+    </ul></details></li>
+  </ul></div>
 </div>
 
-<!-- ===== DOMAIN G ===== -->
-<div class="mindmap-section" id="mindmap-G">
-  <h2><span class="badge-lg" style="background:#ffab40">G</span> 历史心理学方法论</h2>
-  <div class="tree-root">
-    <div class="tree">
-      <ul>
-        <li>
-          <details open class="node-G">
-            <summary>❓ 核心问题</summary>
-            <ul>
-              <li><span class="leaf node-G dim">人格随社会环境变迁而变化——但没有标准化量表测量古代人的人格。如何克服？</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-G">
-            <summary>🔍 四种方法路径</summary>
-            <ul>
-              <li>
-                <details class="node-G">
-                  <summary>📝 路径A: 计算语言学分析 (LIWC)</summary>
-                  <ul>
-                    <li><span class="leaf node-G dim">分析日记、书信、小说中的词汇。高神经质→更多负面情绪词/第一人称单数 (Pennebaker, 1997, 2011)</span></li>
-                    <li><span class="leaf node-G small">局限：只有识字阶层留下文本；文本不等于直接心理状态</span></li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-G">
-                  <summary>📊 路径B: 行为代理指标</summary>
-                  <ul>
-                    <li><span class="leaf node-G dim">教育记录→尽责性；犯罪率→宜人性；储蓄率→尽责性；离婚率→情绪稳定性</span></li>
-                    <li><span class="leaf node-G small">局限：代理指标的效度难以验证</span></li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-G">
-                  <summary>🌍 路径C: 跨文化比较+以空间代时间</summary>
-                  <ul>
-                    <li><span class="leaf node-G dim">研究现存前现代社会群体，获得工业化前的人格基线 (Henrich, 2020)</span></li>
-                    <li><span class="leaf node-G small">局限：前现代社会≠古代社会</span></li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-G">
-                  <summary>❤️ 路径D: 情绪史+历史人类学</summary>
-                  <ul>
-                    <li><span class="leaf node-G dim">研究历史上"情绪规范"的变化——中世纪忏悔手册、维多利亚礼仪书 (Reddy, 2001; Rosenwein, 2006)</span></li>
-                    <li><span class="leaf node-G small">局限：质性研究为主，难以量化比较</span></li>
-                  </ul>
-                </details>
-              </li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-G">
-            <summary>⚠️ WEIRD批判——颠覆性的发现</summary>
-            <ul>
-              <li><span class="leaf node-G dim">Henrich (2020)：心理学研究中约<span class="highlight">96%</span>的样本来自WEIRD人群，只占全球人口~12%。人格心理学课本可能只描述了7%的人类。</span></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </div>
+<!-- ===== G ===== -->
+<div class="section" id="s-G">
+  <h2><span class="blg" style="background:#ffab40">G</span> 历史心理学方法论</h2>
+  <div class="tree"><ul>
+    <li><details open class="cG"><summary>❓ <b>核心问题</b></summary>
+      <ul><li><span class="leaf cG dim">人格随社会环境变迁而变化——但我们没有标准化量表来测量古代人的人格。如何克服？</span></li></ul>
+    </details></li>
+    <li><details open class="cG"><summary>🔍 <b>四种方法路径</b></summary><ul>
+      <li><details class="cG"><summary>📝 路径A: 计算语言学分析 (LIWC)</summary><ul>
+        <li><span class="leaf cG dim">LIWC (Linguistic Inquiry and Word Count) 分析日记、书信、小说中的词汇。语言风格与人格稳定关联：高神经质→更多负面情绪词/第一人称单数；高开放性→更多认知复杂性词汇</span></li>
+        <li><span class="leaf cG sm">核心学者：Pennebaker (1997, 2011 <i>The Secret Life of Pronouns</i>)</span></li>
+        <li><span class="leaf cG sm">局限：只有识字阶层留下文本；文本不等于直接心理状态（有表达规范和社会面具）</span></li>
+      </ul></details></li>
+      <li><details class="cG"><summary>📊 路径B: 行为代理指标</summary><ul>
+        <li><span class="leaf cG dim">教育记录→尽责性；犯罪率→宜人性；储蓄率→尽责性；离婚率→情绪稳定性。经济行为/社会行为间接反映人格的集体水平</span></li>
+        <li><span class="leaf cG sm">局限：代理指标的效度难以验证——储蓄率高是因为尽责性高还是因为没消费渠道？</span></li>
+      </ul></details></li>
+      <li><details class="cG"><summary>🌍 路径C: 跨文化比较+以空间代时间</summary><ul>
+        <li><span class="leaf cG dim">研究现存的前现代社会群体（亚马逊原住民、巴布亚新几内亚部落），与现代工业化社会比较。"前现代社会≈我们祖先的社会"——获得工业化前的人格基线</span></li>
+        <li><span class="leaf cG sm">核心学者：Henrich (2020 <i>The WEIRDest People in the World</i>)</span></li>
+        <li><span class="leaf cG sm">局限：前现代社会≠古代社会——它们也经历了自己的历史变迁</span></li>
+      </ul></details></li>
+      <li><details class="cG"><summary>❤️ 路径D: 情绪史+历史人类学</summary><ul>
+        <li><span class="leaf cG dim">研究历史上"情绪规范"(Emotional Regimes)的变化——中世纪忏悔手册、维多利亚礼仪书。情绪规范=人格的社会脚本——规定"什么样的人格是好的/得体的"</span></li>
+        <li><span class="leaf cG sm">核心学者：Reddy (2001 <i>The Navigation of Feeling</i>); Rosenwein (2006 <i>Emotional Communities in the Early Middle Ages</i>)</span></li>
+        <li><span class="leaf cG sm">局限：质性研究为主，难以量化比较</span></li>
+      </ul></details></li>
+    </ul></details></li>
+    <li><details class="cG"><summary>⚠️ <b>WEIRD批判——一个颠覆性的发现</b></summary><ul>
+      <li><span class="leaf cG dim">Henrich (2020)：心理学研究中约<b>96%</b>的样本来自WEIRD人群（Western, Educated, Industrialized, Rich, Democratic）。但这群人只占全球人口的~12%，而且在人格上高度特殊——更高开放性、更强个体主义、更倾向内在归因。这意味着：<b>你的人格心理学课本可能只描述了7%的人类。</b></span></li>
+    </ul></details></li>
+  </ul></div>
 </div>
 
-<!-- ===== DOMAIN H ===== -->
-<div class="mindmap-section" id="mindmap-H">
-  <h2><span class="badge-lg" style="background:#1de9b6;color:#000">H</span> 身份驱动动机 (IBM) 理论与实践</h2>
-  <div class="tree-root">
-    <div class="tree">
-      <ul>
-        <li>
-          <details open class="node-H">
-            <summary>🎯 核心命题</summary>
-            <ul>
-              <li><span class="leaf node-H dim">Daphna Oyserman (2015)：人的行为不是由"目标"驱动，而是由"<span class="highlight">此刻我认为我是谁</span>"驱动。</span></li>
-              <li><span class="leaf node-H dim">传统路径：设定目标→制定计划→执行行为→改变</span></li>
-              <li><span class="leaf node-H highlight-cyan">IBM路径：启动身份→行为与身份匹配→社会确认→身份固化→行为自动化</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-H">
-            <summary>📚 两大支撑理论</summary>
-            <ul>
-              <li>
-                <details class="node-H">
-                  <summary>🔮 可能自我 (Possible Selves) — Markus & Nurius (1986)</summary>
-                  <ul>
-                    <li><span class="leaf node-H dim">自我概念=现在自我+期望自我（牵引力）+恐惧自我（推动力）</span></li>
-                    <li><span class="leaf node-H dim">最佳缺口：清晰具体可操作</span></li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-H">
-                  <summary>🪞 自我感知理论 — Daryl Bem (1972)</summary>
-                  <ul>
-                    <li><span class="leaf node-H dim">人们通过观察自己的行为来推断自己的态度——就像观察他人一样</span></li>
-                    <li><span class="leaf node-H dim">"假装直到成为"有理论依据——行为先于认知改变</span></li>
-                  </ul>
-                </details>
-              </li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-H">
-            <summary>🪜 身份锚定的四步骤</summary>
-            <ul>
-              <li><span class="leaf node-H"><span class="tag tag-red">第一步</span> 选择一个身份（不是目标） ✗"我要每天跑步" ✓"我是一个跑者"</span></li>
-              <li><span class="leaf node-H"><span class="tag tag-blue">第二步</span> 设计"身份仪式"——语言启动身份</span></li>
-              <li><span class="leaf node-H"><span class="tag tag-green">第三步</span> 用小行为喂养身份——行为证实身份</span></li>
-              <li><span class="leaf node-H"><span class="tag tag-purple">第四步</span> 公开声明身份——社会强化身份</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-H">
-            <summary>🧩 不同人格类型的差异效应</summary>
-            <ul>
-              <li><span class="leaf node-H">高开放性 → <span class="tag tag-green">🟢非常有效</span> 对新身份自然好奇接纳</span></li>
-              <li><span class="leaf node-H">高尽责性 → <span class="tag tag-gold">🟡中等有效，执行出色</span> 身份转换需要更长时间</span></li>
-              <li><span class="leaf node-H">高外向性 → <span class="tag tag-green">🟢有效</span> 受社会强化驱动</span></li>
-              <li><span class="leaf node-H">高宜人性 → <span class="tag tag-gold">🟡有效但需警惕</span> "假身份"风险</span></li>
-              <li><span class="leaf node-H">高神经质 → <span class="tag tag-red">🔴复杂双向</span> 怀疑论+焦虑驱动，恐惧自我推动力更大</span></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </div>
+<!-- ===== H ===== -->
+<div class="section" id="s-H">
+  <h2><span class="blg" style="background:#1de9b6;color:#000">H</span> 身份驱动动机（IBM）理论与实践</h2>
+  <div class="tree"><ul>
+    <li><details open class="cH"><summary>🎯 <b>核心命题</b></summary><ul>
+      <li><span class="leaf cH dim">Daphna Oyserman (2015)：人的行为不是由"目标"驱动，而是由<b>"此刻我认为我是谁"</b>驱动。</span></li>
+      <li><span class="leaf cH dim">传统路径：设定目标 → 制定计划 → 执行行为 → 改变</span></li>
+      <li><span class="leaf cH hlc"><b>IBM路径：启动身份 → 行为与身份匹配 → 身份获得社会确认 → 身份固化 → 行为自动化</b></span></li>
+    </ul></details></li>
+    <li><details open class="cH"><summary>📚 <b>两大支撑理论</b></summary><ul>
+      <li><details class="cH"><summary>🔮 可能自我 (Possible Selves) — Markus & Nurius (1986)</summary>
+        <ul><li><span class="leaf cH dim">自我概念=现在自我+期望自我（牵引力）+恐惧自我（推动力）。最佳缺口：清晰具体可操作。IBM的"身份替代"需要愿景——期望自我提供了方向</span></li></ul>
+      </details></li>
+      <li><details class="cH"><summary>🪞 自我感知理论 — Daryl Bem (1972)</summary>
+        <ul><li><span class="leaf cH dim">人们通过观察自己的行为来推断自己的态度——就像观察他人一样。"假装直到成为"有理论依据——行为先于认知改变</span></li></ul>
+      </details></li>
+    </ul></details></li>
+    <li><details open class="cH"><summary>🪜 <b>身份锚定的四步骤</b></summary><ul>
+      <li><span class="leaf cH"><span class="tag tr">第一步</span> <b>选择一个身份（不是目标）</b> ✗ "我要每天跑步"（目标） ✓ "我是一个跑者"（身份）</span></li>
+      <li><span class="leaf cH"><span class="tag tb">第二步</span> <b>设计"身份仪式"</b> 每天早上说："作为一个跑者，我现在要穿上跑鞋"（语言启动身份）</span></li>
+      <li><span class="leaf cH"><span class="tag tg">第三步</span> <b>用小行为喂养身份</b> 哪怕只跑了5分钟，对自己说："这就是跑者会做的事"（行为证实身份）</span></li>
+      <li><span class="leaf cH"><span class="tag tp">第四步</span> <b>公开声明身份</b> "我最近在练跑步"→社会期待让你保持行为一致（社会强化身份）</span></li>
+    </ul></details></li>
+    <li><details open class="cH"><summary>🧩 <b>不同人格类型的差异效应</b></summary><ul>
+      <li><span class="leaf cH">高开放性 → <span class="tag tg">🟢 非常有效</span> 对新身份自然好奇接纳——最容易被"我想成为的那种人"吸引</span></li>
+      <li><span class="leaf cH">高尽责性 → <span class="tag tgo">🟡 中等有效，但执行出色</span> 一旦身份锚定，行为一致性极高；但身份转换需要更长时间</span></li>
+      <li><span class="leaf cH">高外向性 → <span class="tag tg">🟢 有效，受社会强化驱动</span> 需要公开声明的社会反馈作为动力</span></li>
+      <li><span class="leaf cH">高宜人性 → <span class="tag tgo">🟡 有效但需警惕</span> 可能为了迎合他人采用身份而非内在动机——"假身份"风险</span></li>
+      <li><span class="leaf cH">高神经质 → <span class="tag tr">🔴 复杂双向</span> 怀疑论→容易放弃；但焦虑驱动→恐惧自我比期望自我推动力更大。需要大量结构调整</span></li>
+    </ul></details></li>
+    <li><details class="cH"><summary>🧪 <b>经典实验支持</b></summary><ul>
+      <li><span class="leaf cH dim">Oyserman et al., 2007：被提示"学业成功是非洲裔美国人的文化价值"→学习投入↑20~30%，6个月后持续</span></li>
+      <li><span class="leaf cH dim">身份启动戒烟："我是一个非吸烟者"比"我在努力戒烟"的戒断成功率↑30%</span></li>
+    </ul></details></li>
+  </ul></div>
 </div>
 
-<!-- ===== DOMAIN I ===== -->
-<div class="mindmap-section" id="mindmap-I">
-  <h2><span class="badge-lg" style="background:#7c4dff">I</span> 记忆的叙事建构与自传体编辑</h2>
-  <div class="tree-root">
-    <div class="tree">
-      <ul>
-        <li>
-          <details open class="node-I">
-            <summary>💡 核心命题</summary>
-            <ul>
-              <li><span class="leaf node-I highlight">记忆不是回放，是重构。每一次回忆，大脑都重新建构一次。</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-I">
-            <summary>🧠 神经基础</summary>
-            <ul>
-              <li><span class="leaf node-I"><span class="tag tag-blue">海马体</span> 将分散存储在视觉/听觉/情绪/躯体皮层的记忆碎片拼接成连贯场景</span></li>
-              <li><span class="leaf node-I"><span class="tag tag-green">前额叶皮质</span> 对场景进行叙事性组织——赋予"开头-发展-结局"结构</span></li>
-              <li><span class="leaf node-I"><span class="tag tag-red">杏仁核</span> 给记忆贴上情绪标签——为什么同一段记忆在不同心情下感受不同</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-I">
-            <summary>🚀 两大驱动力</summary>
-            <ul>
-              <li>
-                <details class="node-I">
-                  <summary>📖 叙事连贯性驱动 (McAdams, 2001)</summary>
-                  <ul>
-                    <li><span class="leaf node-I dim">大脑有深层需求将人生经历编织成连贯的"自我叙事"。完整叙事=稳定自我概念=奖赏中心激活</span></li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <details class="node-I">
-                  <summary>💓 躯体标记 (Damasio, 1994)</summary>
-                  <ul>
-                    <li><span class="leaf node-I dim">情绪记忆存储在身体中。回忆时身体先复现生理状态，大脑再"寻找一个合适的叙事来解释它"</span></li>
-                  </ul>
-                </details>
-              </li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-I">
-            <summary>🧪 虚假记忆实验</summary>
-            <ul>
-              <li><span class="leaf node-I dim">Loftus & Pickrell (1995)："商场走失"实验——约<span class="highlight">25%~30%</span>参与者形成完整虚假记忆</span></li>
-              <li><span class="leaf node-I dim">fMRI上真实记忆与虚假记忆几乎不可区分！</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-I">
-            <summary>🔄 自我验证的过滤机制（Swann）</summary>
-            <ul>
-              <li><span class="leaf node-I dim">① 注意偏置：与自我概念一致的信息→注视更久</span></li>
-              <li><span class="leaf node-I dim">② 记忆巩固偏置：一致信息1周后准确率~80% vs 不一致~40%</span></li>
-              <li><span class="leaf node-I dim">③ 神经奖赏机制：一致→腹侧纹状体激活；不一致→前扣带回+杏仁核</span></li>
-              <li><span class="leaf node-I dim">④ 环境选择：选择性进入能验证自我概念的环境</span></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </div>
+<!-- ===== I ===== -->
+<div class="section" id="s-I">
+  <h2><span class="blg" style="background:#7c4dff">I</span> 记忆的叙事建构与自传体编辑</h2>
+  <div class="tree"><ul>
+    <li><details open class="cI"><summary>💡 <b>核心命题</b></summary>
+      <ul><li><span class="leaf cI hl">记忆不是回放，是重构。每一次回忆，大脑都重新建构一次。</span></li></ul>
+    </details></li>
+    <li><details open class="cI"><summary>🧠 <b>神经基础</b></summary><ul>
+      <li><span class="leaf cI"><span class="tag tb">海马体</span> 将分散存储在视觉/听觉/情绪/躯体皮层的记忆碎片拼接成一个连贯场景——每次回忆重新运行拼接</span></li>
+      <li><span class="leaf cI"><span class="tag tg">前额叶皮质</span> 对场景进行叙事性组织——赋予"开头-发展-结局"结构，加入因果解释——赋予意义的"编剧"</span></li>
+      <li><span class="leaf cI"><span class="tag tr">杏仁核</span> 给记忆贴上情绪标签——为什么同一段记忆在不同心情下感受不同</span></li>
+    </ul></details></li>
+    <li><details open class="cI"><summary>🚀 <b>两大驱动力解释"记忆清晰化"</b></summary><ul>
+      <li><details class="cI"><summary>📖 叙事连贯性驱动 (McAdams, 2001)</summary>
+        <ul><li><span class="leaf cI dim">大脑有深层需求将人生经历编织成连贯的"自我叙事"。空白被填充不是为了欺骗，而是让叙事完整有意义。完整叙事=稳定自我概念=减少不确定性=腹侧纹状体(奖赏中心)激活</span></li></ul>
+      </details></li>
+      <li><details class="cI"><summary>💓 躯体标记 (Damasio, 1994, <i>Descartes' Error</i>)</summary>
+        <ul><li><span class="leaf cI dim">情绪记忆存储在身体中。回忆时身体先复现生理状态（心跳/肌肉紧张），大脑再"寻找一个合适的叙事来解释它"。躯体感觉可能先于叙事出现——所以痛苦感觉是真实的，但绑定在"可能不真实"的事件上</span></li></ul>
+      </details></li>
+    </ul></details></li>
+    <li><details class="cI"><summary>🧪 <b>虚假记忆实验</b></summary><ul>
+      <li><span class="leaf cI dim">Loftus & Pickrell (1995)："商场走失"实验——通过反复引导和想象，约<b>25%~30%</b>参与者形成从未发生的童年事件的完整虚假记忆</span></li>
+      <li><span class="leaf cI dim">后续数十次复制：虚假记忆可以被植入，且<b>fMRI上真实记忆与虚假记忆几乎不可区分</b>——都激活海马体/前额叶/视觉皮层。唯一微小差异：真实记忆在感觉皮层有更精细编码，但当事人无法主观区分</span></li>
+    </ul></details></li>
+    <li><details class="cI"><summary>🔄 <b>自我验证的过滤机制（Swann）——四重证据</b></summary><ul>
+      <li><span class="leaf cI dim"><span class="tag tr">① 注意偏置</span> 与自我概念一致的信息→注视更久、回视更多；不一致信息→被快速扫过/主动回避</span></li>
+      <li><span class="leaf cI dim"><span class="tag tb">② 记忆巩固偏置</span> 一致信息：1周后准确回忆率~80%；不一致信息：~40%，且回忆时发生"扭曲"以符合自我概念</span></li>
+      <li><span class="leaf cI dim"><span class="tag tg">③ 神经奖赏机制</span> 看到与自我概念一致信息→腹侧纹状体(多巴胺奖赏中心)激活；不一致→前扣带回(冲突检测)+杏仁核(轻度负向情绪)</span></li>
+      <li><span class="leaf cI dim"><span class="tag tp">④ 环境选择</span> 人们选择性地进入能验证自我概念的环境→环境被修改以匹配自我概念。如"社恐"→回避社交→技能不练习→表现不佳→"看，我确实社恐"</span></li>
+    </ul></details></li>
+  </ul></div>
 </div>
 
-<!-- ===== DOMAIN J ===== -->
-<div class="mindmap-section" id="mindmap-J">
-  <h2><span class="badge-lg" style="background:#ff6e40">J</span> 认知失调、自洽与矛盾的价值</h2>
-  <div class="tree-root">
-    <div class="tree">
-      <ul>
-        <li>
-          <details open class="node-J">
-            <summary>⚡ 认知失调理论</summary>
-            <ul>
-              <li><span class="leaf node-J dim">Leon Festinger (1957)：不一致的认知→不愉快的心理紧张→被驱动减少失调</span></li>
-              <li><span class="leaf node-J dim">三种减少方式：改变态度（最容易）→添加认知（中等）→改变行为（最难）</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-J">
-            <summary>📌 自洽的操作性定义</summary>
-            <ul>
-              <li><span class="leaf node-J dim">自洽 ≠ 正确（一个完全错误的信念体系也可以是自洽的）</span></li>
-              <li><span class="leaf node-J dim">自洽 ≠ 健康（过于刚性的自洽是心理免疫系统的过度激活）</span></li>
-              <li><span class="leaf node-J dim">自洽有程度差异——从"灵活自洽"到"僵化自洽"是一个连续谱</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-J">
-            <summary>🧘 健康自洽 vs 僵化自洽</summary>
-            <ul>
-              <li><span class="leaf node-J"><span class="tag tag-green">健康自洽</span> 核心价值一致，表达方式有弹性；能容纳矛盾；新证据足够有力时愿调整框架</span></li>
-              <li><span class="leaf node-J"><span class="tag tag-red">僵化自洽</span> 所有认知必须完全一致；拒绝例外；任何不一致都被解释掉或忽略；矛盾被视为威胁</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-J">
-            <summary>🌟 矛盾的三大积极功能</summary>
-            <ul>
-              <li><span class="leaf node-J"><span class="tag tag-gold">① 认知失调是改变的入口</span> 没有失调就没有改变的必要</span></li>
-              <li><span class="leaf node-J"><span class="tag tag-blue">② 辩证思维与创造力</span> 矛盾容忍度与更高创造力、更好适应性相关 (彭凯平等, 1999)</span></li>
-              <li><span class="leaf node-J"><span class="tag tag-purple">③ 自我复杂性与情绪韧性</span> 多个相对独立的自我方面→单个受挫时不影响整体 (Linville, 1987)</span></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </div>
+<!-- ===== J ===== -->
+<div class="section" id="s-J">
+  <h2><span class="blg" style="background:#ff6e40">J</span> 认知失调、自洽与矛盾的价值</h2>
+  <div class="tree"><ul>
+    <li><details open class="cJ"><summary>⚡ <b>认知失调理论</b></summary><ul>
+      <li><span class="leaf cJ dim">Leon Festinger (1957)：当一个人同时持有两个或多个不一致的认知（信念/态度/行为认知）→不愉快心理紧张状态→被驱动去减少失调。</span></li>
+      <li><span class="leaf cJ dim">三种减少失调的方式（按难度升序）：<br>① 改变态度（最容易）——"吸烟的危害被夸大了"<br>② 添加认知（中等）——"我认识的某人每天两包烟活到90岁"<br>③ 改变行为（最难）——戒烟</span></li>
+    </ul></details></li>
+    <li><details open class="cJ"><summary>📌 <b>自洽的操作性定义</b></summary>
+      <ul><li><span class="leaf cJ dim">自洽 (Self-Consistency)：个体的一套认知体系（信念/态度/自我概念/价值观）在内部逻辑上不存在明显矛盾，且个体拥有有效的心理机制（过滤/解释/回避）来消除外界输入的不一致信息，从而维持系统稳定运行的状态。</span></li>
+      <li><span class="leaf cJ dim"><b>自洽 ≠ 正确</b>（一个完全错误的信念体系也可以是自洽的）</span></li>
+      <li><span class="leaf cJ dim"><b>自洽 ≠ 健康</b>（过于刚性的自洽是心理免疫系统的过度激活）</span></li>
+      <li><span class="leaf cJ dim">自洽有程度差异——从"灵活自洽"到"僵化自洽"是一个<b>连续谱</b></span></li>
+    </ul></details></li>
+    <li><details open class="cJ"><summary>🧘 <b>健康自洽 vs 僵化自洽</b></summary><ul>
+      <li><span class="leaf cJ"><span class="tag tg">健康自洽</span> 核心价值一致，但表达方式有弹性；能容纳"我有时也会做出不符合我标签的行为"；当新证据足够有力时，愿意调整框架；内在矛盾被视为成长的信号</span></li>
+      <li><span class="leaf cJ"><span class="tag tr">僵化自洽</span> 所有认知必须完全一致，拒绝例外；"我是X型的人，所以我不可能做Y"；任何不一致都被解释掉或忽略；内在矛盾被视为威胁</span></li>
+      <li><span class="leaf cJ dim">Swann的发现：中等自尊者更能吸收平衡信息；极端自尊（极高/极低）拒绝不一致反馈</span></li>
+    </ul></details></li>
+    <li><details open class="cJ"><summary>🌟 <b>矛盾的三大积极功能</b></summary><ul>
+      <li><span class="leaf cJ"><span class="tag tgo">① 认知失调是改变的入口</span> 没有失调就没有改变的必要。诱发轻度失调比说教更有效 (Festinger, 1957)</span></li>
+      <li><span class="leaf cJ"><span class="tag tb">② 辩证思维与创造力</span> 矛盾容忍度（Tolerance for Ambiguity）与更高创造力、更好适应性、更低防御性相关——能同时持有两个对立想法并产生新综合（彭凯平等跨文化研究, 1999~）</span></li>
+      <li><span class="leaf cJ"><span class="tag tp">③ 自我复杂性与情绪韧性</span> 拥有多个相对独立的自我方面（"我在工作中是A，在家是B，在爱好中是C"）→单个方面受挫时不会影响整体自我概念→情绪恢复更快 (Linville, 1987, <i>JPSP</i>)</span></li>
+    </ul></details></li>
+  </ul></div>
 </div>
 
-<!-- ===== DOMAIN K ===== -->
-<div class="mindmap-section" id="mindmap-K">
-  <h2><span class="badge-lg" style="background:#18d5ab;color:#000">K</span> 与自洽者沟通：说服的心理学</h2>
-  <div class="tree-root">
-    <div class="tree">
-      <ul>
-        <li>
-          <details open class="node-K">
-            <summary>❌ 为什么直接反驳会失败？</summary>
-            <ul>
-              <li><span class="leaf node-K dim">外部挑战→ACC(冲突检测)→杏仁核(威胁信号)→前额叶启动"防御性推理"→信念反而被加固（<span class="highlight">逆火效应</span>）</span></li>
-              <li><span class="leaf node-K small">Nyhan & Reifler, 2010, Political Behavior</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-K">
-            <summary>💬 策略一：动机性访谈 (MI)</summary>
-            <ul>
-              <li><span class="leaf node-K dim">William Miller & Stephen Rollnick (1991, 2013)</span></li>
-              <li><span class="leaf node-K dim">核心原则：不是"说服"，而是"引导"</span></li>
-              <li>
-                <details class="node-K">
-                  <summary>四大核心技巧</summary>
-                  <ul>
-                    <li><span class="leaf node-K"><span class="tag tag-red">① 表达共情</span> 被理解→威胁信号↓→防御↓→认知开放度↑</span></li>
-                    <li><span class="leaf node-K"><span class="tag tag-blue">② 发展差异</span> 引导对方自己发现"我想成为的人"与"我现在做的人"之间的差距</span></li>
-                    <li><span class="leaf node-K"><span class="tag tag-green">③ 回避争论</span> 不抵抗→防御无处着力→自然松懈</span></li>
-                    <li><span class="leaf node-K"><span class="tag tag-purple">④ 支持自我效能</span> "你觉得哪个方法更适合你？"→保护自洽感</span></li>
-                  </ul>
-                </details>
-              </li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-K">
-            <summary>🔄 策略二：悖论式改变 (Swann, 1988)</summary>
-            <ul>
-              <li><span class="leaf node-K dim">自洽者无法接受"我错了"，但可以接受"我发现了自己以前没注意到的一面"</span></li>
-              <li><span class="leaf node-K dim">使用反方向的引导性问题→对方自己"发现"新框架</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-K">
-            <summary>🤔 策略三：苏格拉底式提问</summary>
-            <ul>
-              <li><span class="leaf node-K dim">不是从外部攻击认知体系，而是从内部让它自己发现漏洞</span></li>
-              <li><span class="leaf node-K dim">你只是在提问，结论由对方自己得出</span></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </div>
+<!-- ===== K ===== -->
+<div class="section" id="s-K">
+  <h2><span class="blg" style="background:#18d5ab;color:#000">K</span> 与自洽者沟通：说服的心理学</h2>
+  <div class="tree"><ul>
+    <li><details open class="cK"><summary>❌ <b>为什么直接反驳会失败？</b></summary>
+      <ul><li><span class="leaf cK dim">外部挑战 → ACC(冲突检测) → 杏仁核(威胁信号) → 前额叶启动"防御性推理"→ 认知资源用来保护自我概念而非评估论点→ 信念反而被加固（<b>逆火效应 Backfire Effect</b>）</span></li>
+      <li><span class="leaf cK sm">核心文献：Nyhan & Reifler, 2010, <i>Political Behavior</i> "When Corrections Fail: The persistence of political misperceptions"</span></li>
+    </ul></details></li>
+    <li><details open class="cK"><summary>💬 <b>策略一：动机性访谈 (Motivational Interviewing, MI)</b></summary><ul>
+      <li><span class="leaf cK dim">提出者：William Miller & Stephen Rollnick (1991, 2013)</span></li>
+      <li><span class="leaf cK dim">核心原则：不是"说服"，而是"<b>引导</b>"。</span></li>
+      <li><span class="leaf cK dim">传统说服："你应该戒烟，因为……" ｜ MI："你对吸烟有什么感受？"</span></li>
+      <li><span class="leaf cK dim">外部施加动机 vs 唤起内在动机；对抗 vs 合作；专家姿态 vs 同伴姿态</span></li>
+      <li><details class="cK"><summary>四大核心技巧</summary><ul>
+        <li><span class="leaf cK"><span class="tag tr">① 表达共情</span> "我完全理解为什么你会这样想"——被理解=威胁信号↓(杏仁核↓)→防御↓→认知开放度↑</span></li>
+        <li><span class="leaf cK"><span class="tag tb">② 发展差异</span> 引导对方自己发现"我想成为的人"与"我现在做的人"之间的差距（不是你指出，是对方自己说出）——自己说出的差距→没有外部入侵者需要防御</span></li>
+        <li><span class="leaf cK"><span class="tag tg">③ 回避争论</span> 对方反驳时→不辩解→侧身让开："你说得对，戒烟确实很难……你现在有什么想法？"——不抵抗→防御无处着力→自然松懈</span></li>
+        <li><span class="leaf cK"><span class="tag tp">④ 支持自我效能</span> "你觉得哪个方法更适合你？你自己最清楚什么方式可能有效"——改变被感知为"自己的选择"→保护自洽感</span></li>
+      </ul></details></li>
+    </ul></details></li>
+    <li><details class="cK"><summary>🔄 <b>策略二：悖论式改变 (Swann, 1988)</b></summary><ul>
+      <li><span class="leaf cK dim">核心洞察：自洽者无法接受"我错了"，但可以接受"我发现了自己以前没注意到的一面"。前者威胁自我概念，后者丰富自我概念。</span></li>
+      <li><span class="leaf cK dim">操作：对信念高度确定的人使用反方向的引导性问题。例：对认为自己"不自信"（但实质自信）的人问："你是否曾有过坚定捍卫自己观点的时刻？"→对方自己"发现"自己其实是自信的</span></li>
+    </ul></details></li>
+    <li><details class="cK"><summary>🤔 <b>策略三：苏格拉底式提问</b></summary><ul>
+      <li><span class="leaf cK dim">原理：不是从外部攻击认知体系，而是从内部让它自己发现漏洞。</span></li>
+      <li><span class="leaf cK dim">"你说社会是邪恶的所以你也可以邪恶——那你觉得在你生命中，有没有什么人做过善良的事？"→"那个人为什么要那样做？"→"如果那个人可以，你有什么理由说你不行？"</span></li>
+      <li><span class="leaf cK dim">关键：你只是在提问，结论由对方自己得出。</span></li>
+    </ul></details></li>
+  </ul></div>
 </div>
 
-<!-- ===== DOMAIN L ===== -->
-<div class="mindmap-section" id="mindmap-L">
-  <h2><span class="badge-lg" style="background:#d500f9">L</span> 历史周期中的人格偏好规律</h2>
-  <div class="tree-root">
-    <div class="tree">
-      <ul>
-        <li>
-          <details open class="node-L">
-            <summary>📊 趋势性规律（Twenge CTMA数据 + 理论推断）</summary>
-            <ul>
-              <li><span class="leaf node-L"><span class="tag tag-red">战乱/动荡期</span> 高神经质·低开放性·高尽责性</span></li>
-              <li><span class="leaf node-L"><span class="tag tag-green">经济繁荣/和平期</span> 高外向性·高开放性·低神经质</span></li>
-              <li><span class="leaf node-L"><span class="tag tag-gold">转型/混乱期</span> 高开放性·高神经质</span></li>
-              <li><span class="leaf node-L"><span class="tag tag-blue">衰退/紧缩期</span> 高尽责性·低外向性·高神经质</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-L">
-            <summary>🔄 ASA模型的放大 (Schneider, 1987)</summary>
-            <ul>
-              <li><span class="leaf node-L"><span class="tag tag-purple">吸引 (Attraction)</span> 人选择与自己人格匹配的环境</span></li>
-              <li><span class="leaf node-L"><span class="tag tag-blue">选择 (Selection)</span> 环境选择与自己匹配的人</span></li>
-              <li><span class="leaf node-L"><span class="tag tag-red">退出 (Attrition)</span> 不匹配的人离开</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-L">
-            <summary>📈 三种可能的脉动规律</summary>
-            <ul>
-              <li><span class="leaf node-L"><span class="tag tag-green">① 技术革命节奏</span> 数百年周期——农业→工业→信息→AI (⭐⭐⭐强)</span></li>
-              <li><span class="leaf node-L"><span class="tag tag-gold">② 代际钟摆 (Strauss & Howe)</span> ~80年周期——沉默→婴儿潮→X→千禧→Z (⭐⭐中等)</span></li>
-              <li><span class="leaf node-L"><span class="tag tag-purple">③ 历史大转型</span> 前现代→现代→后现代 (⭐⭐⭐强)</span></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </div>
+<!-- ===== L ===== -->
+<div class="section" id="s-L">
+  <h2><span class="blg" style="background:#d500f9">L</span> 历史周期中的人格偏好规律</h2>
+  <div class="tree"><ul>
+    <li><details open class="cL"><summary>📊 <b>趋势性规律</b>（Twenge CTMA数据 + 理论推断）</summary><ul>
+      <li><span class="leaf cL"><span class="tag tr">战乱/动荡期</span> 高神经质（警觉）·低开放性（守旧）·高尽责性（守纪律）——安全第一</span></li>
+      <li><span class="leaf cL"><span class="tag tg">经济繁荣/和平期</span> 高外向性（社交）·高开放性（创新）·低神经质（放松）——机会捕捉</span></li>
+      <li><span class="leaf cL"><span class="tag tgo">转型/混乱期</span> 高开放性（适应）·高神经质（警觉）——信息敏感</span></li>
+      <li><span class="leaf cL"><span class="tag tb">衰退/紧缩期</span> 高尽责性（节约）·低外向性（风险回避）·高神经质（焦虑）——资源保护</span></li>
+    </ul></details></li>
+    <li><details open class="cL"><summary>🔄 <b>ASA模型的放大</b>（Schneider, 1987）</summary><ul>
+      <li><span class="leaf cL"><span class="tag tp">吸引 (Attraction)</span> 人选择与自己人格匹配的环境 → 某种社会结构吸引特定人格的人</span></li>
+      <li><span class="leaf cL"><span class="tag tb">选择 (Selection)</span> 环境选择与自己匹配的人 → 社会制度奖励与时代匹配的人格</span></li>
+      <li><span class="leaf cL"><span class="tag tr">退出 (Attrition)</span> 不匹配的人离开 → 不适应的人格被边缘化或"淘汰"</span></li>
+      <li><span class="leaf cL dim">历史尺度意义：社会结构转型→人格偏好价值重估→过去被压抑的人格（如农业时代的高开放性）在工业/信息时代变成资产</span></li>
+    </ul></details></li>
+    <li><details class="cL"><summary>📈 <b>三种可能的脉动规律</b></summary><ul>
+      <li><span class="leaf cL"><span class="tag tg">① 技术革命节奏</span> 数百年周期：农业→高宜人·高尽责；工业早期→高尽责·低神经质；信息→高开放·高外向；AI(进行中)→高认知灵活·高自律 <span class="dim">(⭐⭐⭐ 强)</span></span></li>
+      <li><span class="leaf cL"><span class="tag tgo">② 代际钟摆 (Strauss & Howe)</span> ~80年周期：沉默一代(高服从)→婴儿潮(高叛逆)→X世代(高独立)→千禧代(高集体)→Z世代(?) <span class="dim">(⭐⭐ 中等)</span></span></li>
+      <li><span class="leaf cL"><span class="tag tp">③ 历史大转型</span> 数百年：前现代→集体主义·情境伦理；现代→个人主义·普世伦理；后现代→混合/碎片化 <span class="dim">(⭐⭐⭐ 强)</span></span></li>
+    </ul></details></li>
+  </ul></div>
 </div>
 
-<!-- ===== DOMAIN M ===== -->
-<div class="mindmap-section" id="mindmap-M">
-  <h2><span class="badge-lg" style="background:#ffab00;color:#000">M</span> 哲学框架与替代解释</h2>
-  <div class="tree-root">
-    <div class="tree">
-      <ul>
-        <li>
-          <details open class="node-M">
-            <summary>🏛️ 马克思框架的映射</summary>
-            <ul>
-              <li><span class="leaf node-M dim">生产力/生产关系（物质基础）→ 上层建筑（制度/文化）→ 社会意识</span></li>
-              <li><span class="leaf node-M dim">封建社会→宜人性↑·保守性↑·集体主义↑</span></li>
-              <li><span class="leaf node-M dim">资本主义早期→个人主义↑·尽责性↑·延迟满足↑</span></li>
-              <li><span class="leaf node-M dim">数字资本主义→开放性↑·灵活性↑·自我营销↑</span></li>
-              <li>
-                <details class="node-M">
-                  <summary>三大局限</summary>
-                  <ul>
-                    <li><span class="leaf node-M dim">① 过度决定论——无法解释个体差异远大于群体差异</span></li>
-                    <li><span class="leaf node-M dim">② 反作用机制不清——"能动性"成为黑箱</span></li>
-                    <li><span class="leaf node-M dim">③ 忽略生物层面——没有考虑到遗传对人格的40~60%贡献</span></li>
-                  </ul>
-                </details>
-              </li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-M">
-            <summary>🔄 替代框架一：布迪厄的"惯习" (Habitus)</summary>
-            <ul>
-              <li><span class="leaf node-M dim">社会结构在身体和心智上的烙印——持久的感知/思考/行动倾向</span></li>
-              <li><span class="leaf node-M dim">生成性：提供"可能行为的有限空间"，个体有策略选择余地</span></li>
-              <li><span class="leaf node-M dim">滞后性 (Hysteresis)：社会条件变化时，惯习仍沿袭旧结构→"不适配"</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-M">
-            <summary>🏠 替代框架二：生态系统理论 (Bronfenbrenner)</summary>
-            <ul>
-              <li><span class="leaf node-M dim">宏观系统→文化价值观·经济制度·意识形态</span></li>
-              <li><span class="leaf node-M dim">外层系统→社会政策·媒体环境·就业市场</span></li>
-              <li><span class="leaf node-M dim">中观系统→家庭-学校-社区之间的互动</span></li>
-              <li><span class="leaf node-M dim">微观系统→亲子·师生·同伴互动</span></li>
-              <li><span class="leaf node-M dim">个体→基因+气质</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-M">
-            <summary>📚 替代框架三：维果茨基的文化-历史活动理论</summary>
-            <ul>
-              <li><span class="leaf node-M dim">心理功能是文化中介的——语言、符号、工具改变了大脑的运作方式</span></li>
-              <li><span class="leaf node-M dim">人格 = 社会关系的内化——但内化是创造性转化</span></li>
-              <li><span class="leaf node-M dim">文化工具箱：个体从社会文化"工具箱"中选择工具，以独特方式组合</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-M">
-            <summary>🧩 整合多层级框架</summary>
-            <ul>
-              <li><span class="leaf node-M dim">物质基础层 ↔ 制度-文化层 ↔ 人际关系层 ↔ 个体生物-心理层 ↔ 自我意识层</span></li>
-              <li><span class="leaf node-M highlight">人格 = 社会结构在个体心理层面的沉淀，但沉淀物可以被重新溶解和重塑。</span></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </div>
+<!-- ===== M ===== -->
+<div class="section" id="s-M">
+  <h2><span class="blg" style="background:#ffab00;color:#000">M</span> 哲学框架与替代解释</h2>
+  <div class="tree"><ul>
+    <li><details open class="cM"><summary>🏛️ <b>马克思框架的映射</b></summary><ul>
+      <li><span class="leaf cM dim">生产力/生产关系（物质基础）→ 上层建筑（制度/文化）→ 社会意识<br>人格：社会结构/经济/技术 → 教育/家庭/文化 → 集体人格/人格理想</span></li>
+      <li><span class="leaf cM dim">封建社会→农业经济+宗法制度→宜人性↑·保守性↑·集体主义↑</span></li>
+      <li><span class="leaf cM dim">资本主义早期→工厂生产+市场竞争→个人主义↑·尽责性↑·延迟满足↑</span></li>
+      <li><span class="leaf cM dim">数字资本主义→平台经济+柔性生产→开放性↑·灵活性↑·自我营销↑</span></li>
+      <li><details class="cM"><summary>三大局限</summary><ul>
+        <li><span class="leaf cM dim">① <b>过度决定论</b> 如果完全用经济基础解释人格，那么同一代人的平均人格应该完全相同——无法解释个体差异远大于群体差异</span></li>
+        <li><span class="leaf cM dim">② <b>反作用机制不清</b> 马克思说意识反作用于存在，但通过什么心理机制？"能动性"成为黑箱</span></li>
+        <li><span class="leaf cM dim">③ <b>忽略生物层面</b> 没有考虑到遗传对人格的40~60%贡献</span></li>
+      </ul></details></li>
+    </ul></details></li>
+    <li><details open class="cM"><summary>🔄 <b>替代框架一：布迪厄的"惯习" (Habitus)</b></summary><ul>
+      <li><span class="leaf cM dim"><b>本质</b>：社会结构在身体和心智上的烙印——一套持久的、可转化的感知/思考/行动倾向。不是"决定"，而是"<b>约束性塑造</b>"</span></li>
+      <li><span class="leaf cM dim"><b>生成性</b>：惯习提供"可能行为的有限空间"，个体在约束内有策略选择余地——比马克思允许更多个体能动性</span></li>
+      <li><span class="leaf cM dim"><b>滞后性 (Hysteresis)</b>：当社会条件变化时，惯习仍沿袭旧结构运作→"不适配"（如农业社会惯习的人在数字社会中感到不适）——解释了为什么社会转型期会产生"人格错配"的痛苦</span></li>
+      <li><span class="leaf cM sm">核心文献：Bourdieu, <i>Outline of a Theory of Practice</i> (1977); <i>The Logic of Practice</i> (1990)</span></li>
+    </ul></details></li>
+    <li><details class="cM"><summary>🏠 <b>替代框架二：生态系统理论 (Bronfenbrenner)</b></summary><ul>
+      <li><span class="leaf cM dim"><b>宏观系统</b>：文化价值观·经济制度·意识形态 → 设定人格的"理想型"</span></li>
+      <li><span class="leaf cM dim"><b>外层系统</b>：社会政策·媒体环境·就业市场 → 提供机会和约束的结构</span></li>
+      <li><span class="leaf cM dim"><b>中观系统</b>：家庭-学校-社区之间的互动 → 人格在不同场所间的协同/冲突</span></li>
+      <li><span class="leaf cM dim"><b>微观系统</b>：亲子·师生·同伴互动 → 人格的直接形成环境</span></li>
+      <li><span class="leaf cM dim"><b>个体</b>：基因+气质 → 生物基础</span></li>
+      <li><span class="leaf cM dim">关键优势：允许<b>多向因果</b>——既承认自上而下的社会约束，也承认自下而上的个体反作用</span></li>
+      <li><span class="leaf cM sm">核心文献：Bronfenbrenner, <i>The Ecology of Human Development</i> (1979)</span></li>
+    </ul></details></li>
+    <li><details class="cM"><summary>📚 <b>替代框架三：维果茨基的文化-历史活动理论</b></summary><ul>
+      <li><span class="leaf cM dim"><b>心理功能是文化中介的</b>：语言、符号、工具改变了大脑的运作方式——"人格"不是纯生物现象</span></li>
+      <li><span class="leaf cM dim"><b>人格 = 社会关系的内化</b>：但内化不是被动的复制，而是创造性的转化——Vygotsky的核心公式</span></li>
+      <li><span class="leaf cM dim"><b>文化工具箱</b>：个体从社会文化"工具箱"中选择工具，以独特方式组合，创造独属自己的"人格成品"</span></li>
+      <li><span class="leaf cM sm">核心文献：Vygotsky, <i>Thought and Language</i> (1934); <i>Mind in Society</i> (1978)</span></li>
+    </ul></details></li>
+    <li><details class="cM"><summary>🧩 <b>整合多层级框架</b></summary><ul>
+      <li><span class="leaf cM dim">物质基础层 ↔ 制度-文化层 ↔ 人际关系层 ↔ 个体生物-心理层 ↔ 自我意识层（主观能动性的所在地）</span></li>
+      <li><span class="leaf cM hl">人格 = 社会结构在个体心理层面的沉淀，但沉淀物可以被重新溶解和重塑。</span></li>
+      <li><span class="leaf cM dim">每次你问"我是谁""我想成为谁"的时候，你就在行使这种反作用力。</span></li>
+    </ul></details></li>
+  </ul></div>
 </div>
 
-<!-- ===== DOMAIN N ===== -->
-<div class="mindmap-section" id="mindmap-N">
-  <h2><span class="badge-lg" style="background:#00bfa5;color:#000">N</span> 东亚辩证思维的文化起源</h2>
-  <div class="tree-root">
-    <div class="tree">
-      <ul>
-        <li>
-          <details open class="node-N">
-            <summary>🧩 四大解释层的嵌套</summary>
-            <ul>
-              <li><span class="leaf node-N"><span class="tag tag-red">① 哲学层</span> (~2000年) 道/儒/禅→辩证思维</span></li>
-              <li><span class="leaf node-N"><span class="tag tag-green">② 农业生态层</span> (~数千年) 水稻种植→整体性认知→辩证思维</span></li>
-              <li><span class="leaf node-N"><span class="tag tag-blue">③ 社会结构层</span> (数百年~千年) 集体协作→协商调和→互依自我</span></li>
-              <li><span class="leaf node-N"><span class="tag tag-purple">④ 语言中介层</span> (数千年) 高情境语言(汉语)→训练容忍模糊和矛盾</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-N">
-            <summary>☯️ 哲学层（近因因 ~2000年+）</summary>
-            <ul>
-              <li><span class="leaf node-N"><span class="tag tag-red">道家</span> "反者道之动"——事物必然向其反面转化</span></li>
-              <li><span class="leaf node-N"><span class="tag tag-gold">儒家</span> "中庸"——不走极端，在矛盾中寻求平衡</span></li>
-              <li><span class="leaf node-N"><span class="tag tag-blue">佛家(禅宗)</span> "不二法门"——超越二元对立</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details open class="node-N">
-            <summary>🌾 农业生态系统层（深层因 ~数千年）——水稻理论</summary>
-            <ul>
-              <li><span class="leaf node-N dim">Thomas Talhelm (2014, Science)</span></li>
-              <li><span class="leaf node-N dim">水稻种植区：复杂灌溉系统需要大规模合作→整体性认知→辩证思维</span></li>
-              <li><span class="leaf node-N dim">小麦种植区：可独立耕作→分析性认知→线性思维</span></li>
-              <li><span class="leaf node-N dim">中国内部验证：控制了GDP/城市化/教育水平后差异依然显著</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-N">
-            <summary>🔤 语言中介层</summary>
-            <ul>
-              <li><span class="leaf node-N dim">汉语：高情境依赖，同一词在不同语境可以有相反含义</span></li>
-              <li><span class="leaf node-N dim">印欧语言：强调精确性和逻辑一致性</span></li>
-              <li><span class="leaf node-N dim">长期使用高情境语言 = 训练大脑容忍模糊和矛盾</span></li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <details class="node-N">
-            <summary>📉 当代变化</summary>
-            <ul>
-              <li><span class="leaf node-N dim">东亚年轻一代辩证思维在下降，分析思维在上升</span></li>
-              <li><span class="leaf node-N dim">但仍显著高于西方同龄人——文化惯性极强</span></li>
-              <li><span class="leaf node-N dim">双语者的"思维切换"现象——同一人在中/英环境下表现不同认知风格</span></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </div>
+<!-- ===== N ===== -->
+<div class="section" id="s-N">
+  <h2><span class="blg" style="background:#00bfa5;color:#000">N</span> 东亚辩证思维的文化起源</h2>
+  <div class="tree"><ul>
+    <li><details open class="cN"><summary>🧩 <b>四大解释层的嵌套</b></summary><ul>
+      <li><span class="leaf cN"><span class="tag tr">① 哲学传统直接塑造</span> (~2000年) 道/儒/禅→辩证思维 (Peng & Nisbett, 1999)</span></li>
+      <li><span class="leaf cN"><span class="tag tg">② 农业生态系统的深层塑造（水稻理论）</span> (~数千年) 水稻种植(灌溉合作)→高依赖→整体性认知→辩证思维 (Talhelm et al., 2014, <i>Science</i>)</span></li>
+      <li><span class="leaf cN"><span class="tag tb">③ 社会结构强化</span> (数百年~千年) 集体协作→协商调和→情境伦理→互依自我 (Nisbett, 2003)</span></li>
+      <li><span class="leaf cN"><span class="tag tp">④ 语言中介</span> (数千年) 高情境语言(汉语)→训练容忍模糊和矛盾 (Bloom, 1981)</span></li>
+    </ul></details></li>
+    <li><details open class="cN"><summary>☯️ <b>哲学层（近因因 ~2000年+）</b></summary><ul>
+      <li><span class="leaf cN"><span class="tag tr">道家</span> "反者道之动"——事物必然向其反面转化。接受变化和矛盾是自然的</span></li>
+      <li><span class="leaf cN"><span class="tag tgo">儒家</span> "中庸"——不走极端，在矛盾中寻求平衡。容忍矛盾，寻求"第三条路"</span></li>
+      <li><span class="leaf cN"><span class="tag tb">佛家(禅宗)</span> "不二法门"——超越二元对立。矛盾只是表面，本质统一</span></li>
+      <li><span class="leaf cN dim">对比西方哲学源头（古希腊）：亚里士多德强调形式逻辑（A≠非A，排中律），中国哲学强调辩证逻辑（A可以同时是非A）</span></li>
+    </ul></details></li>
+    <li><details open class="cN"><summary>🌾 <b>农业生态系统层（深层因 ~数千年）——水稻理论</b></summary><ul>
+      <li><span class="leaf cN dim">提出者：Thomas Talhelm (2014, <i>Science</i>)</span></li>
+      <li><span class="leaf cN dim"><b>水稻种植区</b>：复杂灌溉系统需要大规模合作 → 高依赖·高协调 → 整体性认知（关注背景关系、容忍矛盾、偏好调和）</span></li>
+      <li><span class="leaf cN dim"><b>小麦种植区</b>：可独立耕作，不需要协调 → 低依赖·个体独立 → 分析性认知（关注个体和类别、偏好逻辑一致、偏好分出对错）</span></li>
+      <li><span class="leaf cN dim"><b>实证证据</b>：中国内部水稻种植区居民在思维风格测试中显著更整体性、更辩证；小麦种植区更分析性、更线性。控制了GDP/城市化/教育水平后差异依然显著。同一省份内部（如江苏南北、广东东西）也成立——最完美的"自然实验"条件</span></li>
+    </ul></details></li>
+    <li><details class="cN"><summary>🏘️ <b>社会结构强化层（中介机制）</b></summary><ul>
+      <li><span class="leaf cN dim">水稻文化：集体协作 → 协商调和 → 情境伦理 → 互依型自我 → 辩证思维</span></li>
+      <li><span class="leaf cN dim">小麦文化：个体独立 → 规则裁决 → 普世伦理 → 独立型自我 → 分析思维</span></li>
+      <li><span class="leaf cN dim">这是一个自我强化的循环：农业生态 → 社会结构 → 认知风格 → 哲学体系 → 教育方式 → 下一代认知 → 制度强化</span></li>
+    </ul></details></li>
+    <li><details class="cN"><summary>🔤 <b>语言中介层</b></summary><ul>
+      <li><span class="leaf cN dim">汉语：高情境依赖的语言，同一个词在不同语境可以有相反含义。没有严格的语法时态、单复数区分——大量容忍模糊空间</span></li>
+      <li><span class="leaf cN dim">印欧语言：强调精确性和逻辑一致性，有严格的形式逻辑结构（if-then、either-or）</span></li>
+      <li><span class="leaf cN dim">长期使用高情境语言 = 训练大脑容忍模糊和矛盾</span></li>
+      <li><span class="leaf cN dim">可测试假说：中英双语者在不同语言环境下会表现出不同的思维方式——已有初步证据支持</span></li>
+    </ul></details></li>
+    <li><details class="cN"><summary>📉 <b>当代变化</b></summary><ul>
+      <li><span class="leaf cN dim">东亚年轻一代的辩证思维在下降，分析思维在上升</span></li>
+      <li><span class="leaf cN dim">但仍显著高于西方同龄人——文化惯性极强</span></li>
+      <li><span class="leaf cN dim">双语者的"思维切换"现象——同一人在中/英环境下表现出不同认知风格</span></li>
+    </ul></details></li>
+  </ul></div>
 </div>
 
-<!-- ===== CROSS CONNECTIONS ===== -->
-<div class="connections" id="connections">
+<!-- ===== CONNECTIONS ===== -->
+<div class="conn-box">
   <h3>🌐 跨领域内在连接总图</h3>
-  <div class="connections-grid">
-    <div class="conn"><strong>A↔B</strong> 生物学基础为"天生 vs 后天"的区分提供了物质证据</div>
-    <div class="conn"><strong>B↔C</strong> 类型学的争论在争论如何最好地描述天生的个体差异</div>
-    <div class="conn"><strong>C↔D</strong> MBTI与Big Five的映射表明：去掉二分法，两者重合度很高</div>
-    <div class="conn"><strong>E↔F</strong> 神经可塑性为"自我规训"提供了神经基础</div>
-    <div class="conn"><strong>F↔H</strong> 自我规训的效应量边界直接决定IBM的有效性</div>
-    <div class="conn"><strong>F↔I</strong> 自我验证是记忆建构的核心驱动力</div>
-    <div class="conn"><strong>I↔J</strong> 记忆叙事创造"自洽的自我叙事"——但不能太僵化</div>
-    <div class="conn"><strong>J↔K</strong> 理解自洽的封闭效应是设计有效沟通策略的前提</div>
-    <div class="conn"><strong>G↔L</strong> 历史心理学方法提供了研究历史人格偏好的工具</div>
-    <div class="conn"><strong>L↔M</strong> 历史人格偏好的规律寻求元框架来解释</div>
-    <div class="conn"><strong>M↔N</strong> 任何人格的哲学解释都必须处理文化差异</div>
+  <div class="conn-grid">
+    <div class="c"><strong>A↔B</strong> 生物学基础为"天生 vs 后天"的区分提供了物质证据（遗传率/神经递质系统）</div>
+    <div class="c"><strong>B↔C</strong> 类型学的争论（MBTI vs Big Five）本质上在争论：如何最好地描述天生的个体差异？</div>
+    <div class="c"><strong>C↔D</strong> MBTI与Big Five的映射关系表明：如果去掉二分法，两者有很高的重合度</div>
+    <div class="c"><strong>E↔F</strong> 神经可塑性为"自我规训"提供了神经基础——标签内化改变的是真实的大脑结构</div>
+    <div class="c"><strong>F↔H</strong> 自我规训的"效应量边界"直接决定IBM的有效性——不是所有人都同样容易被身份驱动</div>
+    <div class="c"><strong>F↔I</strong> 自我验证（F的过滤机制）是I（记忆建构）的核心驱动力——我们记住符合自我概念的东西</div>
+    <div class="c"><strong>I↔J</strong> 记忆的叙事建构创造了一个"自洽的自我叙事"——但不能太僵化（J的讨论）</div>
+    <div class="c"><strong>J↔K</strong> 理解自洽的封闭效应（J）是设计有效沟通策略（K）的前提</div>
+    <div class="c"><strong>G↔L</strong> 历史心理学方法（G）提供了研究历史人格偏好（L）的工具</div>
+    <div class="c"><strong>L↔M</strong> 历史人格偏好的规律寻求一个元框架来解释（M）</div>
+    <div class="c"><strong>M↔N</strong> 任何人格的哲学解释都必须处理文化差异（N）——否则只是WEIRD人的哲学</div>
   </div>
 </div>
 
-<!-- ===== SCHOLAR INDEX ===== -->
-<div class="connections" id="scholars" style="margin-top:0;">
+<!-- ===== SCHOLARS ===== -->
+<div class="conn-box" style="margin-top:0;">
   <h3>📖 学者索引（42+位）</h3>
-  <div class="scholar-grid" id="scholarGrid"></div>
+  <div class="sg" id="sg"></div>
 </div>
 
-<!-- ===== UNANSWERED QUESTIONS ===== -->
-<div class="questions" id="questions">
+<!-- ===== QUESTIONS ===== -->
+<div class="qbox">
   <h3>🧩 未解之问完整清单（20+）</h3>
-  <div class="questions-grid" id="questionGrid"></div>
+  <div class="qg" id="qg"></div>
 </div>
 
 <!-- ===== FOOTER ===== -->
 <div class="footer">
   <q>人既是自己叙事的作者，也是叙事的角色。我们无法完全脱离叙事，但可以选择如何编写它。</q>
-  <div class="formula">
-    你追问的自由度，最终落在：<strong>遗传基线</strong>（你不能选的）× <strong>时代位置</strong>（你不能逃的）× <strong>自我意识</strong>（你可以选的）
-  </div>
-  <div style="margin-top:20px; color:var(--text2); font-size:0.85em;">
-    人格心理学 · 跨学科全量知识库 &nbsp;|&nbsp; 涵盖14大主题 · 42+位学者 · 50+篇文献 · 30+种机制 · 20+个未解之问
+  <div class="fml">你追问的自由度，最终落在：<strong>遗传基线</strong>（你不能选的）× <strong>时代位置</strong>（你不能逃的）× <strong>自我意识</strong>（你可以选的）</div>
+  <div style="margin-top:18px; color:var(--text2); font-size:0.82em;">
+    人格心理学 · 跨学科全量知识库 &nbsp;|&nbsp; 14大主题 · 42+位学者 · 50+篇文献 · 30+种机制 · 20+个未解之问
   </div>
 </div>
 
-</div><!-- end container -->
+</div><!-- container -->
 
 <script>
-// ===== Scholar data =====
+// ===== Scholars data =====
 const scholars = [
-  {name:"Ainsworth, Mary", domain:"发展心理学", contrib:"陌生情境实验→依恋类型测量", mod:"B"},
-  {name:"Bem, Daryl", domain:"社会心理学", contrib:"自我感知理论—行为推断态度", mod:"H"},
-  {name:"Becker, Howard", domain:"社会学", contrib:"标签理论—Outsiders (1963)", mod:"F"},
-  {name:"Bloom, Alfred", domain:"语言心理学", contrib:"语言与思维—汉语与反事实思维", mod:"N"},
-  {name:"Bouchard, Thomas", domain:"行为遗传学", contrib:"双生子研究—人格遗传率", mod:"A"},
-  {name:"Bourdieu, Pierre", domain:"社会学", contrib:"惯习(Habitus)—生成性+滞后性", mod:"M"},
-  {name:"Bowlby, John", domain:"发展心理学", contrib:"依恋理论—内部工作模型", mod:"B"},
-  {name:"Bronfenbrenner, Urie", domain:"发展心理学", contrib:"生态系统理论—多层级嵌套", mod:"M"},
-  {name:"Caspi, Avshalom", domain:"发展精神病理学", contrib:"5-HTTLPR与压力×基因交互", mod:"A"},
-  {name:"Cuddy, Amy", domain:"社会心理学", contrib:"存在力/权力姿势（有争议）", mod:"H"},
-  {name:"Damasio, Antonio", domain:"神经科学", contrib:"躯体标记假说—Descartes' Error (1994)", mod:"I"},
-  {name:"Festinger, Leon", domain:"社会心理学", contrib:"认知失调理论 (1957)", mod:"J"},
-  {name:"Fivush, Robyn", domain:"认知发展", contrib:"自传体记忆与叙事发展", mod:"I"},
-  {name:"Forer, Bertram", domain:"人格心理学", contrib:"巴纳姆效应实验 (1948)", mod:"F"},
-  {name:"Furnham, Adrian", domain:"人格心理学", contrib:"MBTI vs Big Five批判比较", mod:"C"},
-  {name:"Gogtay, Nitin", domain:"神经科学", contrib:"PFC髓鞘化动态图谱 (2004)", mod:"A"},
-  {name:"Henrich, Joseph", domain:"文化演化", contrib:"WEIRD批判—The WEIRDest People (2020)", mod:"G"},
-  {name:"Hogg, Michael", domain:"社会心理学", contrib:"自我归类理论—自我刻板化", mod:"F"},
-  {name:"Hudson, Nathan", domain:"人格心理学", contrib:"意志性人格改变 (2015)", mod:"E"},
-  {name:"Jung, Carl", domain:"分析心理学", contrib:"心理类型学—Psychological Types (1921)", mod:"C"},
-  {name:"Kagan, Jerome", domain:"发展心理学", contrib:"行为抑制—杏仁核与天生气质", mod:"B"},
-  {name:"Kristof-Brown, Amy", domain:"工业/组织心理学", contrib:"人-环境匹配元分析", mod:"L"},
-  {name:"Linville, Patricia", domain:"社会认知", contrib:"自我复杂性理论 (1987)", mod:"J"},
-  {name:"Loftus, Elizabeth", domain:"认知心理学", contrib:"虚假记忆实验—记忆的可塑性", mod:"I"},
-  {name:"Main, Mary", domain:"发展心理学", contrib:"成人依恋访谈—依恋代际传递", mod:"B"},
-  {name:"Markus, Hazel", domain:"文化心理学", contrib:"可能自我 (1986); 独立vs互依自我", mod:"H,N"},
-  {name:"McAdams, Dan", domain:"叙事心理学", contrib:"生命故事模型—自传体叙事与身份", mod:"I"},
-  {name:"McCrae & Costa", domain:"人格心理学", contrib:"大五人格模型创始人", mod:"C,D"},
-  {name:"McGowan, Patrick", domain:"表观遗传学", contrib:"NR3C1甲基化—童年经历的'写入'", mod:"A"},
-  {name:"Merton, Robert", domain:"社会学", contrib:"自我实现预言 (1948)", mod:"F"},
-  {name:"Miller & Rollnick", domain:"临床心理学", contrib:"动机性访谈(MI)", mod:"K"},
-  {name:"Nisbett, Richard", domain:"文化心理学", contrib:"The Geography of Thought (2003)", mod:"N"},
-  {name:"Nyhan, Brendan", domain:"政治心理学", contrib:"逆火效应 (2010)", mod:"K"},
-  {name:"Oyserman, Daphna", domain:"社会心理学", contrib:"身份驱动动机(IBM) (2015)", mod:"H"},
-  {name:"Peng, Kaiping (彭凯平)", domain:"文化心理学", contrib:"辩证思维与矛盾推理跨文化研究 (1999)", mod:"J,N"},
-  {name:"Pennebaker, James", domain:"健康心理学", contrib:"LIWC文本分析—语言与人格关联", mod:"G"},
-  {name:"Petanjek, Zdravko", domain:"神经科学", contrib:"突触修剪的崭新性—前额叶发育 (2011)", mod:"A"},
-  {name:"Pittenger, David", domain:"心理测量学", contrib:"MBTI的系统性批判 (2005)", mod:"C"},
-  {name:"Plomin, Robert", domain:"行为遗传学", contrib:"行为遗传学综合研究", mod:"A"},
-  {name:"Roberts, Brent", domain:"人格心理学", contrib:"人格终身变化元分析 (2006)", mod:"E"},
-  {name:"Schacter, Daniel", domain:"认知神经科学", contrib:"记忆建构的神经机制 (2007)", mod:"I"},
-  {name:"Scheff, Thomas", domain:"社会学", contrib:"Being Mentally Ill (1966)—标签理论", mod:"F"},
-  {name:"Schneider, Benjamin", domain:"工业/组织心理学", contrib:"ASA模型—吸引-选择-退出 (1987)", mod:"L"},
-  {name:"Snyder, Mark", domain:"社会心理学", contrib:"行为证实实验 (1977)", mod:"F"},
-  {name:"Stieger, Mathias", domain:"人格心理学", contrib:"数字干预改变人格RCT (2021, PNAS)", mod:"E"},
-  {name:"Strauss & Howe", domain:"代际研究", contrib:"The Fourth Turning (1997)—代际周期理论", mod:"L"},
-  {name:"Swann, William", domain:"社会心理学", contrib:"自我验证理论; Change Through Paradox (1988)", mod:"I,J,K"},
-  {name:"Talhelm, Thomas", domain:"文化心理学", contrib:"水稻理论 (2014, Science)", mod:"N"},
-  {name:"Twenge, Jean", domain:"代际心理学", contrib:"跨时间元分析(CTMA)—世代人格变化", mod:"G,L"},
-  {name:"Vaillant, George", domain:"精神医学", contrib:"防御机制层级分类—Grant Study", mod:"B"},
-  {name:"Vygotsky, Lev", domain:"发展心理学", contrib:"文化-历史活动理论—内化与创造性转化", mod:"M"},
-  {name:"Zuckerman, Marvin", domain:"人格心理学", contrib:"感觉寻求—生物基础", mod:"B"}
+  {n:"Ainsworth, Mary", d:"发展心理学", c:"陌生情境实验→依恋类型测量", m:"B"},
+  {n:"Bem, Daryl", d:"社会心理学", c:"自我感知理论—行为推断态度", m:"H"},
+  {n:"Becker, Howard", d:"社会学", c:"标签理论—Outsiders (1963)", m:"F"},
+  {n:"Bloom, Alfred", d:"语言心理学", c:"语言与思维—汉语与反事实思维", m:"N"},
+  {n:"Bouchard, Thomas", d:"行为遗传学", c:"双生子研究—人格遗传率", m:"A"},
+  {n:"Bourdieu, Pierre", d:"社会学", c:"惯习(Habitus)—生成性+滞后性", m:"M"},
+  {n:"Bowlby, John", d:"发展心理学", c:"依恋理论—内部工作模型", m:"B"},
+  {n:"Bronfenbrenner, Urie", d:"发展心理学", c:"生态系统理论—多层级嵌套", m:"M"},
+  {n:"Caspi, Avshalom", d:"精神病理学", c:"5-HTTLPR与压力×基因交互", m:"A"},
+  {n:"Damasio, Antonio", d:"神经科学", c:"躯体标记假说—Descartes' Error (1994)", m:"I"},
+  {n:"Festinger, Leon", d:"社会心理学", c:"认知失调理论 (1957)", m:"J"},
+  {n:"Forer, Bertram", d:"人格心理学", c:"巴纳姆效应实验 (1948)", m:"F"},
+  {n:"Furnham, Adrian", d:"人格心理学", c:"MBTI vs Big Five批判比较", m:"C"},
+  {n:"Gogtay, Nitin", d:"神经科学", c:"PFC髓鞘化动态图谱 (2004)", m:"A"},
+  {n:"Henrich, Joseph", d:"文化演化", c:"WEIRD批判—The WEIRDest People (2020)", m:"G"},
+  {n:"Hogg, Michael", d:"社会心理学", c:"自我归类理论—自我刻板化", m:"F"},
+  {n:"Hudson, Nathan", d:"人格心理学", c:"意志性人格改变 (2015)", m:"E"},
+  {n:"Jung, Carl", d:"分析心理学", c:"心理类型学—Psychological Types (1921)", m:"C"},
+  {n:"Kagan, Jerome", d:"发展心理学", c:"行为抑制—杏仁核与天生气质", m:"B"},
+  {n:"Kristof-Brown, A.", d:"组织心理学", c:"人-环境匹配元分析", m:"L"},
+  {n:"Linville, Patricia", d:"社会认知", c:"自我复杂性理论 (1987)", m:"J"},
+  {n:"Loftus, Elizabeth", d:"认知心理学", c:"虚假记忆实验—记忆的可塑性", m:"I"},
+  {n:"Markus, Hazel", d:"文化心理学", c:"可能自我 (1986); 独立vs互依自我", m:"H,N"},
+  {n:"McAdams, Dan", d:"叙事心理学", c:"生命故事模型—自传体叙事与身份", m:"I"},
+  {n:"McCrae & Costa", d:"人格心理学", c:"大五人格模型创始人", m:"C,D"},
+  {n:"McGowan, Patrick", d:"表观遗传学", c:"NR3C1甲基化—童年经历的'写入'", m:"A"},
+  {n:"Merton, Robert", d:"社会学", c:"自我实现预言 (1948)", m:"F"},
+  {n:"Miller & Rollnick", d:"临床心理学", c:"动机性访谈(MI)", m:"K"},
+  {n:"Nisbett, Richard", d:"文化心理学", c:"The Geography of Thought (2003)", m:"N"},
+  {n:"Nyhan, Brendan", d:"政治心理学", c:"逆火效应 (2010)", m:"K"},
+  {n:"Oyserman, Daphna", d:"社会心理学", c:"身份驱动动机(IBM) (2015)", m:"H"},
+  {n:"Peng, Kaiping", d:"文化心理学", c:"辩证思维与矛盾推理跨文化研究", m:"J,N"},
+  {n:"Pennebaker, James", d:"健康心理学", c:"LIWC文本分析—语言与人格关联", m:"G"},
+  {n:"Petanjek, Zdravko", d:"神经科学", c:"突触修剪的崭新性—前额叶发育", m:"A"},
+  {n:"Pittenger, David", d:"心理测量学", c:"MBTI的系统性批判 (2005)", m:"C"},
+  {n:"Roberts, Brent", d:"人格心理学", c:"人格终身变化元分析 (2006)", m:"E"},
+  {n:"Schacter, Daniel", d:"认知神经科学", c:"记忆建构的神经机制 (2007)", m:"I"},
+  {n:"Scheff, Thomas", d:"社会学", c:"Being Mentally Ill (1966)—标签理论", m:"F"},
+  {n:"Schneider, Benjamin", d:"组织心理学", c:"ASA模型—吸引-选择-退出 (1987)", m:"L"},
+  {n:"Snyder, Mark", d:"社会心理学", c:"行为证实实验 (1977)", m:"F"},
+  {n:"Stieger, Mathias", d:"人格心理学", c:"数字干预改变人格RCT (2021, PNAS)", m:"E"},
+  {n:"Strauss & Howe", d:"代际研究", c:"The Fourth Turning (1997)—代际周期理论", m:"L"},
+  {n:"Swann, William", d:"社会心理学", c:"自我验证理论; Change Through Paradox", m:"I,J,K"},
+  {n:"Talhelm, Thomas", d:"文化心理学", c:"水稻理论 (2014, Science)", m:"N"},
+  {n:"Twenge, Jean", d:"代际心理学", c:"跨时间元分析—世代人格变化", m:"G,L"},
+  {n:"Vaillant, George", d:"精神医学", c:"防御机制层级分类—Grant Study", m:"B"},
+  {n:"Vygotsky, Lev", d:"发展心理学", c:"文化-历史活动理论—内化与创造性转化", m:"M"},
+  {n:"Zuckerman, Marvin", d:"人格心理学", c:"感觉寻求—生物基础", m:"B"}
 ];
 
 // ===== Questions data =====
 const questions = [
-  {mod:"A", text:"遗传率40~60%的'剩余'中，共享环境 vs 非共享环境的精确比例——经典难题"},
-  {mod:"A", text:"表观遗传修饰的可逆性边界——心理治疗/药物干预能在多大程度上逆转童年经历的'写入'？"},
-  {mod:"A", text:"行为抑制等气质（Kagan）的跨文化普遍性——西方样本的结论是否适用于非WEIRD群体？"},
-  {mod:"B", text:"临床上如何精确解析一个个案中'天生+适应+防御'的三元混合比例？"},
-  {mod:"B", text:"是否存在'适应策略→特质固化→看起来像天生'的路径？时间窗口和机制？"},
-  {mod:"C", text:"八维的工具性价值如何被严谨评估？什么时候有益、什么时候有害？"},
-  {mod:"C", text:"有没有可能通过更先进的测量方法（经验取样/行为观察编码）验证功能堆栈？"},
-  {mod:"D", text:"T/F与宜人性的低关联（r≈0.45）——MBTI的T/F是否测量了Big Five未覆盖的独特维度？"},
-  {mod:"E", text:"人格可塑性的'天花板'——基因设定的上下限有多宽？"},
-  {mod:"E", text:"人格改变是持久的还是需要持续维持的？没有持续环境支撑会反弹吗？"},
-  {mod:"F", text:"'语法 vs 剧本'隐喻的精确量化——天生气质占多少方差，标签内化占多少？"},
-  {mod:"G", text:"CTMA代理指标的效度验证——能否用现代人数据验证文本推断的准确性？"},
-  {mod:"G", text:"'历史心理测量学'的标准化方法论——如同考古学碳定年，需要一个统一工具"},
-  {mod:"H", text:"如何为不同人格画像设计'精确匹配的身份叙事'？"},
-  {mod:"H", text:"高神经质者的恐惧自我驱动——短期有效但长期焦虑副作用——如何平衡？"},
-  {mod:"I", text:"治疗的目标是'恢复真实记忆'还是'建构功能性叙事'？——伦理后果的讨论"},
-  {mod:"I", text:"如何让人同时拥有'我的故事是连贯的'和'我知道它只是一个版本'的觉察？"},
-  {mod:"J", text:"'自洽的黄金区间'——存在最优自洽水平吗？如何操作化测量'自洽灵活性'？"},
-  {mod:"K", text:"MI在日常非治疗情境中的伦理边界和使用方式——朋友/伴侣/同事如何使用？"},
-  {mod:"K", text:"使用MI技巧的同时保持真诚——如何不让对方感觉'你在用技术'？"},
-  {mod:"L", text:"历史人格偏好是严格周期性的还是响应性的？是否存在深层动力导致准周期？"},
-  {mod:"L", text:"AI时代正在如何重塑'成功人格'？（目前进行中，只能提出假说）"},
-  {mod:"M", text:"四个框架（马克思/Bourdieu/Bronfenbrenner/Vygotsky）是竞争、互补还是不可通约？"},
-  {mod:"M", text:"能否发展出一个统一的、多层次的人格形成理论？"},
-  {mod:"N", text:"水稻理论的跨文化复制——日本/韩国/越南是否一致？"},
-  {mod:"N", text:"城市化的'自然实验'——脱离水稻种植后的几十年内，代际差异就会显现吗？"},
-  {mod:"N", text:"'辩证思维是否只有一种？'——中国式中庸vs日本式和而不同vs韩国式情义理可能不同"}
+  {m:"A", t:"遗传率40~60%的'剩余'中，共享环境 vs 非共享环境的精确比例——经典行为遗传学难题"},
+  {m:"A", t:"表观遗传修饰的可逆性边界——心理治疗/药物干预能在多大程度上逆转童年经历的'写入'？"},
+  {m:"A", t:"行为抑制等气质的跨文化普遍性——Kagan的样本主要是西方中产家庭"},
+  {m:"B", t:"临床上如何精确解析一个个案中'天生+适应+防御'的三元混合比例？"},
+  {m:"B", t:"是否存在'适应策略→特质固化→看起来像天生'的路径？时间窗口和机制？"},
+  {m:"C", t:"八维的工具性价值如何被严谨评估？什么时候有益、什么时候有害？"},
+  {m:"C", t:"能否通过更先进的测量方法验证功能堆栈？还是本质上无法被科学验证？"},
+  {m:"C", t:"健康/不健康表达谱与DSM诊断轴之间是否存在映射关系？"},
+  {m:"D", t:"T/F与宜人性的低关联（r≈0.45）——MBTI的T/F是否测量了Big Five未覆盖的独特维度？"},
+  {m:"D", t:"J/P与尽责性的r≈0.45——J/P是否捕捉了'对模糊性的容忍度'等因素？"},
+  {m:"E", t:"改变的量级有多大？Cohen's d通常在0.2~0.5——能否通过更强化的干预达到更大效应？"},
+  {m:"E", t:"人格可塑性的'天花板'在哪？基因设定的上下限有多宽？"},
+  {m:"E", t:"改变是持久的还是需要持续维持的？没有持续环境支撑会反弹吗？"},
+  {m:"F", t:"'语法 vs 剧本'隐喻的精确量化——天生气质占多少方差，标签内化占多少？"},
+  {m:"G", t:"代理指标的效度验证——能否用现代人数据验证文本推断的准确性？"},
+  {m:"G", t:"能否发展出'历史心理测量学'的标准化方法论？"},
+  {m:"H", t:"如何为不同人格画像设计'精确匹配的身份叙事'？"},
+  {m:"H", t:"高神经质者的恐惧自我驱动——短期有效但长期焦虑副作用——如何平衡？"},
+  {m:"I", t:"治疗目标是'恢复真实记忆'还是'建构功能性叙事'？——伦理后果的讨论"},
+  {m:"I", t:"如何让人同时拥有'我的故事是连贯的'和'我知道它只是一个版本'的觉察？"},
+  {m:"J", t:"'自洽的黄金区间'——存在最优自洽水平吗？如何操作化测量'自洽灵活性'？"},
+  {m:"J", t:"矛盾容忍度对低开放性人群是否也有益？还是只是焦虑来源？"},
+  {m:"K", t:"MI在日常非治疗情境中的伦理边界——朋友/伴侣/同事如何使用？"},
+  {m:"K", t:"使用MI技巧的同时保持真诚——如何不让对方感觉'你在用技术'？"},
+  {m:"L", t:"历史人格偏好是严格周期性的还是响应性的？是否存在深层动力导致准周期？"},
+  {m:"L", t:"AI时代正在如何重塑'成功人格'？（目前进行中，只能提出假说）"},
+  {m:"M", t:"四个框架（马克思/Bourdieu/Bronfenbrenner/Vygotsky）是竞争、互补还是不可通约？"},
+  {m:"M", t:"能否发展出一个统一的、多层次的人格形成理论？"},
+  {m:"N", t:"水稻理论的跨文化复制——日本/韩国/越南是否一致？"},
+  {m:"N", t:"脱离水稻种植后的城市化，几十年内代际差异就会显现吗？"},
+  {m:"N", t:"'辩证思维是否只有一种？'——中国式中庸vs日本式和而不同vs韩国式情义理"}
 ];
 
 // Render scholars
-const scholarGrid = document.getElementById('scholarGrid');
+const sg = document.getElementById('sg');
 scholars.forEach(s => {
-  const div = document.createElement('div');
-  div.className = 'scholar-item';
-  div.innerHTML = `<span class="name">${s.name}</span> <span class="domain">[${s.mod}]</span><div class="contrib">${s.contrib}</div>`;
-  scholarGrid.appendChild(div);
+  const d = document.createElement('div');
+  d.className = 'si';
+  d.innerHTML = `<span class="nm">${s.n}</span> <span class="dm">[${s.m}]</span><div class="co">${s.c}</div>`;
+  sg.appendChild(d);
 });
 
 // Render questions
-const questionGrid = document.getElementById('questionGrid');
+const qg = document.getElementById('qg');
 questions.forEach(q => {
-  const div = document.createElement('div');
-  div.className = 'q-item';
-  div.innerHTML = `<span class="q-badge">${q.mod}</span> ${q.text}`;
-  questionGrid.appendChild(div);
+  const d = document.createElement('div');
+  d.className = 'qi';
+  d.innerHTML = `<span class="qb">${q.m}</span> ${q.t}`;
+  qg.appendChild(d);
 });
 
 // ===== Controls =====
-function expandAll() {
-  document.querySelectorAll('.tree details').forEach(d => d.open = true);
+function xall(open) {
+  document.querySelectorAll('.tree details').forEach(d => d.open = open);
 }
-function collapseAll() {
-  document.querySelectorAll('.tree details').forEach(d => d.open = false);
-}
-function scrollToTop() {
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-// ===== Scroll to section =====
-function scrollToSection(id) {
+function st() { window.scrollTo({top:0, behavior:'smooth'}); }
+function gs(id) {
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
-  // Expand that section
-  const details = el.querySelectorAll('details');
-  details.forEach(d => d.open = true);
+  // Expand the section
+  el.querySelectorAll('details').forEach(d => d.open = true);
 }
 
-// ===== Search =====
-function searchMindMap() {
-  const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  const allNodes = document.querySelectorAll('.tree li, .tree summary, .tree .leaf');
+// ===== Search — FIXED: robust approach =====
+function dosearch() {
+  const q = document.getElementById('si').value.trim().toLowerCase();
+  const sc = document.getElementById('sc');
   
-  // First clear all highlights
-  document.querySelectorAll('.search-highlight').forEach(el => {
-    const parent = el.parentNode;
-    parent.replaceChild(document.createTextNode(el.textContent), el);
-    parent.normalize();
+  // Remove all previous marks and hidden states
+  document.querySelectorAll('.tree li').forEach(li => {
+    li.classList.remove('sr-match', 'sr-hidden');
+  });
+  document.querySelectorAll('.tree mark').forEach(m => {
+    const p = m.parentNode;
+    p.replaceChild(document.createTextNode(m.textContent), m);
+    p.normalize();
   });
   
-  // Remove match-node class
-  document.querySelectorAll('.match-node').forEach(el => el.classList.remove('match-node'));
+  if (!q) { sc.className = 'search-count'; sc.textContent = ''; return; }
   
-  if (!q) return;
-  
+  // Collect all leaf & summary text
+  const items = document.querySelectorAll('.tree li');
   let matchCount = 0;
-  allNodes.forEach(node => {
-    const text = node.textContent.toLowerCase();
+  
+  items.forEach(li => {
+    const text = li.textContent.toLowerCase();
     if (text.includes(q)) {
-      // Highlight the text
-      const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-      const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);
-      const textNodes = [];
-      while (walker.nextNode()) textNodes.push(walker);
-      
-      textNodes.forEach(tn => {
-        if (tn.nodeValue.toLowerCase().includes(q)) {
-          const span = document.createElement('span');
-          span.className = 'search-highlight';
-          span.innerHTML = tn.nodeValue.replace(regex, '<mark style="background:rgba(245,197,24,0.35);color:#fff;padding:0 2px;border-radius:2px;">$1</mark>');
-          tn.parentNode.replaceChild(span, tn);
-        }
-      });
-      
-      // Add match class to parent items
-      let parent = node.closest('li');
-      while (parent) {
-        parent.classList.add('match-node');
-        parent = parent.parentElement.closest('li');
-      }
-      
-      // Expand all ancestors
-      let el = node.closest('details');
-      while (el) {
-        el.open = true;
-        el = el.parentElement.closest('details');
-      }
-      
+      li.classList.add('sr-match');
       matchCount++;
+      
+      // Expand all ancestor details
+      let el = li.closest('details');
+      while (el) { el.open = true; el = el.parentElement.closest('details'); }
+    } else {
+      li.classList.add('sr-hidden');
     }
   });
   
-  // Update placeholder to show count
-  const input = document.getElementById('searchInput');
-  if (matchCount > 0) {
-    input.style.borderColor = 'rgba(245,197,24,0.5)';
-  } else {
-    input.style.borderColor = 'var(--border)';
+  // Highlight matching text within all visible nodes
+  items.forEach(li => {
+    if (li.classList.contains('sr-match')) {
+      highlightText(li, q);
+    }
+  });
+  
+  sc.className = 'search-count show';
+  sc.textContent = matchCount > 0 ? `找到 ${matchCount} 个匹配` : '无匹配结果';
+  if (matchCount === 0) sc.style.color = '#e94560';
+  else sc.style.color = '#4ecca3';
+}
+
+// Simple text highlight function
+function highlightText(node, query) {
+  if (node.nodeType === 3) { // text node
+    const txt = node.nodeValue;
+    const idx = txt.toLowerCase().indexOf(query);
+    if (idx >= 0) {
+      const span = document.createElement('span');
+      const before = txt.substring(0, idx);
+      const match = txt.substring(idx, idx + query.length);
+      const after = txt.substring(idx + query.length);
+      span.appendChild(document.createTextNode(before));
+      const mark = document.createElement('mark');
+      mark.textContent = match;
+      span.appendChild(mark);
+      if (after) span.appendChild(document.createTextNode(after));
+      node.parentNode.replaceChild(span, node);
+    }
+  } else if (node.nodeType === 1 && node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE' && node.tagName !== 'MARK') {
+    // Don't go into already highlighted marks, avoid infinite loop
+    Array.from(node.childNodes).forEach(child => highlightText(child, query));
   }
 }
 
-// ===== Keyboard shortcut =====
-document.addEventListener('keydown', function(e) {
+// Ctrl+F focus
+document.addEventListener('keydown', e => {
   if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
     e.preventDefault();
-    document.getElementById('searchInput').focus();
+    document.getElementById('si').focus();
   }
 });
 </script>
-
 </body>
 </html>
